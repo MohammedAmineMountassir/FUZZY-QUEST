@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  <title>Fuzzy-Quest — Connexion</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="card">
+
+  <div class="brand">
+    <div>
+      <div class="fuzzy-mark" aria-hidden="true">
+        <span></span>
+        <span></span>
+      </div>
+
+      <h1 style="margin-top:18px;">Fuzzy-Quest</h1>
+
+      <p>
+        Créez et diffusez des questionnaires en logique floue pour vos études de population.
+      </p>
+    </div>
+
+    <p style="font-size:0.75rem; opacity:0.7;">
+      LIMOS — plateforme de collecte de données
+    </p>
+  </div>
+
+  <div class="form-side">
+    <h2>Connexion</h2>
+    <p class="sub">Accédez à votre espace chercheur.</p>
+
+    <form id="login-form" novalidate>
+
+      <div class="field">
+        <label for="email">Adresse e-mail</label>
+
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="vous@limos.fr"
+          autocomplete="email"
+          required
+        >
+      </div>
+
+      <div class="field">
+        <label for="password">Mot de passe</label>
+
+        <div class="pw-row">
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="••••••••"
+            autocomplete="current-password"
+            required
+          >
+
+          <button type="button" id="toggle-pw">
+            Afficher
+          </button>
+        </div>
+      </div>
+
+      <div class="error" id="error-msg"></div>
+
+      <button type="submit" class="submit">
+        Se connecter
+      </button>
+
+    </form>
+
+    <p class="foot">
+      Pas encore de compte ?
+      <a href="#">Créer un compte</a>
+    </p>
+  </div>
+
+</div>
+
+  </div>
+
+  <script src="js/login.js"></script>
+
+</body>
+</html>
