@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FUZZY-QUEST | Questionnaire</title>
+    <link rel="stylesheet" href="../css/questionnaire.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="brand">
+            <div class="brand-logo">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="brand-text">
+                <h1>FUZZY-QUEST</h1>
+                <p>Votre avis compte</p>
+            </div>
+        </div>
+        <div class="user-menu">
+            <div class="user-icon">👤</div>
+            <div class="user-info">
+                <span>Participant</span>
+            </div>
+            <span class="arrow">⌄</span>
+        </div>
+    </header>
+
+    <main id="welcomePage" class="page welcome-page">
+        <section class="welcome-card">
+            <div class="welcome-content">
+                <span class="small-label">QUESTIONNAIRE</span>
+                <h2>
+                    Votre avis nous permet
+                    d'analyser la situation.
+                </h2>
+                <p class="welcome-description">
+                    Répondez à quelques questions afin de nous permettre
+                    d'évaluer votre perception grâce à la logique floue.
+                </p>
+                <button id="startButton" class="primary-button">
+                    Commencer le questionnaire
+                    <span>→</span>
+                </button>
+                <div class="question-info">
+                    <div class="info-item">
+                        <span class="info-icon">◷</span>
+                        <div>
+                            <strong>5 minutes</strong>
+                            <small>Temps estimé</small>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-icon">☷</span>
+                        <div>
+                            <strong id="questionCount">12 questions</strong>
+                            <small>Questionnaire</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="welcome-illustration">
+                <div class="illustration-circle circle-one"></div>
+                <div class="illustration-circle circle-two"></div>
+                <div class="clipboard">
+                    <div class="clipboard-top"></div>
+                    <div class="clipboard-line">
+                        <span class="checkbox">✓</span>
+                        <div></div>
+                    </div>
+                    <div class="clipboard-line">
+                        <span class="checkbox">✓</span>
+                        <div></div>
+                    </div>
+                    <div class="clipboard-line">
+                        <span class="checkbox">✓</span>
+                        <div></div>
+                    </div>
+                    <div class="clipboard-line">
+                        <span class="checkbox">✓</span>
+                        <div></div>
+                    </div>
+                </div>
+                <div class="fuzzy-symbol">
+                    ∩
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <main id="questionPage" class="page questionnaire-page hidden">
+        <div class="progress-header">
+            <div class="progress-bar">
+                <div id="progressFill" class="progress-fill"></div>
+            </div>
+            <div class="progress-info">
+                <span id="questionNumber">1 / 12</span>
+                <span id="progressPercentage">8 %</span>
+            </div>
+        </div>
+        <section class="question-card">
+            <div class="question-content">
+                <span id="questionTag" class="question-tag">
+                    Question 1
+                </span>
+                <h2 id="questionTitle">
+                    Dans quelle mesure êtes-vous satisfait
+                    de cette situation ?
+                </h2>
+                <div id="answersContainer" class="answers-container">
+                </div>
+            </div>
+            <div class="question-navigation">
+                <button
+                    id="previousButton"
+                    class="secondary-button"
+                    disabled
+                >
+                    ← Question précédente
+                </button>
+                <button
+                    id="nextButton"
+                    class="primary-button"
+                    disabled
+                >
+                    Question suivante →
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <main id="finishPage" class="page finish-page hidden">
+        <section class="finish-card">
+            <div class="success-icon">✓</div>
+            <h2>Questionnaire terminé</h2>
+            <p>Merci pour votre participation.<br>Vos réponses ont bien été enregistrées.</p>
+            <button id="restartButton" class="primary-button">↩ Revenir à l'accueil</button>
+        </section>
+    </main>
+
+    <script src="../js/questionnaire.js"></script>
+</body>
+</html>
