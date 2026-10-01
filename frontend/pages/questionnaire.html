@@ -3,8 +3,9 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-	<title>Fuzzy-Quest – Participer</title>
+	<title>Fuzzy-Quest – Questionnaire</title>
 	<link rel="stylesheet" href="../css/participer.css">
+	<link rel="stylesheet" href="../css/questionnaire.css">
 </head>
 
 <body>
@@ -96,16 +97,30 @@
 		</header>
 
 		<div class="wrap">
-			<div class="top">
-				<div>
-					<h1>Participer</h1>
-					<p class="sub" id="topSub">Choisissez un questionnaire auquel répondre.</p>
+			<a class="back" href="participant.html">← Retour aux questionnaires</a>
+			<div id="view">
+				<div class="top qtop">
+					<div>
+						<h1 id="qTitle">Questionnaire</h1>
+						<p class="sub" id="qDesc"></p>
+					</div>
+					<div class="meta" id="qMeta"></div>
 				</div>
-			</div>
-			<div class="filters" id="filters"></div>
-			<div class="grid qgrid" id="qgrid"></div>
-			<div class="note">
-				🔒 Vos réponses sont confidentielles. Les résultats sont réservés à l'équipe d'analyse.
+				<div class="card prog">
+					<div class="row">
+						<b id="pTxt">0 / 0 questions</b>
+						<span id="pPct">0 %</span>
+					</div>
+					<div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="pBar">
+						<i id="pFill"></i>
+					</div>
+				</div>
+				<div class="qlist" id="qlist"></div>
+				<div class="card submit" id="submitZone">
+					<div class="st" id="sSt"></div>
+					<button class="btn p" id="sendBtn" type="button">Envoyer mes réponses</button>
+					<div class="alertbox" id="alertBox" role="alert"></div>
+				</div>
 			</div>
 		</div>
 	</main>
@@ -150,6 +165,6 @@
 		</div>
 	</div>
 
-	<script src="../js/participer.js"></script>
+	<script src="../js/questionnaire.js"></script>
 </body>
 </html>
