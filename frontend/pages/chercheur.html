@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+	<title>Fuzzy-Quest – Tableau de bord chercheur</title>
+	<link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+	<aside>
+		<div class="logo">
+			<img src="../logo.jpeg" alt="Logo Fuzzy-Quest" width="56" height="56">
+			<div>
+				<b>FUZZY-QUEST</b>
+				<small>Beyond yes and no</small>
+			</div>
+		</div>
+		<a class="nav on" href="#">
+			<svg viewBox="0 0 24 24">
+				<path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>
+			</svg>
+			Dashboard
+		</a>
+		<a class="nav" href="#">
+			<svg viewBox="0 0 24 24">
+				<path d="M9 11l3 3 8-8M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/>
+			</svg>
+			Questionnaire
+		</a>
+		<a class="nav" href="#">
+			<svg viewBox="0 0 24 24">
+				<path d="M3 17l5-5 4 4 8-9"/>
+			</svg>
+			Analyse
+		</a>
+		<a class="nav" href="#">
+			<svg viewBox="0 0 24 24">
+				<path d="M5 21V10M12 21V4M19 21v-7"/>
+			</svg>
+			Résultats
+		</a>
+		<a class="nav" href="#">
+			<svg viewBox="0 0 24 24">
+				<circle cx="9" cy="8" r="3.5"/>
+				<path d="M2.5 20a6.5 6.5 0 0 1 13 0M17 4.5a3.5 3.5 0 0 1 0 7M21.5 20a6 6 0 0 0-4-5.6"/>
+			</svg>
+			Participer
+			<span class="badge">5</span>
+		</a>
+		<a class="nav" href="#">
+			<svg viewBox="0 0 24 24">
+				<circle cx="12" cy="12" r="9"/>
+				<path d="M12 7v5l3 2"/>
+			</svg>
+			Historique
+		</a>
+		<a class="nav" href="#">
+			<svg viewBox="0 0 24 24">
+				<circle cx="12" cy="12" r="3"/>
+				<path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>
+			</svg>
+			Paramètres
+		</a>
+		<div class="help">
+			<b>Besoin d'aide ?</b>
+			Consultez le guide de la logique floue ou contactez le support.
+		</div>
+	</aside>
+
+	<main>
+		<header>
+			<div class="search">
+				🔍 Rechercher un questionnaire, une analyse, un résultat…
+			</div>
+			<div class="sp"></div>
+			<span>🔔</span>
+			<div class="av">YA</div>
+			<div class="who">
+				<b>Yasmina Ait</b>
+				<small>Administrateur</small>
+			</div>
+			<div class="dd" id="pDD">
+				<div class="ddhead">
+					<div class="a2">YA</div>
+					<div>
+						<b>Yasmina Ait</b>
+						<span id="ddRole">Administrateur</span>
+					</div>
+				</div>
+				<div class="sep"></div>
+				<button onclick="document.getElementById('pDD').classList.remove('on');document.getElementById('pOvl').classList.add('on')">
+					<svg viewBox="0 0 24 24">
+						<circle cx="12" cy="8" r="4"/>
+						<path d="M4 21a8 8 0 0 1 16 0"/>
+					</svg>
+					Mon profil
+				</button>
+				<button onclick="document.getElementById('pDD').classList.remove('on')">
+					<svg viewBox="0 0 24 24">
+						<circle cx="12" cy="12" r="9"/>
+						<path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 1.7-2 1.8-2 3.5M12 17h.01"/>
+					</svg>
+					Aide &amp; support
+				</button>
+				<div class="sep"></div>
+				<button class="out" onclick="alert('Déconnexion (démo)');document.getElementById('pDD').classList.remove('on')">
+					<svg viewBox="0 0 24 24">
+						<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>
+					</svg>
+					Se déconnecter
+				</button>
+			</div>
+		</header>
+
+		<div class="wrap">
+			<div class="top">
+				<div>
+					<h1>Bonjour Yasmina 👋</h1>
+					<p class="sub">Voici un aperçu de l'activité du système · 27 septembre 2026, 12:45</p>
+				</div>
+				<div class="btns">
+					<button class="btn">Exporter le rapport</button>
+					<button class="btn p">+ Nouveau questionnaire</button>
+				</div>
+			</div>
+
+			<div class="grid k5">
+				<div class="card kpi">
+					<div class="ic" style="background:var(--brand-s);color:var(--brand)">
+						<svg viewBox="0 0 24 24">
+							<path d="M3 17l5-5 4 4 8-9"/>
+						</svg>
+					</div>
+					<div>
+						<div class="n">128</div>
+						<div class="l">Analyses réalisées</div>
+						<span class="tr up">↗ +12%</span>
+						<small>vs semaine dernière</small>
+					</div>
+				</div>
+				<div class="card kpi">
+					<div class="ic" style="background:var(--ok-s);color:var(--ok)">
+						<svg viewBox="0 0 24 24">
+							<path d="M5 12l5 5 9-10"/>
+						</svg>
+					</div>
+					<div>
+						<div class="n">94</div>
+						<div class="l">Résultats conformes</div>
+						<span class="tr up">↗ +8%</span>
+						<small>vs semaine dernière</small>
+					</div>
+				</div>
+				<div class="card kpi">
+					<div class="ic" style="background:var(--warn-s);color:var(--warn)">
+						<svg viewBox="0 0 24 24">
+							<path d="M12 9v4M12 17h.01M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/>
+						</svg>
+					</div>
+					<div>
+						<div class="n">12</div>
+						<div class="l">Alertes</div>
+						<span class="tr dn">↘ −2%</span>
+						<small>vs semaine dernière</small>
+					</div>
+				</div>
+				<div class="card kpi">
+					<div class="ic" style="background:var(--vio-s);color:var(--vio)">
+						<svg viewBox="0 0 24 24">
+							<circle cx="9" cy="8" r="3.5"/>
+							<path d="M2.5 20a6.5 6.5 0 0 1 13 0"/>
+						</svg>
+					</div>
+					<div>
+						<div class="n">342</div>
+						<div class="l">Participants</div>
+						<span class="tr up">↗ +18%</span>
+						<small>ce mois-ci</small>
+					</div>
+				</div>
+				<div class="card kpi">
+					<div class="ic" style="background:#e6f4fb;color:#0e86b8">
+						<svg viewBox="0 0 24 24">
+							<circle cx="12" cy="12" r="9"/>
+							<path d="M12 7v5l3 2"/>
+						</svg>
+					</div>
+					<div>
+						<div class="n">5</div>
+						<div class="l">En attente</div>
+						<span class="tr nu">0%</span>
+						<small>en cours de traitement</small>
+					</div>
+				</div>
+			</div>
+
+			<div class="grid r2">
+				<div class="card">
+					<h2>
+						Évolution des résultats
+						<span class="leg">
+							<span>
+								<i class="dot" style="background:var(--ok)"></i>
+								Conformes
+							</span>
+							<span>
+								<i class="dot" style="background:var(--warn)"></i>
+								Alertes
+							</span>
+						</span>
+					</h2>
+					<svg viewBox="0 0 640 250" width="100%" role="img" aria-label="Évolution des résultats conformes et des alertes du 20 au 27 septembre">
+						<g stroke="#e9e5f5">
+							<path d="M40 20H630M40 70H630M40 120H630M40 170H630M40 220H630"/>
+						</g>
+						<g fill="#6b6584" font-size="11" text-anchor="end">
+							<text x="32" y="224">0</text>
+							<text x="32" y="174">20</text>
+							<text x="32" y="124">40</text>
+							<text x="32" y="74">60</text>
+							<text x="32" y="24">80</text>
+						</g>
+						<path d="M60 182 L140 148 L220 138 L300 128 L380 132 L460 108 L540 110 L620 88 L620 220 L60 220Z" fill="#0f9d68" opacity=".08"/>
+						<polyline fill="none" stroke="#0f9d68" stroke-width="2.5" points="60,182 140,148 220,138 300,128 380,132 460,108 540,110 620,88"/>
+						<polyline fill="none" stroke="#e0a030" stroke-width="2.5" points="60,212 140,207 220,204 300,209 380,205 460,199 540,203 620,192"/>
+						<g fill="#0f9d68">
+							<circle cx="60" cy="182" r="4"/>
+							<circle cx="140" cy="148" r="4"/>
+							<circle cx="220" cy="138" r="4"/>
+							<circle cx="300" cy="128" r="4"/>
+							<circle cx="380" cy="132" r="4"/>
+							<circle cx="460" cy="108" r="4"/>
+							<circle cx="540" cy="110" r="4"/>
+							<circle cx="620" cy="88" r="4"/>
+						</g>
+						<g fill="#e0a030">
+							<circle cx="60" cy="212" r="4"/>
+							<circle cx="140" cy="207" r="4"/>
+							<circle cx="220" cy="204" r="4"/>
+							<circle cx="300" cy="209" r="4"/>
+							<circle cx="380" cy="205" r="4"/>
+							<circle cx="460" cy="199" r="4"/>
+							<circle cx="540" cy="203" r="4"/>
+							<circle cx="620" cy="192" r="4"/>
+						</g>
+						<g fill="#6b6584" font-size="11" text-anchor="middle">
+							<text x="60" y="242">20/09</text>
+							<text x="140" y="242">21/09</text>
+							<text x="220" y="242">22/09</text>
+							<text x="300" y="242">23/09</text>
+							<text x="380" y="242">24/09</text>
+							<text x="460" y="242">25/09</text>
+							<text x="540" y="242">26/09</text>
+							<text x="620" y="242">27/09</text>
+						</g>
+					</svg>
+				</div>
+				<div class="card">
+					<h2>Répartition des résultats</h2>
+					<div class="donut">
+						<svg viewBox="0 0 120 120" width="170" height="170" role="img" aria-label="73 % conformes, 9 % alertes, 18 % non conformes">
+							<g fill="none" stroke-width="16" transform="rotate(-90 60 60)">
+								<circle cx="60" cy="60" r="45" stroke="#0f9d68" stroke-dasharray="206.4 282.7"/>
+								<circle cx="60" cy="60" r="45" stroke="#e0a030" stroke-dasharray="25.4 282.7" stroke-dashoffset="-206.4"/>
+								<circle cx="60" cy="60" r="45" stroke="#ef4444" stroke-dasharray="50.9 282.7" stroke-dashoffset="-231.8"/>
+							</g>
+							<text x="60" y="60" text-anchor="middle" font-size="22" font-weight="800" fill="#1b1147">128</text>
+							<text x="60" y="76" text-anchor="middle" font-size="10" fill="#6b6584">analyses</text>
+						</svg>
+						<ul>
+							<li>
+								<i class="dot" style="background:var(--ok)"></i>
+								Conformes
+								<b>73%</b>
+							</li>
+							<li>
+								<i class="dot" style="background:var(--warn)"></i>
+								Alertes
+								<b>9%</b>
+							</li>
+							<li>
+								<i class="dot" style="background:var(--bad)"></i>
+								Non conformes
+								<b>18%</b>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="grid r3">
+				<div class="card">
+					<h2>
+						Questionnaires actifs
+						<a href="#">Gérer</a>
+					</h2>
+					<div class="qi">
+						<div class="h">
+							<span>Satisfaction usagers</span>
+							<span class="pill up">Ouvert</span>
+						</div>
+						<div class="bar">
+							<i style="width:82%;background:var(--ok)"></i>
+						</div>
+						<small>164 / 200 réponses</small>
+					</div>
+					<div class="qi">
+						<div class="h">
+							<span>Évaluation des risques</span>
+							<span class="pill up">Ouvert</span>
+						</div>
+						<div class="bar">
+							<i style="width:57%;background:var(--brand)"></i>
+						</div>
+						<small>85 / 150 réponses</small>
+					</div>
+					<div class="qi">
+						<div class="h">
+							<span>Qualité de service</span>
+							<span class="pill dn">Brouillon</span>
+						</div>
+						<div class="bar">
+							<i style="width:12%;background:var(--warn)"></i>
+						</div>
+						<small>12 / 100 réponses</small>
+					</div>
+				</div>
+				<div class="card gauge">
+					<h2>Confiance moyenne du modèle</h2>
+					<svg viewBox="0 0 200 120" width="220">
+						<path d="M20 105A80 80 0 0 1 180 105" fill="none" stroke="#e9e5f5" stroke-width="16" stroke-linecap="round"/>
+						<defs>
+							<linearGradient id="g" x1="0" x2="1">
+								<stop offset="0" stop-color="#5b3fd0"/>
+								<stop offset="1" stop-color="#d6479a"/>
+							</linearGradient>
+						</defs>
+						<path d="M20 105A80 80 0 0 1 164 64" fill="none" stroke="url(#g)" stroke-width="16" stroke-linecap="round"/>
+					</svg>
+					<div class="big">79%</div>
+					<p class="sub">Basé sur les 30 derniers jours</p>
+					<p style="margin-top:10px">
+						<span class="tr up">↗ +3 pts</span>
+					</p>
+				</div>
+				<div class="card">
+					<h2>
+						Alertes récentes
+						<a href="#">Voir tout</a>
+					</h2>
+					<div class="alert">
+						<span class="st" style="background:var(--bad)">!</span>
+						<div>
+							<b>Analyse #125 non conforme</b>
+							<small>Confiance 62% · il y a 1 jour</small>
+						</div>
+					</div>
+					<div class="alert">
+						<span class="st" style="background:var(--warn)">!</span>
+						<div>
+							<b>Analyse #127 en alerte</b>
+							<small>Confiance 71% · il y a 3 h</small>
+						</div>
+					</div>
+					<div class="alert">
+						<span class="st" style="background:var(--vio)">i</span>
+						<div>
+							<b>5 participations à valider</b>
+							<small>Questionnaire Satisfaction usagers</small>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="grid r4">
+				<div class="card">
+					<h2>
+						Dernières analyses
+						<a href="#">Voir tout →</a>
+					</h2>
+					<div class="tw">
+						<table>
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>Date</th>
+									<th>Entrées</th>
+									<th>Résultat</th>
+									<th>Confiance</th>
+									<th>Statut</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td><b>#128</b></td>
+									<td>27/09/2026</td>
+									<td>5</td>
+									<td><i class="dot" style="background:var(--ok)"></i>Conforme</td>
+									<td>94%</td>
+									<td><span class="st" style="background:var(--ok)">✓</span></td>
+								</tr>
+								<tr>
+									<td><b>#127</b></td>
+									<td>27/09/2026</td>
+									<td>5</td>
+									<td><i class="dot" style="background:var(--warn)"></i>Alerte</td>
+									<td>71%</td>
+									<td><span class="st" style="background:var(--warn)">!</span></td>
+								</tr>
+								<tr>
+									<td><b>#126</b></td>
+									<td>26/09/2026</td>
+									<td>5</td>
+									<td><i class="dot" style="background:var(--ok)"></i>Conforme</td>
+									<td>89%</td>
+									<td><span class="st" style="background:var(--ok)">✓</span></td>
+								</tr>
+								<tr>
+									<td><b>#125</b></td>
+									<td>26/09/2026</td>
+									<td>5</td>
+									<td><i class="dot" style="background:var(--bad)"></i>Non conforme</td>
+									<td>62%</td>
+									<td><span class="st" style="background:var(--bad)">×</span></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="card">
+					<h2>Actions rapides</h2>
+					<div class="act">
+						<button class="btn p">＋ Créer un questionnaire</button>
+						<button class="btn">▶ Lancer une analyse</button>
+						<button class="btn">👥 Inviter des participants</button>
+						<button class="btn">⬇ Exporter en PDF / Excel</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+
+	<div class="ovl" id="pOvl">
+		<div class="pmodal">
+			<div class="phead">
+				<button class="x" onclick="document.getElementById('pOvl').classList.remove('on')">✕</button>
+				<div class="bigav">YA</div>
+				<b>Yasmina Ait</b>
+				<span id="pRole">Administrateur</span>
+			</div>
+			<div class="pbody">
+				<div class="pfield">
+					<label>Nom complet</label>
+					<input value="Yasmina Ait">
+				</div>
+				<div class="pfield">
+					<label>Adresse e-mail</label>
+					<input id="pEmail" value="yasmina.ait@fuzzy-quest.com" disabled>
+				</div>
+				<div class="pfield">
+					<label>Téléphone</label>
+					<input id="pPhone" value="+212 6 12 34 56 78" disabled>
+				</div>
+				<div class="pdiv"></div>
+				<button class="plink" onclick="var d=this.parentElement.querySelectorAll('#pEmail,#pPhone');d.forEach(i=>i.disabled=!i.disabled);this.textContent=d[0].disabled?'✎ Modifier mes coordonnées':'Verrouiller les champs'">
+					✎ Modifier mes coordonnées
+				</button>
+				<div class="pdiv"></div>
+				<div class="pfield">
+					<label>Mot de passe</label>
+					<input type="password" value="••••••••" disabled>
+				</div>
+				<button class="plink">✎ Changer le mot de passe</button>
+				<div class="pdiv"></div>
+				<div class="prow">
+					<button class="btn p" style="justify-content:center" onclick="document.getElementById('pOvl').classList.remove('on')">Enregistrer</button>
+					<button class="btn">Annuler</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="../js/app.js"></script>
+</body>
+</html>
