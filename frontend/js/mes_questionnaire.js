@@ -5,7 +5,6 @@
 		scale: 'Échelle de valeurs',
 		single: 'Choix unique',
 		multi: 'Choix multiple',
-		text: 'Texte libre',
 		triangle: 'Logique floue - Triangle',
 		trapeze: 'Logique floue - Trapèze'
 	};
@@ -53,7 +52,7 @@
 				date: '2026-09-25',
 				questions: [
 					{ id: 1, type: 'single', label: 'Recommanderiez-vous le service ?', required: true, options: ['Oui', 'Plutôt oui', 'Plutôt non', 'Non'] },
-					{ id: 2, type: 'text', label: 'Vos remarques', required: false, placeholder: 'Votre avis…', maxLength: 500, multiline: true }
+					{ id: 2, type: 'scale', label: 'Quel est votre niveau de satisfaction globale ?', required: false, min: 1, max: 5, step: 1, minLabel: 'Pas satisfait', maxLabel: 'Très satisfait' }
 				]
 			}
 		];
@@ -69,6 +68,16 @@
 	if (!Array.isArray(data)) {
 		data = seed();
 		save();
+	} else {
+		// Migration : retire les anciennes questions « texte libre » déjà enregistrées
+		var changed = false;
+		data.forEach(function (qn) {
+			var before = qn.questions.length;
+			qn.questions = qn.questions.filter(function (q) { return q.type !== 'text'; });
+			qn.questions.forEach(function (q, i) { q.id = i + 1; });
+			if (qn.questions.length !== before) changed = true;
+		});
+		if (changed) save();
 	}
 
 	function save() {
@@ -98,11 +107,6 @@
 			q.maxLabel = '';
 		}
 		if (type === 'single' || type === 'multi') q.options = ['', ''];
-		if (type === 'text') {
-			q.placeholder = '';
-			q.maxLength = 500;
-			q.multiline = true;
-		}
 		if (type === 'triangle') {
 			q.unit = '';
 			q.a = 0;
@@ -205,10 +209,6 @@
 				q.options.map(function (o, k) {
 					return '<div class="opt"><span class="mk ' + mk + '"></span><input type="text" data-q="' + i + '" data-o="' + k + '" value="' + esc(o) + '" placeholder="Proposition ' + (k + 1) + '"><button class="ib d" data-act="delopt" data-q="' + i + '" data-o="' + k + '" title="Retirer">✕</button></div>';
 				}).join('') + '<button class="btn" data-act="addopt" data-q="' + i + '" style="padding:7px 12px;font-size:13px">+ Ajouter une proposition</button>';
-		}
-		if (q.type === 'text') {
-			return '<div class="row2">' + txt('Texte indicatif (placeholder)', i, 'placeholder', q.placeholder, 'Ex : Saisissez votre réponse…') + num('Longueur maximale (caractères)', i, 'maxLength', q.maxLength, ' min="1"') + '</div>' +
-				'<label class="chk"><input type="checkbox" data-q="' + i + '" data-f="multiline"' + (q.multiline ? ' checked' : '') + '> Zone de texte multiligne</label>';
 		}
 		var tri = q.type === 'triangle';
 		return '<div class="fz"><div class="pfield" style="margin-bottom:10px">' + '<label>Unité (optionnel)</label><input type="text" data-q="' + i + '" data-f="unit" value="' + esc(q.unit) + '" placeholder="Ex : min, %, °C" style="max-width:220px"></div>' +
@@ -333,7 +333,6 @@
 				if (f.length < 2) return n + 'indiquez au moins 2 propositions non vides.';
 				q.options = f;
 			}
-			if (q.type === 'text' && !(q.maxLength >= 1)) return n + 'la longueur maximale doit être ≥ 1.';
 			if (q.type === 'triangle') {
 				if ([q.a, q.b, q.c].some(function (v) { return v === '' || isNaN(v); })) return n + 'renseignez a, b et c.';
 				if (!(q.a <= q.b && q.b <= q.c && q.a < q.c)) return n + 'le triangle exige a ≤ b ≤ c et a < c.';
@@ -384,9 +383,6 @@
 		}
 		if (q.type === 'single' || q.type === 'multi') {
 			return '<ul>' + q.options.map(function (o) { return '<li>' + esc(o) + '</li>'; }).join('') + '</ul>';
-		}
-		if (q.type === 'text') {
-			return (q.multiline ? 'Multiligne' : 'Une ligne') + ' · max ' + q.maxLength + ' caractères';
 		}
 		return '<div class="fp" style="max-width:340px;border:1px solid var(--line);border-radius:10px;padding:6px;margin-top:6px">' + fuzzySVG(q) + '</div>' + (q.unit ? '<small>Unité : ' + esc(q.unit) + '</small>' : '');
 	}
