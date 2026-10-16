@@ -83,14 +83,26 @@
 				<form id="loginForm" novalidate>
 					<div class="alertbox" id="formAlert" role="alert"></div>
  
-					<div class="field" id="fId">
-						<label class="sr" for="identifiant">Identifiant ou email</label>
-						<div class="inp">
-							<svg class="lead-ic" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
-							<input type="text" id="identifiant" name="identifiant" placeholder="Identifiant ou email" autocomplete="username" required>
-						</div>
-						<p class="msg" id="idMsg"></p>
-					</div>
+					
+                    <div class="field" id="fId">
+                        <label class="sr" for="identifiant">Adresse e-mail</label>
+                        <div class="inp">
+                            <svg class="lead-ic" viewBox="0 0 24 24">
+                                <circle cx="12" cy="8" r="4"/>
+                                <path d="M4 21a8 8 0 0 1 16 0"/>
+                            </svg>
+                            <input
+                                type="email"
+                                id="identifiant"
+                                name="identifiant"
+                                placeholder="Adresse e-mail"
+                                autocomplete="email"
+                                required
+                            >
+                        </div>
+                        <p class="msg" id="idMsg"></p>
+                    </div>
+
  
 					<div class="field" id="fPwd">
 						<label class="sr" for="motdepasse">Mot de passe</label>
