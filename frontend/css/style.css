@@ -985,3 +985,7 @@ h2 {
 		flex-wrap: wrap;
 	}
 }
+.icon { width: 16px; height: 16px; display: inline-block; vertical-align: -3px; flex: 0 0 auto; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.btn .icon { margin-right: 7px; }
+.st .icon { width: 13px; height: 13px; vertical-align: -2px; }
+.x .icon { width: 18px; height: 18px; vertical-align: middle; }

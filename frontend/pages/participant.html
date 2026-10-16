@@ -5,24 +5,28 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 	<title>Fuzzy-Quest – Espace participant</title>
 	<link rel="stylesheet" href="../css/style.css">
+	<link rel="stylesheet" href="../css/topbare.css">
 </head>
 
 <body>
-	<aside>
-		<div class="logo">
+
+
+		<header class="topbar">
+<a class="brand" href="participant.html">
 			<img src="../logo.jpeg" alt="Logo Fuzzy-Quest" width="56" height="56">
 			<div>
 				<b>FUZZY-QUEST</b>
 				<small>Beyond yes and no</small>
 			</div>
-		</div>
-		<a class="nav on" href="#">
+		</a>
+		<nav class="tnav" aria-label="Navigation principale">
+<a class="nav on" aria-current="page" href="#">
 			<svg viewBox="0 0 24 24">
 				<path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>
 			</svg>
-			Dashboard
+			Tableau de bord
 		</a>
-		<a class="nav" href="#">
+<a class="nav" href="#questionnaires">
 			<svg viewBox="0 0 24 24">
 				<circle cx="9" cy="8" r="3.5"/>
 				<path d="M2.5 20a6.5 6.5 0 0 1 13 0M17 4.5a3.5 3.5 0 0 1 0 7M21.5 20a6 6 0 0 0-4-5.6"/>
@@ -30,26 +34,8 @@
 			Participer
 			<span class="badge">3</span>
 		</a>
-		<a class="nav" href="#">
-			<svg viewBox="0 0 24 24">
-				<circle cx="12" cy="12" r="3"/>
-				<path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>
-			</svg>
-			Paramètres
-		</a>
-		<div class="help">
-			<b>Vos réponses comptent</b>
-			Elles sont confidentielles et transmises à l'équipe d'analyse.
-		</div>
-	</aside>
-
-	<main>
-		<header>
-			<div class="search">
-				🔍 Rechercher un questionnaire…
-			</div>
+		</nav>
 			<div class="sp"></div>
-			<span>🔔</span>
 			<div class="av">YA</div>
 			<div class="who">
 				<b>Yasmina Ait</b>
@@ -86,12 +72,15 @@
 					Se déconnecter
 				</button>
 			</div>
-		</header>
+	</header>
+
+	<main>
+
 
 		<div class="wrap">
 			<div class="top">
 				<div>
-					<h1>Bonjour Yasmina 👋</h1>
+					<h1>Bonjour Yasmina </h1>
 					<p class="sub">Voici les questionnaires qui vous attendent · 28 septembre 2026</p>
 				</div>
 				<div class="btns">
@@ -153,9 +142,9 @@
 
 			<div class="grid r2">
 				<div class="card">
-					<h2>
+					<h2 id="questionnaires">
 						Questionnaires disponibles
-						<a href="#">Voir tout →</a>
+						<a href="#">Voir tout <svg class="icon" aria-hidden="true"><use href="../icons.svg#icon-arrow-right"/></svg></a>
 					</h2>
 					<div class="qc">
 						<div class="ic">
@@ -222,14 +211,14 @@
 						<text x="60" y="64" text-anchor="middle" font-size="24" font-weight="800" fill="#1b1147">70%</text>
 					</svg>
 					<p class="sub">14 questionnaires complétés sur 20 proposés</p>
-					<div class="note">🔒 Les résultats sont réservés à l'équipe d'analyse. Vous ne les verrez pas ici.</div>
+					<div class="note"><svg class="icon" aria-hidden="true"><use href="../icons.svg#icon-lock"/></svg> Les résultats sont réservés à l'équipe d'analyse. Vous ne les verrez pas ici.</div>
 				</div>
 			</div>
 
 			<div class="card">
 				<h2>
 					Mes dernières participations
-					<a href="#">Voir l'historique →</a>
+					<a href="#">Voir l'historique <svg class="icon" aria-hidden="true"><use href="../icons.svg#icon-arrow-right"/></svg></a>
 				</h2>
 				<div class="tw">
 					<table>
@@ -281,7 +270,7 @@
 	<div class="ovl" id="pOvl">
 		<div class="pmodal">
 			<div class="phead">
-				<button class="x" onclick="document.getElementById('pOvl').classList.remove('on')">✕</button>
+				<button class="x" onclick="document.getElementById('pOvl').classList.remove('on')" aria-label="Fermer"><svg class="icon" aria-hidden="true"><use href="../icons.svg#icon-close"/></svg></button>
 				<div class="bigav">YA</div>
 				<b>Yasmina Ait</b>
 				<span id="pRole">Participant</span>
@@ -300,15 +289,15 @@
 					<input id="pPhone" value="+212 6 12 34 56 78" disabled>
 				</div>
 				<div class="pdiv"></div>
-				<button class="plink" onclick="var d=this.parentElement.querySelectorAll('#pEmail,#pPhone');d.forEach(i=>i.disabled=!i.disabled);this.textContent=d[0].disabled?'✎ Modifier mes coordonnées':'Verrouiller les champs'">
-					✎ Modifier mes coordonnées
+				<button class="plink" onclick="var d=this.parentElement.querySelectorAll('#pEmail,#pPhone');d.forEach(i=>i.disabled=!i.disabled);this.textContent=d[0].disabled' Modifier mes coordonnées':'Verrouiller les champs'">
+					 Modifier mes coordonnées
 				</button>
 				<div class="pdiv"></div>
 				<div class="pfield">
 					<label>Mot de passe</label>
 					<input type="password" value="••••••••" disabled>
 				</div>
-				<button class="plink">✎ Changer le mot de passe</button>
+				<button class="plink"> Changer le mot de passe</button>
 				<div class="pdiv"></div>
 				<div class="prow">
 					<button class="btn p" style="justify-content:center" onclick="document.getElementById('pOvl').classList.remove('on')">Enregistrer</button>

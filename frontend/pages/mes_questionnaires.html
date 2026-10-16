@@ -6,55 +6,41 @@
 	<title>Fuzzy-Quest – Mes questionnaires</title>
 	<link rel="stylesheet" href="../css/style.css">
 	<link rel="stylesheet" href="../css/mes_questionnaire.css">
+	<link rel="stylesheet" href="../css/topbare.css">
 </head>
 
 <body>
-	<aside>
-		<div class="logo">
+
+
+		<header class="topbar">
+<a class="brand" href="chercheur.html">
 			<img src="../logo.jpeg" alt="Logo Fuzzy-Quest" width="56" height="56">
 			<div>
 				<b>FUZZY-QUEST</b>
 				<small>Beyond yes and no</small>
 			</div>
-		</div>
-		<a class="nav" href="chercheur.html">
+		</a>
+		<nav class="tnav" aria-label="Navigation principale">
+<a class="nav" href="chercheur.html">
 			<svg viewBox="0 0 24 24">
 				<path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>
 			</svg>
-			Dashboard
+			Tableau de bord
 		</a>
-		<a class="nav on" href="mes_questionnaires.html">
+<a class="nav on" aria-current="page" href="mes_questionnaires.html">
 			<svg viewBox="0 0 24 24">
 				<path d="M9 11l3 3 8-8M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/>
 			</svg>
 			Questionnaire
 		</a>
-		<a class="nav" href="#">
+<a class="nav" href="chercheur.html#analyses">
 			<svg viewBox="0 0 24 24">
 				<path d="M3 17l5-5 4 4 8-9"/>
 			</svg>
 			Analyse &amp; Résultats
 		</a>
-		<a class="nav" href="#">
-			<svg viewBox="0 0 24 24">
-				<circle cx="12" cy="12" r="3"/>
-				<path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>
-			</svg>
-			Paramètres
-		</a>
-		<div class="help">
-			<b>Besoin d'aide ?</b>
-			Consultez le guide de la logique floue ou contactez le support.
-		</div>
-	</aside>
-
-	<main>
-		<header>
-			<div class="search">
-				🔍 Rechercher un questionnaire, une analyse, un résultat…
-			</div>
+		</nav>
 			<div class="sp"></div>
-			<span>🔔</span>
 			<div class="av">YA</div>
 			<div class="who">
 				<b>Yasmina Ait</b>
@@ -91,7 +77,10 @@
 					Se déconnecter
 				</button>
 			</div>
-		</header>
+	</header>
+
+	<main>
+
 
 		<div class="wrap">
 			<div class="top">
@@ -119,7 +108,7 @@
 	<div class="ovl" id="pOvl">
 		<div class="pmodal">
 			<div class="phead">
-				<button class="x" id="pClose">✕</button>
+				<button class="x" id="pClose" aria-label="Fermer"><svg class="icon" aria-hidden="true"><use href="../icons.svg#icon-close"/></svg></button>
 				<div class="bigav">YA</div>
 				<b>Yasmina Ait</b>
 				<span id="pRole">Administrateur</span>
@@ -138,13 +127,13 @@
 					<input id="pPhone" value="+212 6 12 34 56 78" disabled>
 				</div>
 				<div class="pdiv"></div>
-				<button class="plink" id="pEdit">✎ Modifier mes coordonnées</button>
+				<button class="plink" id="pEdit"> Modifier mes coordonnées</button>
 				<div class="pdiv"></div>
 				<div class="pfield">
 					<label>Mot de passe</label>
 					<input type="password" value="••••••••" disabled>
 				</div>
-				<button class="plink">✎ Changer le mot de passe</button>
+				<button class="plink"> Changer le mot de passe</button>
 				<div class="pdiv"></div>
 				<div class="prow">
 					<button class="btn p" id="pSave">Enregistrer</button>
@@ -157,7 +146,7 @@
 	<div class="ovl c" id="eOvl">
 		<div class="modal">
 			<div class="phead">
-				<button class="x" id="eClose">✕</button>
+				<button class="x" id="eClose" aria-label="Fermer"><svg class="icon" aria-hidden="true"><use href="../icons.svg#icon-close"/></svg></button>
 				<b id="eTitle">Nouveau questionnaire</b>
 				<span>Ajoutez vos questions et choisissez leur type</span>
 			</div>
@@ -172,7 +161,7 @@
 	<div class="ovl c" id="vOvl">
 		<div class="modal">
 			<div class="phead">
-				<button class="x" id="vClose">✕</button>
+				<button class="x" id="vClose" aria-label="Fermer"><svg class="icon" aria-hidden="true"><use href="../icons.svg#icon-close"/></svg></button>
 				<b id="vTitle"></b>
 				<span id="vSub"></span>
 			</div>
@@ -187,7 +176,7 @@
 	<div class="ovl c" id="dOvl">
 		<div class="modal sm">
 			<div class="phead">
-				<b>Supprimer le questionnaire ?</b>
+				<b>Supprimer le questionnaire </b>
 				<span id="dName"></span>
 			</div>
 			<div class="mbody">

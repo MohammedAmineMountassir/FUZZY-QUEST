@@ -73,7 +73,7 @@
 		var changed = false;
 		data.forEach(function (qn) {
 			var before = qn.questions.length;
-			qn.questions = qn.questions.filter(function (q) { return q.type !== 'text'; });
+			qn.questions = qn.questions.filter(function (q) { return q && TYPES[q.type]; });
 			qn.questions.forEach(function (q, i) { q.id = i + 1; });
 			if (qn.questions.length !== before) changed = true;
 		});
@@ -207,8 +207,8 @@
 			var mk = q.type === 'single' ? 'r' : 's';
 			return '<label style="font-size:11.5px;color:var(--mut);font-weight:700;text-transform:uppercase;letter-spacing:.3px;display:block;margin-bottom:8px">Propositions de réponse</label>' +
 				q.options.map(function (o, k) {
-					return '<div class="opt"><span class="mk ' + mk + '"></span><input type="text" data-q="' + i + '" data-o="' + k + '" value="' + esc(o) + '" placeholder="Proposition ' + (k + 1) + '"><button class="ib d" data-act="delopt" data-q="' + i + '" data-o="' + k + '" title="Retirer">✕</button></div>';
-				}).join('') + '<button class="btn" data-act="addopt" data-q="' + i + '" style="padding:7px 12px;font-size:13px">+ Ajouter une proposition</button>';
+					return '<div class="opt"><span class="mk ' + mk + '"></span><input type="text" data-q="' + i + '" data-o="' + k + '" value="' + esc(o) + '" placeholder="Proposition ' + (k + 1) + '"><button class="ib d" data-act="delopt" data-q="' + i + '" data-o="' + k + '" title="Retirer" aria-label="Retirer"><svg class="icon" aria-hidden="true"><use href="../icons.svg#icon-close"/></svg></button></div>';
+				}).join('') + '<button class="btn" data-act="addopt" data-q="' + i + '" style="padding:7px 12px;font-size:13px"><svg class="icon" aria-hidden="true"><use href="../icons.svg#icon-plus"/></svg> Ajouter une proposition</button>';
 		}
 		var tri = q.type === 'triangle';
 		return '<div class="fz"><div class="pfield" style="margin-bottom:10px">' + '<label>Unité (optionnel)</label><input type="text" data-q="' + i + '" data-f="unit" value="' + esc(q.unit) + '" placeholder="Ex : min, %, °C" style="max-width:220px"></div>' +
@@ -223,7 +223,7 @@
 			return '<option value="' + t + '"' + (q.type === t ? ' selected' : '') + '>' + TYPES[t] + '</option>';
 		}).join('');
 		return '<div class="qb"><div class="qt"><span class="num">' + (i + 1) + '</span><select data-q="' + i + '" data-f="type">' + opts + '</select>' +
-			'<button class="ib" data-act="up" data-q="' + i + '" title="Monter"' + (i === 0 ? ' disabled' : '') + '>↑</button><button class="ib" data-act="down" data-q="' + i + '" title="Descendre"' + (i === n - 1 ? ' disabled' : '') + '>↓</button><button class="ib d" data-act="delq" data-q="' + i + '" title="Supprimer la question">🗑</button></div>' +
+			'<button class="ib" data-act="up" data-q="' + i + '" title="Monter"' + (i === 0 ? ' disabled' : '') + '><svg class="icon" aria-hidden="true"><use href="../icons.svg#icon-up"/></svg></button><button class="ib" data-act="down" data-q="' + i + '" title="Descendre"' + (i === n - 1 ? ' disabled' : '') + '><svg class="icon" aria-hidden="true"><use href="../icons.svg#icon-down"/></svg></button><button class="ib d" data-act="delq" data-q="' + i + '" title="Supprimer la question"><svg class="icon" aria-hidden="true"><use href="../icons.svg#icon-trash"/></svg></button></div>' +
 			'<div class="pfield"><label>Intitulé de la question</label><input type="text" data-q="' + i + '" data-f="label" value="' + esc(q.label) + '" placeholder="Saisissez la question…"></div>' + paramsHTML(q, i) +
 			'<label class="chk" style="margin-top:12px"><input type="checkbox" data-q="' + i + '" data-f="required"' + (q.required ? ' checked' : '') + '> Réponse obligatoire</label></div>';
 	}
@@ -468,7 +468,7 @@
 	$('pEdit').addEventListener('click', function () {
 		var d = [$('pEmail'), $('pPhone')];
 		d.forEach(function (i) { i.disabled = !i.disabled; });
-		this.textContent = d[0].disabled ? '✎ Modifier mes coordonnées' : 'Verrouiller les champs';
+		this.textContent = d[0].disabled ? ' Modifier mes coordonnées' : 'Verrouiller les champs';
 	});
 
 	renderList();

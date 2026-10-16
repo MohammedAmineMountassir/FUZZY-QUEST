@@ -5,55 +5,41 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 	<title>Fuzzy-Quest – Tableau de bord chercheur</title>
 	<link rel="stylesheet" href="../css/style.css">
+	<link rel="stylesheet" href="../css/topbare.css">
 </head>
 
 <body>
-	<aside>
-		<div class="logo">
+
+
+		<header class="topbar">
+<a class="brand" href="chercheur.html">
 			<img src="../logo.jpeg" alt="Logo Fuzzy-Quest" width="56" height="56">
 			<div>
 				<b>FUZZY-QUEST</b>
 				<small>Beyond yes and no</small>
 			</div>
-		</div>
-		<a class="nav on" href="#">
+		</a>
+		<nav class="tnav" aria-label="Navigation principale">
+<a class="nav on" aria-current="page" href="#">
 			<svg viewBox="0 0 24 24">
 				<path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>
 			</svg>
-			Dashboard
+			Tableau de bord
 		</a>
-		<a class="nav" href="mes_questionnaires.html">
+<a class="nav" href="mes_questionnaires.html">
 			<svg viewBox="0 0 24 24">
 				<path d="M9 11l3 3 8-8M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/>
 			</svg>
 			Questionnaire
 		</a>
-		<a class="nav" href="#">
+<a class="nav" href="#analyses">
 			<svg viewBox="0 0 24 24">
 				<path d="M3 17l5-5 4 4 8-9"/>
 			</svg>
 			Analyse &amp; Résultats
 		</a>
-		<a class="nav" href="#">
-			<svg viewBox="0 0 24 24">
-				<circle cx="12" cy="12" r="3"/>
-				<path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>
-			</svg>
-			Paramètres
-		</a>
-		<div class="help">
-			<b>Besoin d'aide ?</b>
-			Consultez le guide de la logique floue ou contactez le support.
-		</div>
-	</aside>
-
-	<main>
-		<header>
-			<div class="search">
-				🔍 Rechercher un questionnaire, une analyse, un résultat…
-			</div>
+		</nav>
 			<div class="sp"></div>
-			<span>🔔</span>
 			<div class="av">YA</div>
 			<div class="who">
 				<b>Yasmina Ait</b>
@@ -90,12 +76,15 @@
 					Se déconnecter
 				</button>
 			</div>
-		</header>
+	</header>
+
+	<main>
+
 
 		<div class="wrap">
 			<div class="top">
 				<div>
-					<h1>Bonjour Yasmina 👋</h1>
+					<h1>Bonjour Yasmina </h1>
 					<p class="sub">Voici un aperçu de l'activité du système · 27 septembre 2026, 12:45</p>
 				</div>
 				<div class="btns">
@@ -139,7 +128,7 @@
 					</div>
 					<div>
 						<div class="n">12</div>
-						<div class="l">Alertes</div>
+						<div class="l">Valeurs aberrantes</div>
 						<span class="tr dn">↘ −2%</span>
 						<small>vs semaine dernière</small>
 					</div>
@@ -185,11 +174,11 @@
 							</span>
 							<span>
 								<i class="dot" style="background:var(--warn)"></i>
-								Alertes
+								Valeurs aberrantes
 							</span>
 						</span>
 					</h2>
-					<svg viewBox="0 0 640 250" width="100%" role="img" aria-label="Évolution des résultats conformes et des alertes du 20 au 27 septembre">
+					<svg viewBox="0 0 640 250" width="100%" role="img" aria-label="Évolution des résultats conformes et des valeurs aberrantes du 20 au 27 septembre">
 						<g stroke="#e9e5f5">
 							<path d="M40 20H630M40 70H630M40 120H630M40 170H630M40 220H630"/>
 						</g>
@@ -238,7 +227,7 @@
 				<div class="card">
 					<h2>Répartition des résultats</h2>
 					<div class="donut">
-						<svg viewBox="0 0 120 120" width="170" height="170" role="img" aria-label="73 % conformes, 9 % alertes, 18 % non conformes">
+						<svg viewBox="0 0 120 120" width="170" height="170" role="img" aria-label="73 % conformes, 9 % valeurs aberrantes, 18 % non conformes">
 							<g fill="none" stroke-width="16" transform="rotate(-90 60 60)">
 								<circle cx="60" cy="60" r="45" stroke="#0f9d68" stroke-dasharray="206.4 282.7"/>
 								<circle cx="60" cy="60" r="45" stroke="#e0a030" stroke-dasharray="25.4 282.7" stroke-dashoffset="-206.4"/>
@@ -255,7 +244,7 @@
 							</li>
 							<li>
 								<i class="dot" style="background:var(--warn)"></i>
-								Alertes
+								Valeurs aberrantes
 								<b>9%</b>
 							</li>
 							<li>
@@ -323,32 +312,10 @@
 						<span class="tr up">↗ +3 pts</span>
 					</p>
 				</div>
-				<div class="card">
-					<h2>
-						Alertes récentes
-						<a href="#">Voir tout</a>
-					</h2>
-					<div class="alert">
-						<span class="st" style="background:var(--bad)">!</span>
-						<div>
-							<b>Analyse #125 non conforme</b>
-							<small>Confiance 62% · il y a 1 jour</small>
-						</div>
-					</div>
-					<div class="alert">
-						<span class="st" style="background:var(--warn)">!</span>
-						<div>
-							<b>Analyse #127 en alerte</b>
-							<small>Confiance 71% · il y a 3 h</small>
-						</div>
-					</div>
-					<div class="alert">
-						<span class="st" style="background:var(--vio)">i</span>
-						<div>
-							<b>5 participations à valider</b>
-							<small>Questionnaire Satisfaction usagers</small>
-						</div>
-					</div>
+				<div class="card anomaly-card">
+					<h2>Valeurs aberrantes</h2>
+					<p class="sub">Repérez les analyses qui s’écartent des résultats attendus.</p>
+					<a class="btn p anomaly-link" href="#analyses">Consulter les analyses</a>
 				</div>
 			</div>
 
@@ -356,9 +323,9 @@
 				<div class="card">
 					<h2>
 						Dernières analyses
-						<a href="#">Voir tout →</a>
+						<a href="#">Voir tout <svg class="icon" aria-hidden="true"><use href="../icons.svg#icon-arrow-right"/></svg></a>
 					</h2>
-					<div class="tw">
+					<div class="tw" id="analyses">
 						<table>
 							<thead>
 								<tr>
@@ -377,15 +344,15 @@
 									<td>5</td>
 									<td><i class="dot" style="background:var(--ok)"></i>Conforme</td>
 									<td>94%</td>
-									<td><span class="st" style="background:var(--ok)">✓</span></td>
+									<td><span class="st" style="background:var(--ok)"><svg class="icon" aria-hidden="true"><use href="../icons.svg#icon-check"/></svg></span></td>
 								</tr>
 								<tr>
 									<td><b>#127</b></td>
 									<td>27/09/2026</td>
 									<td>5</td>
-									<td><i class="dot" style="background:var(--warn)"></i>Alerte</td>
+									<td><i class="dot" style="background:var(--warn)"></i>Valeur aberrante</td>
 									<td>71%</td>
-									<td><span class="st" style="background:var(--warn)">!</span></td>
+									<td><span class="st" style="background:var(--warn)"><svg class="icon" aria-hidden="true"><use href="../icons.svg#icon-warning"/></svg></span></td>
 								</tr>
 								<tr>
 									<td><b>#126</b></td>
@@ -393,7 +360,7 @@
 									<td>5</td>
 									<td><i class="dot" style="background:var(--ok)"></i>Conforme</td>
 									<td>89%</td>
-									<td><span class="st" style="background:var(--ok)">✓</span></td>
+									<td><span class="st" style="background:var(--ok)"><svg class="icon" aria-hidden="true"><use href="../icons.svg#icon-check"/></svg></span></td>
 								</tr>
 								<tr>
 									<td><b>#125</b></td>
@@ -401,7 +368,7 @@
 									<td>5</td>
 									<td><i class="dot" style="background:var(--bad)"></i>Non conforme</td>
 									<td>62%</td>
-									<td><span class="st" style="background:var(--bad)">×</span></td>
+									<td><span class="st" style="background:var(--bad)"><svg class="icon" aria-hidden="true"><use href="../icons.svg#icon-x"/></svg></span></td>
 								</tr>
 							</tbody>
 						</table>
@@ -410,10 +377,10 @@
 				<div class="card">
 					<h2>Actions rapides</h2>
 					<div class="act">
-						<button class="btn p">＋ Créer un questionnaire</button>
-						<button class="btn">▶ Lancer une analyse</button>
-						<button class="btn">👥 Inviter des participants</button>
-						<button class="btn">⬇ Exporter en PDF / Excel</button>
+						<button class="btn p"><svg class="icon" aria-hidden="true"><use href="../icons.svg#icon-plus"/></svg> Créer un questionnaire</button>
+						<button class="btn"><svg class="icon" aria-hidden="true"><use href="../icons.svg#icon-play"/></svg> Lancer une analyse</button>
+						<button class="btn"><svg class="icon" aria-hidden="true"><use href="../icons.svg#icon-users"/></svg> Inviter des participants</button>
+						<button class="btn"><svg class="icon" aria-hidden="true"><use href="../icons.svg#icon-download"/></svg> Exporter en PDF / Excel</button>
 					</div>
 				</div>
 			</div>
@@ -423,7 +390,7 @@
 	<div class="ovl" id="pOvl">
 		<div class="pmodal">
 			<div class="phead">
-				<button class="x" onclick="document.getElementById('pOvl').classList.remove('on')">✕</button>
+				<button class="x" onclick="document.getElementById('pOvl').classList.remove('on')" aria-label="Fermer"><svg class="icon" aria-hidden="true"><use href="../icons.svg#icon-close"/></svg></button>
 				<div class="bigav">YA</div>
 				<b>Yasmina Ait</b>
 				<span id="pRole">Administrateur</span>
@@ -442,15 +409,15 @@
 					<input id="pPhone" value="+212 6 12 34 56 78" disabled>
 				</div>
 				<div class="pdiv"></div>
-				<button class="plink" onclick="var d=this.parentElement.querySelectorAll('#pEmail,#pPhone');d.forEach(i=>i.disabled=!i.disabled);this.textContent=d[0].disabled?'✎ Modifier mes coordonnées':'Verrouiller les champs'">
-					✎ Modifier mes coordonnées
+				<button class="plink" onclick="var d=this.parentElement.querySelectorAll('#pEmail,#pPhone');d.forEach(i=>i.disabled=!i.disabled);this.textContent=d[0].disabled' Modifier mes coordonnées':'Verrouiller les champs'">
+					 Modifier mes coordonnées
 				</button>
 				<div class="pdiv"></div>
 				<div class="pfield">
 					<label>Mot de passe</label>
 					<input type="password" value="••••••••" disabled>
 				</div>
-				<button class="plink">✎ Changer le mot de passe</button>
+				<button class="plink"> Changer le mot de passe</button>
 				<div class="pdiv"></div>
 				<div class="prow">
 					<button class="btn p" style="justify-content:center" onclick="document.getElementById('pOvl').classList.remove('on')">Enregistrer</button>

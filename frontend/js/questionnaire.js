@@ -22,7 +22,6 @@
 	var RISK = ['Négligeable', 'Faible', 'Modéré', 'Élevé', 'Critique'];
 
 	var R = function (t, o) { return { t: t, o: o, r: true }; };
-	var T = function (t, req) { return { t: t, o: null, r: !!req }; };
 
 	var DATA = {
 		satisfaction: {
@@ -40,8 +39,8 @@
 				R('À quelle fréquence utilisez-vous ce service ?', ['Première fois', 'Occasionnellement', 'Régulièrement', 'Quotidiennement']),
 				R('Votre demande a-t-elle été résolue ?', ['Oui', 'Partiellement', 'Non']),
 				R('Quel a été votre temps d\'attente ?', ['Moins de 5 min', '5 à 15 min', '15 à 30 min', 'Plus de 30 min']),
-				T('Quel aspect du service faudrait-il améliorer en priorité ?'),
-				T('Souhaitez-vous ajouter un commentaire libre ?')
+				R('Quel aspect du service doit-il être amélioré en priorité ?', ['Délai de traitement', 'Qualité de l’accueil', 'Clarté des informations', 'Suivi de la demande', 'Accessibilité']),
+				R('Dans quelle mesure le service a-t-il répondu à vos besoins ?', ['Pas du tout', 'Un peu', 'En partie', 'Dans l’ensemble', 'Tout à fait'])
 			]
 		},
 		risques: {
@@ -66,7 +65,7 @@
 			].map(function (s) {
 				return R('Quel niveau de risque représente : ' + s + ' ?', RISK);
 			}).concat([
-				T('Y a-t-il une situation à risque que nous n\'avons pas citée ?')
+				R('Avez-vous rencontré une situation à risque non listée ?', ['Oui', 'Non', 'Je ne sais pas'])
 			])
 		},
 		qualite: {
@@ -86,7 +85,7 @@
 			].map(function (s) {
 				return R(s, ACCORD);
 			}).concat([
-				T('Que changeriez-vous pour améliorer la qualité de service ?')
+				R('Dans quelle mesure la qualité du service répond-elle à vos attentes ?', ACCORD)
 			])
 		}
 	};
@@ -125,23 +124,17 @@
 	$('qMeta').innerHTML = '<span class="pill nu">' + N + ' questions</span><span class="pill nu">≈ ' + Q.min + ' min</span><span class="pill nu">Réponses confidentielles</span>';
 
 	$('qlist').innerHTML = Q.q.map(function (q, i) {
-		var body = q.o
-			? '<div class="opts" role="radiogroup" aria-label="Question ' + (i + 1) + '">' + q.o.map(function (o) {
-				return '<label class="opt"><input type="radio" name="q' + i + '" value="' + esc(o) + '"><span>' + o + '</span></label>';
-			}).join('') + '</div>'
-			: '<textarea name="q' + i + '" placeholder="Écrivez votre réponse ici…" aria-label="Question ' + (i + 1) + '"></textarea>';
+		var body = '<div class="opts" role="radiogroup" aria-label="Question ' + (i + 1) + '">' + (q.o || []).map(function (o) {
+			return '<label class="opt"><input type="radio" name="q' + i + '" value="' + esc(o) + '"><span>' + esc(o) + '</span></label>';
+		}).join('') + '</div>';
 		return '<section class="card qc2" id="qc' + i + '"><div class="qh"><span class="qn">Question ' + (i + 1) + '</span>' +
 			'<span class="pill ' + (q.r ? 'dn' : 'nu') + '">' + (q.r ? 'Obligatoire' : 'Facultative') + '</span></div>' +
 			'<h3>' + q.t + '</h3>' + body + '<p class="errmsg">Cette question est obligatoire.</p></section>';
 	}).join('');
 
 	function val(i) {
-		var q = Q.q[i];
-		if (q.o) {
-			var c = document.querySelector('input[name="q' + i + '"]:checked');
-			return c ? c.value : '';
-		}
-		return document.querySelector('textarea[name="q' + i + '"]').value.trim();
+		var c = document.querySelector('input[name="q' + i + '"]:checked');
+		return c ? c.value : '';
 	}
 
 	function all() {
@@ -187,15 +180,17 @@
 	try {
 		var d = JSON.parse(get(KD) || 'null') || {};
 		Object.keys(d).forEach(function (i) {
-			if (Q.q[i].o) {
+			var q = Q.q[i], valid = q && q.o && q.o.indexOf(d[i]) > -1;
+			if (valid) {
 				var r = document.querySelectorAll('input[name="q' + i + '"]');
-				for (var k = 0; k < r.length; k++) {
-					if (r[k].value === d[i]) r[k].checked = true;
-				}
+				for (var k = 0; k < r.length; k++) if (r[k].value === d[i]) r[k].checked = true;
 			} else {
-				document.querySelector('textarea[name="q' + i + '"]').value = d[i];
+				delete d[i];
 			}
 		});
+		var clean = all();
+		if (Object.keys(clean).length) set(KD, JSON.stringify(clean));
+		else del(KD);
 	} catch (e) {}
 
 	update(false);
@@ -204,9 +199,6 @@
 		update(true);
 	});
 
-	$('qlist').addEventListener('input', function (e) {
-		if (e.target.tagName === 'TEXTAREA') update(true);
-	});
 
 	$('sendBtn').addEventListener('click', function () {
 		var a = all(),
