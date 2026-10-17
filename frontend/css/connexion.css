@@ -573,3 +573,50 @@ body {
 
 
 
+
+/* ==========================================================
+   Confort mobile
+   ========================================================== */
+
+/* Hauteur réelle de l'écran sur mobile (barre d'adresse comprise) */
+body {
+	min-height: 100vh;
+	min-height: 100dvh;
+}
+
+/* Évite le zoom automatique d'iOS au focus : champs à 16 px minimum */
+@media (max-width: 720px) {
+	.inp input,
+	.fld input[type=text],
+	.fld input[type=email],
+	.fld input[type=password],
+	.fld select {
+		font-size: 16px;
+	}
+
+	/* Illustration centrée et pleine largeur au lieu de rester à gauche */
+	.viz {
+		max-width: 100%;
+		margin: 0 auto;
+	}
+
+	/* Zones tactiles confortables (44 px mini) */
+	.menu a,
+	.plink,
+	.eye {
+		min-height: 44px;
+		display: inline-flex;
+		align-items: center;
+	}
+
+	.top-bar .menu {
+		flex-wrap: wrap;
+	}
+}
+
+/* Petits écrans : le message « Première visite ? » peut passer à la ligne */
+@media (max-width: 360px) {
+	.login .alt {
+		white-space: normal;
+	}
+}
