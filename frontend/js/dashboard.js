@@ -4,10 +4,13 @@
   try {
     var result = await FQAuth.me(), user = result.user;
     if (!user) { location.replace('/connexion.html'); return; }
+    if (page === '/chercheur.html' && user.role === 'admin') { location.replace('/administration.html'); return; }
     if (page === '/chercheur.html' && user.role !== 'researcher') { location.replace('/participant.html'); return; }
     if (page === '/participant.html' && user.role !== 'participant') { location.replace('/chercheur.html'); return; }
     var fullName = [user.first_name, user.last_name].join(' '), initials = (user.first_name[0] + user.last_name[0]).toUpperCase();
     document.querySelectorAll('.who b,.ddhead b,.phead>b').forEach(function (el) { el.textContent = fullName; });
+    document.querySelectorAll('.account-name').forEach(function (el) { el.textContent = fullName; });
+    document.querySelectorAll('.account-email').forEach(function (el) { el.textContent = user.email; });
     var profileName = document.getElementById('pName');
     if (profileName) profileName.value = fullName;
     var profileEmail = document.getElementById('pEmail');

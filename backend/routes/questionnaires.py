@@ -16,11 +16,37 @@ def list_questionnaires():
         rows = get_db().execute(
             "SELECT * FROM questionnaires WHERE owner_id=? ORDER BY updated_at DESC", (user["id"],)
         ).fetchall()
+    elif user and user["role"] == "admin":
+        rows = get_db().execute("SELECT * FROM questionnaires ORDER BY updated_at DESC").fetchall()
     else:
         rows = get_db().execute(
-            "SELECT * FROM questionnaires WHERE status='open' ORDER BY created_at DESC"
+            "SELECT DISTINCT q.* FROM questionnaires q WHERE q.status='open' AND "
+            "(NOT EXISTS (SELECT 1 FROM questionnaire_groups qg WHERE qg.questionnaire_id=q.id) "
+            "OR EXISTS (SELECT 1 FROM questionnaire_groups qg JOIN research_groups g ON g.id=qg.group_id "
+            "WHERE qg.questionnaire_id=q.id AND g.is_public=1) "
+            "OR EXISTS (SELECT 1 FROM questionnaire_groups qg JOIN group_members gm ON gm.group_id=qg.group_id "
+            "WHERE qg.questionnaire_id=q.id AND gm.user_id=?)) ORDER BY q.created_at DESC",
+            (user["id"] if user else -1,),
         ).fetchall()
     return jsonify(questionnaires=[serialize_questionnaire(row) for row in rows])
+
+
+@questionnaires_bp.get("/templates")
+def questionnaire_templates():
+    return jsonify(templates=[
+        {"id": "satisfaction", "title": "Satisfaction des usagers", "description": "Évaluez l'expérience et la qualité du service.", "questions": [
+            {"type": "scale", "label": "Quel est votre niveau de satisfaction globale ?", "required": True, "min": 1, "max": 5, "step": 1},
+            {"type": "single", "label": "Recommanderiez-vous ce service ?", "required": True, "options": ["Oui", "Peut-être", "Non"]},
+        ]},
+        {"id": "risques", "title": "Évaluation des risques", "description": "Identifiez et priorisez les risques perçus.", "questions": [
+            {"type": "multi", "label": "Quels risques avez-vous identifiés ?", "required": True, "options": ["Technique", "Humain", "Financier", "Juridique"]},
+            {"type": "scale", "label": "Quel est le niveau de risque global ?", "required": True, "min": 1, "max": 5, "step": 1},
+        ]},
+        {"id": "besoins", "title": "Analyse des besoins", "description": "Comprenez les attentes et priorités de votre public.", "questions": [
+            {"type": "single", "label": "Quel besoin est prioritaire ?", "required": True, "options": ["Information", "Accompagnement", "Accès au service", "Autre"]},
+            {"type": "triangle", "label": "Dans quelle mesure le besoin est-il satisfait ?", "required": True, "a": 0, "b": 50, "c": 100},
+        ]},
+    ])
 
 
 @questionnaires_bp.post("/questionnaires")
@@ -60,6 +86,17 @@ def questionnaire_detail(item_id):
     if request.method == "GET":
         if row["status"] != "open" and (not user or user["id"] != row["owner_id"]):
             return jsonify(error="NOT_FOUND"), 404
+        if row["status"] == "open" and (not user or user["id"] != row["owner_id"]):
+            allowed = get_db().execute(
+                "SELECT 1 FROM questionnaire_groups qg JOIN research_groups g ON g.id=qg.group_id "
+                "LEFT JOIN group_members gm ON gm.group_id=g.id AND gm.user_id=? "
+                "WHERE qg.questionnaire_id=? GROUP BY qg.questionnaire_id "
+                "HAVING SUM(CASE WHEN g.is_public=1 OR gm.user_id IS NOT NULL THEN 1 ELSE 0 END)>0",
+                (user["id"] if user else -1, item_id),
+            ).fetchone()
+            assigned = get_db().execute("SELECT 1 FROM questionnaire_groups WHERE questionnaire_id=?", (item_id,)).fetchone()
+            if assigned and not allowed:
+                return jsonify(error="NOT_FOUND"), 404
         return jsonify(questionnaire=serialize_questionnaire(row))
     if not user:
         return jsonify(error="AUTH_REQUIRED"), 401
@@ -94,10 +131,18 @@ def submit_response(item_id):
     row = get_db().execute("SELECT status FROM questionnaires WHERE id=?", (item_id,)).fetchone()
     if not row or row["status"] != "open":
         return jsonify(error="NOT_FOUND"), 404
+    user = get_current_user()
+    assigned = get_db().execute("SELECT 1 FROM questionnaire_groups WHERE questionnaire_id=?", (item_id,)).fetchone()
+    if assigned and not get_db().execute(
+        "SELECT 1 FROM questionnaire_groups qg JOIN research_groups g ON g.id=qg.group_id "
+        "LEFT JOIN group_members gm ON gm.group_id=g.id AND gm.user_id=? "
+        "WHERE qg.questionnaire_id=? AND (g.is_public=1 OR gm.user_id IS NOT NULL) LIMIT 1",
+        (user["id"] if user else -1, item_id),
+    ).fetchone():
+        return jsonify(error="FORBIDDEN", message="Ce questionnaire n'est pas accessible à votre compte."), 403
     answers = (request.get_json(silent=True) or {}).get("answers")
     if not isinstance(answers, (dict, list)):
         return jsonify(error="INVALID_INPUT"), 400
-    user = get_current_user()
     get_db().execute(
         "INSERT INTO responses(questionnaire_id,user_id,answers,submitted_at) VALUES(?,?,?,?)",
         (item_id, user["id"] if user else None, json.dumps(answers, ensure_ascii=False), utc_now()),

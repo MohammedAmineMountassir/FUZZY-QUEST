@@ -13,6 +13,8 @@ FRONTEND = Path(__file__).resolve().parents[2] / "frontend"
 @pages_bp.get("/index.html")
 def home():
     user = get_current_user()
+    if user and user["role"] == "admin":
+        return redirect("/administration.html")
     if user and user["role"] == "researcher":
         return redirect("/chercheur.html")
     return redirect("/participant.html" if user else "/connexion.html")
@@ -22,7 +24,7 @@ def home():
 def page(page):
     if page in {"login", "quizz"}:
         return redirect("/connexion.html" if page == "login" else "/questionnaire.html")
-    if page not in {"connexion", "inscription", "chercheur", "participant", "mes_questionnaires", "questionnaire"}:
+    if page not in {"connexion", "inscription", "chercheur", "participant", "mes_questionnaires", "questionnaire", "administration", "groupes", "activation", "mot-de-passe"}:
         return "Page introuvable", 404
     return send_from_directory(FRONTEND / "pages", page + ".html")
 

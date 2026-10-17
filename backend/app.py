@@ -16,6 +16,15 @@ def create_app(test_config=None):
         DATABASE=os.environ.get("FUZZY_QUEST_DB", PROJECT_ROOT / "instance" / "fuzzy_quest.sqlite3"),
         SESSION_COOKIE_HTTPONLY=True,
         SESSION_COOKIE_SAMESITE="Lax",
+        SESSION_COOKIE_SECURE=os.environ.get("APP_ENV") == "production",
+        SMTP_HOST=os.environ.get("SMTP_HOST", ""),
+        SMTP_PORT=int(os.environ.get("SMTP_PORT", "587")),
+        SMTP_USER=os.environ.get("SMTP_USER", ""),
+        SMTP_PASSWORD=os.environ.get("SMTP_PASSWORD", ""),
+        SMTP_USE_TLS=os.environ.get("SMTP_USE_TLS", "1") == "1",
+        MAIL_FROM=os.environ.get("MAIL_FROM", os.environ.get("SMTP_USER", "noreply@fuzzy-quest.local")),
+        APP_BASE_URL=os.environ.get("APP_BASE_URL", "http://127.0.0.1:5000"),
+        APP_ENV=os.environ.get("APP_ENV", "development"),
     )
     if test_config:
         app.config.update(test_config)
@@ -29,4 +38,4 @@ app = create_app()
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="127.0.0.1", port=int(os.environ.get("PORT", "5000")), debug=os.environ.get("FLASK_DEBUG") == "1")

@@ -12,13 +12,14 @@
     register: function (user) { return api('/api/auth/register', { method: 'POST', body: JSON.stringify(user) }).then(function (r) { return r.user; }); },
     login: function (email, password) { return api('/api/auth/login', { method: 'POST', body: JSON.stringify({ email: email, password: password }) }).then(function (r) { return r.user; }); },
     setSession: function () {},
-    pageFor: function (role) { return role === 'researcher' ? '/chercheur.html' : '/participant.html'; },
+    pageFor: function (role) { return role === 'admin' ? '/administration.html' : role === 'researcher' ? '/chercheur.html' : '/participant.html'; },
     logout: function () { return api('/api/auth/logout', { method: 'POST' }); },
     me: function () { return api('/api/auth/me'); }
   };
 
-  document.querySelectorAll('.av, .who').forEach(function (trigger) {
+  document.querySelectorAll('.account-trigger, .av, .who').forEach(function (trigger) {
     trigger.addEventListener('click', function (event) {
+      if (trigger.classList.contains('av') && trigger.closest('.account-trigger')) return;
       event.stopPropagation();
       var menu = document.getElementById('pDD');
       if (menu) menu.classList.toggle('on');
@@ -26,7 +27,7 @@
   });
   document.addEventListener('click', function (event) {
     var menu = document.getElementById('pDD');
-    if (menu && !event.target.closest('#pDD, .av, .who')) menu.classList.remove('on');
+    if (menu && !event.target.closest('#pDD, .account-trigger, .av, .who')) menu.classList.remove('on');
   });
   document.querySelectorAll('.out').forEach(function (button) {
     button.addEventListener('click', async function () {

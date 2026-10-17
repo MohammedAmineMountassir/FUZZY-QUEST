@@ -1,8 +1,8 @@
 # FUZZY-QUEST
 
-Application web de questionnaires avec interface en français, API Flask et base SQLite.
+Plateforme de questionnaires et d'études avec un backend Flask et une base SQLite.
 
-## Démarrer en local
+## Démarrage local
 
 ```powershell
 py -m venv .venv
@@ -11,22 +11,48 @@ pip install -r requirements.txt
 py -m backend.app
 ```
 
-Ouvrir ensuite <http://127.0.0.1:5000>. Les comptes, questionnaires et réponses sont stockés dans `instance/fuzzy_quest.sqlite3`.
+Le site est disponible sur <http://127.0.0.1:5000>. La base de données est créée dans `instance/fuzzy_quest.sqlite3`.
 
-À l’inscription, choisissez Participant ou Chercheur. Les chercheurs créent et gèrent les questionnaires depuis leur espace; les participants répondent aux questionnaires ouverts. Les pages sont servies par Flask et les échanges passent par `/api`.
+## Compte administrateur
 
-Pour un déploiement, définissez `FUZZY_QUEST_SECRET` avec une clé aléatoire propre à l’environnement et utilisez un serveur WSGI. `PORT` peut définir le port local. Le mode debug est désactivé par défaut.
+Créer le premier administrateur depuis la racine du projet :
 
-## Organisation du backend
+```powershell
+py -m backend.cli create-admin admin@exemple.com
+```
+
+L'administrateur examine les demandes après confirmation de l'adresse e-mail. Une fois le compte approuvé, un lien permet à la personne de choisir son mot de passe. Les nouveaux comptes deviennent des comptes chercheur.
+
+## E-mails
+
+Les e-mails de confirmation, d'approbation et de changement de mot de passe utilisent SMTP. Définir les variables suivantes dans l'environnement du serveur : `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASSWORD`, `MAIL_FROM`, `APP_BASE_URL`. TLS est activé par défaut; définir `SMTP_USE_TLS=0` uniquement si le fournisseur SMTP l'exige.
+
+En développement (`APP_ENV=development`), si SMTP n'est pas configuré, le lien sécurisé apparaît dans les journaux du serveur et dans la réponse de développement. Pour un environnement public, définir `APP_ENV=production`, une valeur aléatoire pour `FUZZY_QUEST_SECRET` et une URL HTTPS pour `APP_BASE_URL`.
+
+## Parcours disponibles
+
+- Les chercheurs créent, modifient, suppriment et dupliquent des questionnaires, puis les affectent à plusieurs groupes ou à l'espace public.
+- La bibliothèque fournit des modèles d'études. Les réponses et les indicateurs de participation sont conservés dans SQLite.
+- Les groupes ont une liste de participants modifiable et un tableau de suivi.
+- L'administrateur approuve les demandes de compte et de changement de mot de passe.
+- Les questionnaires publics s'affichent sur l'accueil.
+
+## Structure
 
 ```text
 backend/
-├── app.py                 # création et démarrage de Flask
-├── db.py                  # SQLite, session utilisateur et helpers
+├── app.py
+├── cli.py
+├── db.py
+├── emailer.py
 └── routes/
-    ├── pages.py           # pages HTML et ressources frontend
-    ├── auth.py            # inscription, connexion, déconnexion
-    └── questionnaires.py  # questionnaires et réponses
+    ├── auth.py
+    ├── admin.py
+    ├── groups.py
+    ├── pages.py
+    └── questionnaires.py
+frontend/
+├── css/
+├── js/
+└── pages/
 ```
-
-`py app.py` reste disponible comme raccourci compatible; le code applicatif est maintenu dans `backend/`.
