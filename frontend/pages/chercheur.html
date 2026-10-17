@@ -42,14 +42,14 @@
 			<div class="sp"></div>
 			<div class="av">YA</div>
 			<div class="who">
-				<b>Yasmina Ait</b>
+				<b></b>
 				<small>Administrateur</small>
 			</div>
 			<div class="dd" id="pDD">
 				<div class="ddhead">
 					<div class="a2">YA</div>
 					<div>
-						<b>Yasmina Ait</b>
+						<b></b>
 						<span id="ddRole">Administrateur</span>
 					</div>
 				</div>
@@ -84,7 +84,7 @@
 		<div class="wrap">
 			<div class="top">
 				<div>
-					<h1>Bonjour Yasmina </h1>
+					<h1>Bonjour <span id="welcomeFirstName"></span></h1>
 					<p class="sub">Voici un aperçu de l'activité du système · 27 septembre 2026, 12:45</p>
 				</div>
 				<div class="btns">
@@ -392,17 +392,17 @@
 			<div class="phead">
 				<button class="x" onclick="document.getElementById('pOvl').classList.remove('on')" aria-label="Fermer"><svg class="icon" aria-hidden="true"><use href="../icons.svg#icon-close"/></svg></button>
 				<div class="bigav">YA</div>
-				<b>Yasmina Ait</b>
+				<b></b>
 				<span id="pRole">Administrateur</span>
 			</div>
 			<div class="pbody">
 				<div class="pfield">
 					<label>Nom complet</label>
-					<input value="Yasmina Ait">
+					<input id="pName" value="" autocomplete="name">
 				</div>
 				<div class="pfield">
 					<label>Adresse e-mail</label>
-					<input id="pEmail" value="yasmina.ait@fuzzy-quest.com" disabled>
+					<input id="pEmail" value="" disabled>
 				</div>
 				<div class="pfield">
 					<label>Téléphone</label>
@@ -427,6 +427,7 @@
 		</div>
 	</div>
 
-	<script src="../js/app.js"></script>
+	<script src="../js/auth.js"></script>
+	<script src="../js/dashboard.js"></script>
 </body>
 </html>

@@ -1,0 +1,36 @@
+(function () {
+  'use strict';
+  async function api(path, options) {
+    var response = await fetch(path, Object.assign({ credentials: 'same-origin', headers: { 'Content-Type': 'application/json' } }, options || {}));
+    var body = await response.json().catch(function () { return {}; });
+    if (!response.ok) { var error = new Error(body.message || 'Une erreur est survenue.'); error.code = body.error; throw error; }
+    return body;
+  }
+  window.FQAuth = {
+    api: api,
+    emailTaken: function () { return false; },
+    register: function (user) { return api('/api/auth/register', { method: 'POST', body: JSON.stringify(user) }).then(function (r) { return r.user; }); },
+    login: function (email, password) { return api('/api/auth/login', { method: 'POST', body: JSON.stringify({ email: email, password: password }) }).then(function (r) { return r.user; }); },
+    setSession: function () {},
+    pageFor: function (role) { return role === 'researcher' ? '/chercheur.html' : '/participant.html'; },
+    logout: function () { return api('/api/auth/logout', { method: 'POST' }); },
+    me: function () { return api('/api/auth/me'); }
+  };
+
+  document.querySelectorAll('.av, .who').forEach(function (trigger) {
+    trigger.addEventListener('click', function (event) {
+      event.stopPropagation();
+      var menu = document.getElementById('pDD');
+      if (menu) menu.classList.toggle('on');
+    });
+  });
+  document.addEventListener('click', function (event) {
+    var menu = document.getElementById('pDD');
+    if (menu && !event.target.closest('#pDD, .av, .who')) menu.classList.remove('on');
+  });
+  document.querySelectorAll('.out').forEach(function (button) {
+    button.addEventListener('click', async function () {
+      try { await window.FQAuth.logout(); } finally { location.assign('/connexion.html'); }
+    });
+  });
+})();
