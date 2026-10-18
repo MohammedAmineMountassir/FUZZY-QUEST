@@ -1,8 +1,188 @@
-<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="FUZZY-QUEST aide les chercheurs à concevoir des questionnaires et analyser les réponses incertaines."><title>FUZZY-QUEST · Des études qui éclairent vos décisions</title><link rel="stylesheet" href="../css/public.css"></head>
-<body class="public-site"><header class="public-header"><a class="public-brand" href="/connexion.html"><img src="../logo.jpeg" alt=""><span><b>FUZZY-QUEST</b><small>Beyond yes and no</small></span></a><nav><a href="/connexion.html">Accueil</a><a href="#about">À propos</a><a href="#contact">Contact</a><a class="nav-login" href="#login">Connexion</a><a class="button primary" href="/inscription.html">Créer un compte</a></nav></header>
-<main><section class="hero" id="about"><div class="hero-copy"><span class="eyebrow">QUESTIONNAIRES · GROUPES · ANALYSES</span><h1>Transformez l’incertitude en décisions claires.</h1><p>Concevez vos études, ciblez vos participants et comprenez les résultats grâce à des questionnaires adaptés à la logique floue.</p><div class="hero-actions"><a class="button primary" href="/inscription.html">Créer un compte chercheur</a><a class="button secondary" href="#public-quizzes">Découvrir les questionnaires publics</a></div><div class="hero-trust"><span>✓ Études structurées</span><span>✓ Résultats interprétables</span><span>✓ Groupes maîtrisés</span></div></div><div class="hero-visual"><div class="visual-glow"></div><div class="visual-card"><span class="eyebrow">INDICE DE SATISFACTION</span><div class="chart-score">78<span>%</span></div><div class="chart-bars"><i style="height:38%"></i><i style="height:56%"></i><i style="height:48%"></i><i style="height:75%"></i><i style="height:62%"></i><i style="height:88%"></i><i style="height:78%"></i></div><div class="chart-caption"><span>Réponses analysées</span><b>+12,4 %</b></div></div><div class="floating-note">Étude prête à diffuser <b>✓</b></div></div></section>
-<section class="feature-strip"><article><span>01</span><h2>Créez vos questionnaires</h2><p>Commencez avec une bibliothèque de modèles ou concevez votre étude.</p></article><article><span>02</span><h2>Choisissez vos groupes</h2><p>Diffusez à un groupe défini ou rendez votre quiz public.</p></article><article><span>03</span><h2>Analysez les réponses</h2><p>Suivez la participation et consultez les résultats au même endroit.</p></article></section>
-<section class="public-quizzes" id="public-quizzes"><div class="section-heading"><div><span class="eyebrow">PARTICIPATION OUVERTE</span><h2>Questionnaires publics</h2><p>Participez aux études ouvertes par les chercheurs.</p></div><a class="text-link" href="#login">Vous avez déjà un compte ? Connexion →</a></div><div id="publicQuizList" class="public-quiz-grid"><p class="muted">Chargement des questionnaires publics…</p></div></section>
-<section class="login-overlay" id="loginPanel" hidden><div class="login-panel"><button class="icon-button" id="closeLogin" aria-label="Fermer">×</button><span class="eyebrow">VOTRE ESPACE FUZZY-QUEST</span><h2>Connexion</h2><p>Retrouvez vos questionnaires et vos analyses.</p><form id="loginForm" novalidate><div class="alertbox" id="formAlert" role="alert"></div><label>Adresse e-mail<input type="email" id="identifiant" autocomplete="email" required></label><label>Mot de passe<input type="password" id="motdepasse" autocomplete="current-password" required></label><a href="#" id="forgotPassword" class="text-link">Mot de passe oublié ?</a><button class="button primary full" type="submit" id="loginBtn">Se connecter</button></form><p class="login-signup">Pas encore de compte ? <a href="/inscription.html">Créer un compte</a></p></div></section></main>
-<footer id="contact" class="public-footer"><div class="footer-main"><a class="public-brand" href="/connexion.html"><img src="../logo.jpeg" alt=""><span><b>FUZZY-QUEST</b><small>Beyond yes and no</small></span></a><p>Des questionnaires pour mieux comprendre les situations complexes. Pour toute question sur un compte, contactez l’administrateur de la plateforme.</p><div><a href="#about">À propos</a><a href="/connexion.html#login">Connexion</a><a href="/inscription.html">Créer un compte</a></div></div><div class="footer-bottom"><span>© <span id="year"></span> FUZZY-QUEST</span><span>Conçu pour explorer les réponses nuancées.</span></div></footer>
-<script src="../js/auth.js"></script><script src="../js/auth-login.js"></script><script src="../js/landing.js"></script></body></html>
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta name="description" content="FUZZY-QUEST aide les chercheurs à concevoir des questionnaires et analyser les réponses incertaines.">
+        <title>FUZZY-QUEST · Des études qui éclairent vos décisions</title>
+        <link rel="stylesheet" href="../css/public.css">
+    </head>
+    <body class="public-site">
+        <header class="public-header">
+            <a class="public-brand" href="/connexion.html">
+                <img src="../logo.jpeg" alt=""><span><b>FUZZY-QUEST</b><small>Beyond yes and no</small></span>
+            </a>
+            <nav>
+                <a href="/connexion.html">
+                    Accueil
+                </a>
+                <a href="#about">
+                    À propos
+                </a>
+                <a href="#contact">
+                    Contact
+                </a>
+                <a class="nav-login" href="#login">
+                    Connexion
+                </a>
+                <a class="button primary" href="/inscription.html">
+                    Créer un compte
+                </a>
+            </nav>
+        </header>
+        <main>
+            <section class="hero" id="about">
+                <div class="hero-copy">
+                    <span class="eyebrow">QUESTIONNAIRES · GROUPES · ANALYSES</span>
+                    <h1>
+                        Transformez l’incertitude en décisions claires.
+                    </h1>
+                    <p>
+                        Concevez vos études, ciblez vos participants et comprenez les résultats grâce à des questionnaires adaptés à la logique floue.
+                    </p>
+                    <div class="hero-actions">
+                        <a class="button primary" href="/inscription.html">
+                            Créer un compte chercheur
+                        </a>
+                        <a class="button secondary" href="#public-quizzes">
+                            Découvrir les questionnaires publics
+                        </a>
+                    </div>
+                    <div class="hero-trust">
+                        <span>✓ Études structurées</span><span>✓ Résultats interprétables</span><span>✓ Groupes maîtrisés</span>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="visual-glow">
+                    </div>
+                    <div class="visual-card">
+                        <span class="eyebrow">INDICE DE SATISFACTION</span>
+                        <div class="chart-score">
+                            78<span>%</span>
+                        </div>
+                        <div class="chart-bars">
+                            <i style="height:38%"></i><i style="height:56%"></i><i style="height:48%"></i><i style="height:75%"></i><i style="height:62%"></i><i style="height:88%"></i><i style="height:78%"></i>
+                        </div>
+                        <div class="chart-caption">
+                            <span>Réponses analysées</span><b>+12,4 %</b>
+                        </div>
+                    </div>
+                    <div class="floating-note">
+                        Étude prête à diffuser <b>✓</b>
+                    </div>
+                </div>
+            </section>
+            <section class="feature-strip">
+                <article>
+                    <span>01</span>
+                    <h2>
+                        Créez vos questionnaires
+                    </h2>
+                    <p>
+                        Commencez avec une bibliothèque de modèles ou concevez votre étude.
+                    </p>
+                </article>
+                <article>
+                    <span>02</span>
+                    <h2>
+                        Choisissez vos groupes
+                    </h2>
+                    <p>
+                        Diffusez à un groupe défini ou rendez votre quiz public.
+                    </p>
+                </article>
+                <article>
+                    <span>03</span>
+                    <h2>
+                        Analysez les réponses
+                    </h2>
+                    <p>
+                        Suivez la participation et consultez les résultats au même endroit.
+                    </p>
+                </article>
+            </section>
+            <section class="public-quizzes" id="public-quizzes">
+                <div class="section-heading">
+                    <div>
+                        <span class="eyebrow">PARTICIPATION OUVERTE</span>
+                        <h2>
+                            Questionnaires publics
+                        </h2>
+                        <p>
+                            Participez aux études ouvertes par les chercheurs.
+                        </p>
+                    </div>
+                    <a class="text-link" href="#login">
+                        Vous avez déjà un compte ? Connexion →
+                    </a>
+                </div>
+                <div id="publicQuizList" class="public-quiz-grid">
+                    <p class="muted">
+                        Chargement des questionnaires publics…
+                    </p>
+                </div>
+            </section>
+            <section class="login-overlay" id="loginPanel" hidden>
+                <div class="login-panel">
+                    <button class="icon-button" id="closeLogin" aria-label="Fermer">×</button><span class="eyebrow">VOTRE ESPACE FUZZY-QUEST</span>
+                    <h2>
+                        Connexion
+                    </h2>
+                    <p>
+                        Retrouvez vos questionnaires et vos analyses.
+                    </p>
+                    <form id="loginForm" novalidate>
+                        <div class="alertbox" id="formAlert" role="alert">
+                        </div>
+                        <label>
+                            Adresse e-mail<input type="email" id="identifiant" autocomplete="email" required>
+                        </label>
+                        <label>
+                            Mot de passe<input type="password" id="motdepasse" autocomplete="current-password" required>
+                        </label>
+                        <a href="#" id="forgotPassword" class="text-link">
+                            Mot de passe oublié ?
+                        </a>
+                        <button class="button primary full" type="submit" id="loginBtn">Se connecter</button>
+                    </form>
+                    <p class="login-signup">
+                        Première connexion ?
+                        <a href="/inscription.html">
+                            Envoyer une demande de compte
+                        </a>
+                    </p>
+                </div>
+            </section>
+        </main>
+        <footer id="contact" class="public-footer">
+            <div class="footer-main">
+                <a class="public-brand" href="/connexion.html">
+                    <img src="../logo.jpeg" alt=""><span><b>FUZZY-QUEST</b><small>Beyond yes and no</small></span>
+                </a>
+                <p>
+                    Des questionnaires pour mieux comprendre les situations complexes. Pour toute question sur un compte, contactez l’administrateur de la plateforme.
+                </p>
+                <div>
+                    <a href="#about">
+                        À propos
+                    </a>
+                    <a href="/connexion.html#login">
+                        Connexion
+                    </a>
+                    <a href="/inscription.html">
+                        Créer un compte
+                    </a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>© <span id="year"></span>FUZZY-QUEST</span><span>Conçu pour explorer les réponses nuancées.</span>
+            </div>
+        </footer>
+        <script src="../js/auth.js">
+        </script>
+        <script src="../js/auth-login.js">
+        </script>
+        <script src="../js/landing.js">
+        </script>
+    </body>
+</html>

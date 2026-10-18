@@ -1,7 +1,184 @@
-<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Groupes · FUZZY-QUEST</title><link rel="stylesheet" href="../css/workspace.css"></head>
-<body class="workspace"><aside class="sidebar"><a class="workspace-brand" href="/chercheur.html"><img src="../logo.jpeg" alt=""><span><b>FUZZY-QUEST</b><small>Études & analyses</small></span></a><nav><a class="side-link" href="/chercheur.html"><span><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg></span>Dashboard</a><a class="side-link active" href="/groupes.html"><span><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M10 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM20 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Gestion des groupes</a><a class="side-link" href="/chercheur.html#analysis"><span><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l5-5 4 4 8-9"/></svg></span>Analyse des résultats</a></nav></aside>
-<div class="workspace-main"><header class="workspace-topbar"><div class="workspace-context"><span class="eyebrow">ORGANISATION</span><span>Gestion des groupes</span></div><div class="account-area"><button class="account-trigger"><span class="avatar av">--</span><span class="account-copy"><b class="account-name"></b><small>Chercheur</small></span>⌄</button><div class="account-menu" id="pDD"><div class="account-menu-head"><b class="account-name"></b><small class="account-email"></small></div><button class="out">Se déconnecter</button></div></div></header>
-<main class="content"><section class="welcome-row"><div><p class="eyebrow">VOS AUDIENCES</p><h1>Gestion des groupes</h1><p class="muted">Créez des groupes, ajustez leurs participants et ciblez vos questionnaires.</p></div><button id="newGroup" class="button primary"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg> Créer un groupe</button></section><div class="table-wrap"><table><thead><tr><th>Nom du groupe</th><th>Date de création</th><th>Participants</th><th>Type</th></tr></thead><tbody id="groupRows"><tr><td colspan="4">Chargement des groupes…</td></tr></tbody></table></div><p class="muted page-note">Sélectionnez une ligne pour consulter les participants et modifier le groupe.</p></main></div>
-<dialog class="modal" id="groupDialog"><div class="modal-head"><div><p class="eyebrow">GROUPE</p><h2 id="groupTitle">Nouveau groupe</h2></div><button class="icon-button" data-close="groupDialog">×</button></div><div class="form-fields"><label>Nom du groupe<input id="groupName" maxlength="120"></label><button class="button secondary" id="saveGroupName">Enregistrer le nom</button><div class="section-heading compact"><div><h3>Participants</h3><p class="muted" id="memberCount"></p></div></div><div id="memberRows" class="member-list"></div><label>Ajouter une personne<input id="memberName" placeholder="Nom et prénom"></label><label>Adresse e-mail<input id="memberEmail" type="email" placeholder="nom@exemple.com"></label><button class="button primary" id="addMember">Ajouter le participant</button></div><div class="modal-actions"><button class="button danger-text" id="deleteGroup">Supprimer le groupe</button><button class="button secondary" data-close="groupDialog">Fermer</button></div></dialog>
-<dialog class="modal" id="createGroupDialog"><div class="modal-head"><h2>Créer un groupe</h2><button class="icon-button" data-close="createGroupDialog">×</button></div><div class="form-fields"><label>Nom du groupe<input id="newGroupName"></label><label class="public-option"><input id="newGroupPublic" type="checkbox"> Groupe public</label></div><div class="modal-actions"><button class="button secondary" data-close="createGroupDialog">Annuler</button><button class="button primary" id="createGroup">Créer le groupe</button></div></dialog>
-<script src="../js/auth.js"></script><script src="../js/dashboard.js"></script><script src="../js/groups.js"></script></body></html>
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>Groupes · FUZZY-QUEST</title>
+        <link rel="stylesheet" href="../css/workspace.css">
+        <link rel="stylesheet" href="../css/admin.css">
+    </head>
+    <body class="workspace">
+        <aside class="sidebar">
+            <a class="workspace-brand" href="/chercheur.html">
+                <img src="/LOGO_FQ.png" alt=""><span><b>FUZZY-QUEST</b><small>Quest for truth</small></span>
+            </a>
+            <nav>
+                <a class="side-link" href="/chercheur.html">
+                    <span>⌂</span>Dashboard
+                </a>
+                <a class="side-link" href="/mon-espace.html">
+                    <span>▣</span>Mon espace
+                </a>
+                <a class="side-link active" href="/parametres.html">
+                    <span>⚙</span>Paramètres
+                </a>
+            </nav>
+        </aside>
+        <div class="workspace-main">
+            <header class="workspace-topbar">
+                <div class="workspace-context">
+                    <span class="eyebrow">PARAMÈTRES</span><span>Groupes de participants</span>
+                </div>
+                <div class="account-area">
+                    <button class="account-trigger" type="button"><span class="avatar av">--</span><span class="account-copy"><b class="account-name"></b><small>Chercheur</small></span>⌄</button>
+                    <div class="account-menu" id="pDD">
+                        <div class="account-menu-head">
+                            <b class="account-name"></b><small class="account-email"></small>
+                        </div>
+                        <a href="/parametres.html">
+                            Paramètres
+                        </a>
+                        <button class="out">Se déconnecter</button>
+                    </div>
+                </div>
+            </header>
+            <main class="content">
+                <section class="welcome-row">
+                    <div>
+                        <p class="eyebrow">
+                            VOS AUDIENCES
+                        </p>
+                        <h1>
+                            Groupes
+                        </h1>
+                        <p class="muted">
+                            Créez des groupes, ajoutez des participants et suivez la diffusion.
+                        </p>
+                    </div>
+                    <div class="toolbar-actions">
+                        <a class="button secondary" href="/api/groups/import-template.xlsx" download="modele-participants.xlsx">
+                            Télécharger le modèle Excel
+                        </a>
+                        <button id="newGroup" class="button primary">＋ Nouveau groupe</button>
+                    </div>
+                </section>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>
+                                    Nom du groupe
+                                </th>
+                                <th>
+                                    Description
+                                </th>
+                                <th>
+                                    Participants
+                                </th>
+                                <th>
+                                    Questionnaires diffusés
+                                </th>
+                                <th>
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="groupRows">
+                            <tr>
+                                <td colspan="5">
+                                    Chargement…
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </main>
+        </div>
+        <dialog class="modal" id="createGroupDialog">
+            <div class="modal-head">
+                <div>
+                    <p class="eyebrow">
+                        NOUVEAU GROUPE
+                    </p>
+                    <h2>
+                        Créer un groupe
+                    </h2>
+                </div>
+                <button class="icon-button" data-close="createGroupDialog">×</button>
+            </div>
+            <div class="form-fields">
+                <label>
+                    Nom du groupe<input id="newGroupName" maxlength="120">
+                </label>
+                <label>
+                    Description<textarea id="newGroupDescription" rows="2"></textarea>
+                </label>
+                <label class="public-option">
+                    <input id="newGroupPublic" type="checkbox">Groupe public
+                </label>
+            </div>
+            <div class="modal-actions">
+                <button class="button secondary" data-close="createGroupDialog">Annuler</button><button class="button primary" id="createGroup">Créer le groupe</button>
+            </div>
+        </dialog>
+        <dialog class="modal" id="groupDialog">
+            <div class="modal-head">
+                <div>
+                    <p class="eyebrow">
+                        GROUPE DE PARTICIPANTS
+                    </p>
+                    <h2 id="groupTitle">
+                        Groupe
+                    </h2>
+                </div>
+                <button class="icon-button" data-close="groupDialog">×</button>
+            </div>
+            <div class="form-fields">
+                <label>
+                    Nom du groupe<input id="groupName">
+                </label>
+                <label>
+                    Description<textarea id="groupDescription" rows="2"></textarea>
+                </label>
+                <button class="button secondary" id="saveGroupName">Enregistrer les modifications</button>
+                <div class="group-tools">
+                    <button class="button secondary" id="inviteLink">Activer / copier le lien d’inscription</button>
+                    <label class="button secondary file-button">
+                        Importer des participants (CSV/Excel)<input type="file" id="memberFile" accept=".xlsx,.csv,.txt" hidden>
+                    </label>
+                </div>
+                <div class="section-heading compact">
+                    <div>
+                        <h3>
+                            Participants
+                        </h3>
+                        <p class="muted" id="memberCount">
+                        </p>
+                    </div>
+                </div>
+                <div id="memberRows" class="member-list">
+                </div>
+                <div class="two-col">
+                    <label>
+                        Nom et prénom<input id="memberName" placeholder="Prénom Nom">
+                    </label>
+                    <label>
+                        Adresse e-mail<input id="memberEmail" type="email" placeholder="nom@exemple.com">
+                    </label>
+                </div>
+                <button class="button primary" id="addMember">＋ Ajouter le participant</button>
+                <div class="editor-error" id="groupError" hidden>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="button danger-text" id="deleteGroup">Supprimer le groupe</button><button class="button secondary" data-close="groupDialog">Fermer</button>
+            </div>
+        </dialog>
+        <script src="../js/auth.js">
+        </script>
+        <script src="../js/dashboard.js">
+        </script>
+        <script src="../js/groups.js">
+        </script>
+    </body>
+</html>

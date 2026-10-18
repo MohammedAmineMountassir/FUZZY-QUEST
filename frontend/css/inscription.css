@@ -1,206 +1,193 @@
-/* Complète connexion.css (variables, en-tête, boutons, alertes) */
 
 [hidden] {
-	display: none !important;
+    display: none !important;
 }
-
 .signup {
-	max-width: 520px;
-	margin: 0 auto;
+    max-width: 520px;
+    margin: 0 auto;
 }
-
 .form-card {
-	padding: 32px 30px 26px;
-	box-shadow: 0 20px 60px rgba(27, 17, 71, .14);
+    padding: 32px 30px 26px;
+    box-shadow: 0 20px 60px rgba(27, 17, 71, .14);
 }
-
 .form-card h1 {
-	font-size: 24px;
-	margin-bottom: 6px;
+    font-size: 24px;
+    margin-bottom: 6px;
 }
-
 .sub {
-	color: var(--mut);
-	margin-bottom: 24px;
-	line-height: 1.55;
+    color: var(--mut);
+    margin-bottom: 24px;
+    line-height: 1.55;
 }
-
-/* ---------- Champs ---------- */
 
 .row2 {
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	gap: 14px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
 }
-
 .fld {
-	margin-bottom: 14px;
+    margin-bottom: 14px;
 }
-
 .fld label {
-	display: block;
-	font-size: 12.5px;
-	font-weight: 700;
-	color: #3d3466;
-	margin-bottom: 6px;
+    display: block;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #3d3466;
+    margin-bottom: 6px;
 }
-
-.fld input[type=text],
-.fld input[type=email],
-.fld input[type=password] {
-	width: 100%;
-	height: 46px;
-	border: 1px solid var(--line);
-	border-radius: 10px;
-	padding: 0 14px;
-	font: inherit;
-	color: var(--ink);
-	background: var(--bg);
+.fld input[type=text], .fld input[type=email], .fld input[type=password] {
+    width: 100%;
+    height: 46px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 0 14px;
+    font: inherit;
+    color: var(--ink);
+    background: var(--bg);
 }
-
 .fld .inp input {
-	padding: 0 46px 0 14px;
+    padding: 0 46px 0 14px;
 }
-
 .fld input:focus {
-	outline: 2px solid var(--brand-s);
-	border-color: var(--brand);
-	background: #fff;
+    outline: 2px solid var(--brand-s);
+    border-color: var(--brand);
+    background: #fff;
 }
-
 .fld.bad input {
-	border-color: var(--bad);
-	background: #fffafa;
+    border-color: var(--bad);
+    background: #fffafa;
 }
-
 .hint {
-	color: var(--mut);
-	font-size: 12px;
-	margin-top: 6px;
+    color: var(--mut);
+    font-size: 12px;
+    margin-top: 6px;
 }
 
-/* Jauge de robustesse du mot de passe */
 .bar {
-	height: 5px;
-	background: var(--bg);
-	border-radius: 6px;
-	overflow: hidden;
-	margin-top: 8px;
+    height: 5px;
+    background: var(--bg);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-top: 8px;
 }
-
 .bar i {
-	display: block;
-	width: 0;
-	height: 100%;
-	border-radius: 6px;
-	background: var(--bad);
-	transition: width .25s ease;
+    display: block;
+    width: 0;
+    height: 100%;
+    border-radius: 6px;
+    background: var(--bad);
+    transition: width .25s ease;
 }
-
 .bar i.mid {
-	background: var(--warn);
+    background: var(--warn);
 }
-
 .bar i.strong {
-	background: var(--ok);
+    background: var(--ok);
 }
-
-/* ---------- Bouton et lien ---------- */
 
 .form-card .btn.wide {
-	margin-top: 8px;
+    margin-top: 8px;
 }
-
 .form-card .alt {
-	text-align: center;
+    text-align: center;
 }
-
-/* ---------- Confirmation ---------- */
 
 .done {
-	text-align: center;
-	padding: 16px 0 8px;
+    text-align: center;
+    padding: 16px 0 8px;
 }
-
 .done .big {
-	width: 64px;
-	height: 64px;
-	margin: 0 auto 14px;
-	border-radius: 50%;
-	background: var(--ok-s);
-	color: var(--ok);
-	display: grid;
-	place-items: center;
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 14px;
+    border-radius: 50%;
+    background: var(--ok-s);
+    color: var(--ok);
+    display: grid;
+    place-items: center;
 }
-
 .done .big svg {
-	width: 30px;
-	height: 30px;
-	stroke: currentColor;
-	fill: none;
-	stroke-width: 2.5;
-	stroke-linecap: round;
-	stroke-linejoin: round;
+    width: 30px;
+    height: 30px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
-
 .done h2 {
-	font-size: 20px;
-	margin-bottom: 8px;
+    font-size: 20px;
+    margin-bottom: 8px;
 }
-
 .done p {
-	color: var(--mut);
+    color: var(--mut);
 }
-
 .done p b {
-	color: var(--ink);
+    color: var(--ink);
 }
-
-/* ---------- Petits écrans ---------- */
 
 @media (max-width: 560px) {
-	.form-card {
-		padding: 24px 18px 20px;
-	}
-
-	.row2 {
-		grid-template-columns: 1fr;
-		gap: 0;
-	}
+    .form-card {
+        padding: 24px 18px 20px;
+    }
+    .row2 {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
 }
-/* ---------- Liste « Type de compte » : même style que les champs ---------- */
+
 .fld select {
-	width: 100%;
-	height: 48px;
-	padding: 0 40px 0 14px;
-	border: 1px solid var(--line);
-	border-radius: 10px;
-	background: var(--bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236b6584' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 14px center / 18px;
-	color: var(--ink);
-	font: inherit;
-	-webkit-appearance: none;
-	appearance: none;
+    width: 100%;
+    height: 48px;
+    padding: 0 40px 0 14px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236b6584' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 14px center / 18px;
+    color: var(--ink);
+    font: inherit;
+    -webkit-appearance: none;
+    appearance: none;
 }
-
 .fld select:focus {
-	outline: 2px solid var(--brand-s);
-	border-color: var(--brand);
-	background-color: #fff;
+    outline: 2px solid var(--brand-s);
+    border-color: var(--brand);
+    background-color: #fff;
 }
 
-/* Mobile : champs à 16 px pour éviter le zoom automatique d'iOS */
 @media (max-width: 720px) {
-	.fld input[type=text],
-	.fld input[type=email],
-	.fld input[type=password],
-	.fld select {
-		font-size: 16px;
-	}
+    .fld input[type=text], .fld input[type=email], .fld input[type=password], .fld select {
+        font-size: 16px;
+    }
 }
-
-.phone-row { display:grid; grid-template-columns:minmax(145px, .9fr) minmax(0, 1.4fr); gap:8px; }
-.phone-row select, .phone-row input { width:100%; height:46px; border:1px solid var(--line); border-radius:10px; padding:0 10px; font:inherit; color:var(--ink); background:var(--bg); }
-.phone-row select { padding-right:26px; }
-.phone-row select:focus, .phone-row input:focus { outline:2px solid var(--brand-s); border-color:var(--brand); background:#fff; }
-.fld.bad .phone-row input { border-color:var(--bad); background:#fffafa; }
-@media (max-width:420px) { .phone-row { grid-template-columns:1fr; } }
+.phone-row {
+    display:grid;
+    grid-template-columns:minmax(145px, .9fr) minmax(0, 1.4fr);
+    gap:8px;
+}
+.phone-row select, .phone-row input {
+    width:100%;
+    height:46px;
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:0 10px;
+    font:inherit;
+    color:var(--ink);
+    background:var(--bg);
+}
+.phone-row select {
+    padding-right:26px;
+}
+.phone-row select:focus, .phone-row input:focus {
+    outline:2px solid var(--brand-s);
+    border-color:var(--brand);
+    background:#fff;
+}
+.fld.bad .phone-row input {
+    border-color:var(--bad);
+    background:#fffafa;
+}
+@media (max-width:420px) {
+    .phone-row {
+        grid-template-columns:1fr;
+    }
+}

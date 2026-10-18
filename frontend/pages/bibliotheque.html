@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>Bibliothèque · FUZZY-QUEST</title>
+        <link rel="stylesheet" href="../css/workspace.css">
+        <link rel="stylesheet" href="../css/admin.css">
+    </head>
+    <body class="workspace">
+        <aside class="sidebar">
+            <a class="workspace-brand" href="/chercheur.html">
+                <img src="/LOGO_FQ.png" alt=""><span><b>FUZZY-QUEST</b><small>Quest for truth</small></span>
+            </a>
+            <nav>
+                <a class="side-link" href="/chercheur.html">
+                    Dashboard
+                </a>
+                <a class="side-link" href="/mon-espace.html">
+                    Mon espace
+                </a>
+                <a class="side-link" href="/parametres.html">
+                    Paramètres
+                </a>
+            </nav>
+        </aside>
+        <div class="workspace-main">
+            <header class="workspace-topbar">
+                <div class="workspace-context">
+                    <span>Bibliothèque de modèles</span>
+                </div>
+                <a class="button secondary" href="/chercheur.html">
+                    Retour au tableau
+                </a>
+            </header>
+            <main class="content">
+                <section class="section-heading">
+                    <div>
+                        <h1>
+                            Bibliothèque de modèles
+                        </h1>
+                        <p class="muted">
+                            Choisissez un modèle publié par l’administrateur pour démarrer.
+                        </p>
+                    </div>
+                </section>
+                <div id="templates" class="template-admin-grid">
+                </div>
+            </main>
+        </div>
+        <script src="../js/auth.js">
+        </script>
+        <script src="../js/template-library.js">
+        </script>
+    </body>
+</html>

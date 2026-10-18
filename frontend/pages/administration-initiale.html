@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Configuration administrateur · FUZZY-QUEST</title>
+        <link rel="stylesheet" href="../css/workspace.css">
+        <link rel="stylesheet" href="../css/admin.css">
+    </head>
+    <body class="workspace">
+        <main class="setup-shell">
+            <section class="setup-card">
+                <a class="workspace-brand" href="/connexion.html">
+                    <img src="/LOGO_FQ.png" alt="Logo FUZZY-QUEST"><span><b>FUZZY-QUEST</b><small>Quest for truth</small></span>
+                </a>
+                <p class="eyebrow">
+                    PREMIÈRE CONFIGURATION
+                </p>
+                <h1>
+                    Créer le compte administrateur
+                </h1>
+                <p class="muted">
+                    Ce formulaire se désactive dès que le premier administrateur est créé.
+                </p>
+                <form id="adminSetupForm" class="form-fields">
+                    <label>
+                        Prénom<input id="firstName" autocomplete="given-name" required>
+                    </label>
+                    <label>
+                        Nom<input id="lastName" autocomplete="family-name" required>
+                    </label>
+                    <label>
+                        Adresse e-mail<input id="email" type="email" autocomplete="email" required>
+                    </label>
+                    <label>
+                        Mot de passe<input id="password" type="password" autocomplete="new-password" minlength="8" required><small>8 caractères minimum, avec une lettre et un chiffre.</small>
+                    </label>
+                    <label>
+                        Confirmer le mot de passe<input id="confirmPassword" type="password" autocomplete="new-password" required>
+                    </label>
+                    <p class="editor-error" id="setupError" role="alert" hidden>
+                    </p>
+                    <button class="button primary" id="setupSubmit" type="submit">Créer l’administrateur</button>
+                </form>
+                <a class="setup-login-link" href="/connexion.html">
+                    Retour à la connexion
+                </a>
+            </section>
+        </main>
+        <script src="../js/auth.js">
+        </script>
+        <script src="../js/admin-setup.js">
+        </script>
+    </body>
+</html>

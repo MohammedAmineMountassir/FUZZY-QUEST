@@ -1,87 +1,131 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-	<title>Fuzzy-Quest – Créer un compte</title>
-	<link rel="stylesheet" href="../css/connexion.css">
-	<link rel="stylesheet" href="../css/inscription.css">
-</head>
-
-<body>
-	<div class="page">
-
-		<header class="top-bar">
-			<a class="brand" href="index.html" aria-label="Fuzzy-Quest, retour à l'accueil">
-				<img src="../logo.jpeg" alt="Logo Fuzzy-Quest" width="56" height="56">
-				<span>
-					<b>FUZZY-QUEST</b>
-					<small>Beyond yes and no</small>
-				</span>
-			</a>
-			<nav class="menu" aria-label="Navigation principale">
-				<a href="/connexion.html">Accueil</a>
-				<a href="/connexion.html#about">À propos</a>
-				<a href="/connexion.html#contact">Contact</a>
-				<a href="/connexion.html#login">Connexion</a>
-			</nav>
-		</header>
-
-		<main class="signup">
-			<section class="card form-card" aria-labelledby="signupTitle">
-				<h1 id="signupTitle">Créer votre compte</h1>
-				<p class="sub">Quelques secondes suffisent pour accéder à votre espace FUZZY-QUEST.</p>
-
-				<form id="signupForm" novalidate>
-					<div class="alertbox" id="formAlert" role="alert"></div>
-
-					<div class="row2">
-						<div class="fld" id="f-prenom">
-							<label for="prenom">Prénom</label>
-							<input type="text" id="prenom" autocomplete="given-name" required>
-							<p class="msg" id="m-prenom"></p>
-						</div>
-						<div class="fld" id="f-nom">
-							<label for="nom">Nom</label>
-							<input type="text" id="nom" autocomplete="family-name" required>
-							<p class="msg" id="m-nom"></p>
-						</div>
-					</div>
-
-					<div class="fld" id="f-email">
-						<label for="email">Adresse e-mail</label>
-						<input type="email" id="email" autocomplete="email" placeholder="nom@exemple.com" required>
-						<p class="msg" id="m-email"></p>
-					</div>
-
-					<div class="fld" id="f-telephone">
-						<label for="telephone">Numéro de téléphone</label>
-						<div class="phone-row">
-							<select id="countryCode" aria-label="Pays et indicatif téléphonique" autocomplete="country" required>
-								<option value="+212" selected>Maroc (+212)</option><option value="+213">Algérie (+213)</option><option value="+216">Tunisie (+216)</option><option value="+222">Mauritanie (+222)</option><option value="+221">Sénégal (+221)</option><option value="+225">Côte d’Ivoire (+225)</option><option value="+226">Burkina Faso (+226)</option><option value="+227">Niger (+227)</option><option value="+228">Togo (+228)</option><option value="+229">Bénin (+229)</option><option value="+237">Cameroun (+237)</option><option value="+241">Gabon (+241)</option><option value="+242">Congo (+242)</option><option value="+243">RD Congo (+243)</option><option value="+250">Rwanda (+250)</option><option value="+254">Kenya (+254)</option><option value="+27">Afrique du Sud (+27)</option><option value="+33">France (+33)</option><option value="+32">Belgique (+32)</option><option value="+41">Suisse (+41)</option><option value="+34">Espagne (+34)</option><option value="+351">Portugal (+351)</option><option value="+44">Royaume-Uni (+44)</option><option value="+49">Allemagne (+49)</option><option value="+39">Italie (+39)</option><option value="+31">Pays-Bas (+31)</option><option value="+352">Luxembourg (+352)</option><option value="+1">Canada / États-Unis (+1)</option><option value="+52">Mexique (+52)</option><option value="+55">Brésil (+55)</option><option value="+20">Égypte (+20)</option><option value="+962">Jordanie (+962)</option><option value="+961">Liban (+961)</option><option value="+90">Turquie (+90)</option><option value="+966">Arabie saoudite (+966)</option><option value="+971">Émirats arabes unis (+971)</option><option value="+91">Inde (+91)</option><option value="+92">Pakistan (+92)</option><option value="+86">Chine (+86)</option><option value="+81">Japon (+81)</option><option value="+82">Corée du Sud (+82)</option><option value="+61">Australie (+61)</option><option value="+64">Nouvelle-Zélande (+64)</option>
-							</select>
-							<input type="tel" id="telephone" autocomplete="tel-national" placeholder="6 00 00 00 00" required>
-						</div>
-						<p class="msg" id="m-telephone"></p>
-					</div>
-
-					<button type="submit" class="btn p wide" id="submitBtn">Envoyer le lien de confirmation</button>
-
-					<p class="alt">Vous avez déjà un compte ? <a class="plink" href="connexion.html">Se connecter</a></p>
-				</form>
-
-				<div class="done" id="done" hidden>
-					<div class="big"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></div>
-					<h2>Demande envoyée</h2>
-					<p>Un lien de confirmation a été envoyé à <b id="doneId"></b>. Après confirmation, l’administrateur examinera votre demande.</p>
-					<p class="hint" id="mailStatus"></p>
-					<p class="hint" id="devLinkWrap" hidden><a id="devLink" href="#">Ouvrir le lien de test</a></p>
-				</div>
-			</section>
-		</main>
-	</div>
-
-	<script src="../js/auth.js"></script>
-	<script src="../js/auth-register.js"></script>
-</body>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+        <title>Fuzzy-Quest – Créer un compte</title>
+        <link rel="stylesheet" href="../css/connexion.css">
+        <link rel="stylesheet" href="../css/inscription.css">
+    </head>
+    <body>
+        <div class="page">
+            <header class="top-bar">
+                <a class="brand" href="index.html" aria-label="Fuzzy-Quest, retour à l&#x27;accueil">
+                    <img src="../logo.jpeg" alt="Logo Fuzzy-Quest" width="56" height="56"><span><b>FUZZY-QUEST</b><small>Beyond yes and no</small></span>
+                </a>
+                <nav class="menu" aria-label="Navigation principale">
+                    <a href="/connexion.html">
+                        Accueil
+                    </a>
+                    <a href="/connexion.html#about">
+                        À propos
+                    </a>
+                    <a href="/connexion.html#contact">
+                        Contact
+                    </a>
+                    <a href="/connexion.html#login">
+                        Connexion
+                    </a>
+                </nav>
+            </header>
+            <main class="signup">
+                <section class="card form-card" aria-labelledby="signupTitle">
+                    <h1 id="signupTitle">
+                        Créer votre compte
+                    </h1>
+                    <p class="sub">
+                        Quelques secondes suffisent pour accéder à votre espace FUZZY-QUEST.
+                    </p>
+                    <form id="signupForm" novalidate>
+                        <div class="alertbox" id="formAlert" role="alert">
+                        </div>
+                        <div class="row2">
+                            <div class="fld" id="f-prenom">
+                                <label for="prenom">
+                                    Prénom
+                                </label>
+                                <input type="text" id="prenom" autocomplete="given-name" required>
+                                <p class="msg" id="m-prenom">
+                                </p>
+                            </div>
+                            <div class="fld" id="f-nom">
+                                <label for="nom">
+                                    Nom
+                                </label>
+                                <input type="text" id="nom" autocomplete="family-name" required>
+                                <p class="msg" id="m-nom">
+                                </p>
+                            </div>
+                        </div>
+                        <div class="fld" id="f-email">
+                            <label for="email">
+                                Adresse e-mail
+                            </label>
+                            <input type="email" id="email" autocomplete="email" placeholder="nom@exemple.com" required>
+                            <p class="msg" id="m-email">
+                            </p>
+                        </div>
+                        <div class="fld" id="f-telephone">
+                            <label for="telephone">
+                                Numéro de téléphone
+                            </label>
+                            <div class="phone-row">
+                                <select id="countryCode" aria-label="Pays et indicatif téléphonique" autocomplete="country" required><option value="+212" selected>Maroc (+212)</option><option value="+213">Algérie (+213)</option><option value="+216">Tunisie (+216)</option><option value="+222">Mauritanie (+222)</option><option value="+221">Sénégal (+221)</option><option value="+225">Côte d’Ivoire (+225)</option><option value="+226">Burkina Faso (+226)</option><option value="+227">Niger (+227)</option><option value="+228">Togo (+228)</option><option value="+229">Bénin (+229)</option><option value="+237">Cameroun (+237)</option><option value="+241">Gabon (+241)</option><option value="+242">Congo (+242)</option><option value="+243">RD Congo (+243)</option><option value="+250">Rwanda (+250)</option><option value="+254">Kenya (+254)</option><option value="+27">Afrique du Sud (+27)</option><option value="+33">France (+33)</option><option value="+32">Belgique (+32)</option><option value="+41">Suisse (+41)</option><option value="+34">Espagne (+34)</option><option value="+351">Portugal (+351)</option><option value="+44">Royaume-Uni (+44)</option><option value="+49">Allemagne (+49)</option><option value="+39">Italie (+39)</option><option value="+31">Pays-Bas (+31)</option><option value="+352">Luxembourg (+352)</option><option value="+1">Canada / États-Unis (+1)</option><option value="+52">Mexique (+52)</option><option value="+55">Brésil (+55)</option><option value="+20">Égypte (+20)</option><option value="+962">Jordanie (+962)</option><option value="+961">Liban (+961)</option><option value="+90">Turquie (+90)</option><option value="+966">Arabie saoudite (+966)</option><option value="+971">Émirats arabes unis (+971)</option><option value="+91">Inde (+91)</option><option value="+92">Pakistan (+92)</option><option value="+86">Chine (+86)</option><option value="+81">Japon (+81)</option><option value="+82">Corée du Sud (+82)</option><option value="+61">Australie (+61)</option><option value="+64">Nouvelle-Zélande (+64)</option></select><input type="tel" id="telephone" autocomplete="tel-national" placeholder="6 00 00 00 00" required>
+                            </div>
+                            <p class="msg" id="m-telephone">
+                            </p>
+                        </div>
+                        <div class="fld" id="f-password">
+                            <label for="password">
+                                Mot de passe
+                            </label>
+                            <input type="password" id="password" autocomplete="new-password" required>
+                            <p class="msg" id="m-password">
+                            </p>
+                        </div>
+                        <div class="fld" id="f-confirm">
+                            <label for="confirmPassword">
+                                Confirmer le mot de passe
+                            </label>
+                            <input type="password" id="confirmPassword" autocomplete="new-password" required>
+                            <p class="msg" id="m-confirm">
+                            </p>
+                        </div>
+                        <button type="submit" class="btn p wide" id="submitBtn">Envoyer la demande</button>
+                        <p class="alt">
+                            Vous avez déjà un compte ?
+                            <a class="plink" href="connexion.html">
+                                Se connecter
+                            </a>
+                        </p>
+                    </form>
+                    <div class="done" id="done" hidden>
+                        <div class="big">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M5 12l5 5 9-10">
+                                </path>
+                            </svg>
+                        </div>
+                        <h2>
+                            Demande envoyée
+                        </h2>
+                        <p>
+                            Votre demande de création de compte a été envoyée pour <b id="doneId"></b>. L’administrateur l’examinera.
+                        </p>
+                        <p class="hint" id="mailStatus">
+                        </p>
+                        <p class="hint" id="devLinkWrap" hidden>
+                            <a id="devLink" href="#">
+                                Ouvrir le lien de test
+                            </a>
+                        </p>
+                    </div>
+                </section>
+            </main>
+        </div>
+        <script src="../js/auth.js">
+        </script>
+        <script src="../js/auth-register.js">
+        </script>
+    </body>
 </html>

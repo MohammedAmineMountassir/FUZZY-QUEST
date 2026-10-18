@@ -1,8 +1,345 @@
-<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Administration · FUZZY-QUEST</title><link rel="stylesheet" href="../css/workspace.css"></head>
-<body class="workspace"><aside class="sidebar"><a class="workspace-brand" href="/administration.html"><img src="../logo.jpeg" alt=""><span><b>FUZZY-QUEST</b><small>Administration</small></span></a><nav><a class="side-link active" href="/administration.html"><span><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg></span>Vue d’ensemble</a><a class="side-link" href="#accountRequests"><span><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M10 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM20 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Demandes de comptes</a><a class="side-link" href="#passwordRequests"><span><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11l3 3 8-8M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg></span>Changements de mot de passe</a><a class="side-link" href="#researchers"><span><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M10 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM20 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Chercheurs actifs</a></nav></aside>
-<div class="workspace-main"><header class="workspace-topbar"><div class="workspace-context"><span class="eyebrow">CONTRÔLE DE LA PLATEFORME</span><span>Administration</span></div><div class="account-area"><button class="account-trigger"><span class="avatar av">AD</span><span class="account-copy"><b class="account-name">Administration</b><small>Administrateur</small></span>⌄</button><div class="account-menu" id="pDD"><div class="account-menu-head"><b class="account-name"></b><small class="account-email"></small></div><button class="out">Se déconnecter</button></div></div></header>
-<main class="content"><section class="welcome-row"><div><p class="eyebrow">GESTION DES ACCÈS</p><h1>Administration</h1><p class="muted">Examinez les demandes de compte et les changements de mot de passe.</p></div><div class="quick-stats"><div><b id="pendingAccounts">0</b><span>Comptes à examiner</span></div><div><b id="pendingPasswords">0</b><span>Demandes mot de passe</span></div></div></section>
-<section class="admin-section" id="accountRequests"><div class="section-heading"><div><h2>Demandes de comptes</h2><p class="muted">L’adresse e-mail doit être confirmée avant l’approbation.</p></div></div><div class="table-wrap"><table><thead><tr><th>Nom</th><th>E-mail</th><th>Téléphone</th><th>Demande reçue</th><th>État</th><th>Décision</th></tr></thead><tbody id="accountRequestRows"><tr><td colspan="6">Chargement…</td></tr></tbody></table></div></section>
-<section class="admin-section" id="passwordRequests"><div class="section-heading"><div><h2>Changements de mot de passe</h2><p class="muted">Après approbation, la personne recevra un lien sécurisé pour choisir un nouveau mot de passe.</p></div></div><div class="table-wrap"><table><thead><tr><th>Compte</th><th>E-mail</th><th>Demande reçue</th><th>Décision</th></tr></thead><tbody id="passwordRequestRows"><tr><td colspan="4">Chargement…</td></tr></tbody></table></div></section>
-<section class="admin-section" id="researchers"><div class="section-heading"><div><h2>Chercheurs actifs</h2><p class="muted">Comptes autorisés à créer et diffuser des questionnaires.</p></div></div><div class="table-wrap"><table><thead><tr><th>Nom</th><th>E-mail</th><th>Téléphone</th><th>Activé le</th></tr></thead><tbody id="researcherRows"><tr><td colspan="4">Chargement…</td></tr></tbody></table></div></section></main></div>
-<script src="../js/auth.js"></script><script src="../js/admin-dashboard.js"></script></body></html>
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>Administration · FUZZY-QUEST</title>
+        <link rel="stylesheet" href="../css/workspace.css">
+        <link rel="stylesheet" href="../css/admin.css">
+    </head>
+    <body class="workspace">
+        <aside class="sidebar">
+            <a class="workspace-brand" href="/administration.html">
+                <img src="/LOGO_FQ.png" alt=""><span><b>FUZZY-QUEST</b><small>Quest for truth</small></span>
+            </a>
+            <nav aria-label="Administration">
+                <a class="side-link active" href="/administration.html?section=researchers" data-admin-nav="researchers">
+                    <span>
+                    <svg class="ui-icon" viewBox="0 0 24 24">
+                        <circle cx="9" cy="8" r="3">
+                        </circle>
+                        <path d="M3 20v-1a6 6 0 0 1 12 0v1M16 5a3 3 0 0 1 0 6">
+                        </path>
+                    </svg>
+                    </span>Chercheurs
+                </a>
+                <a class="side-link" href="/administration.html?section=requests" data-admin-nav="requests">
+                    <span>
+                    <svg class="ui-icon" viewBox="0 0 24 24">
+                        <rect x="3" y="5" width="18" height="14" rx="2">
+                        </rect>
+                        <path d="m4 7 8 6 8-6">
+                        </path>
+                    </svg>
+                    </span>Demandes de compte <i id="requestBadge" class="nav-badge">0</i>
+                </a>
+                <a class="side-link" href="/administration.html?section=templates" data-admin-nav="templates">
+                    <span>
+                    <svg class="ui-icon" viewBox="0 0 24 24">
+                        <path d="M6 3h9l4 4v14H6zM14 3v5h5M9 12h7M9 16h7">
+                        </path>
+                    </svg>
+                    </span>Modèles
+                </a>
+                <a class="side-link" href="/administration.html?section=activity" data-admin-nav="activity">
+                    <span>
+                    <svg class="ui-icon" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="9">
+                        </circle>
+                        <path d="M12 7v5l3 2">
+                        </path>
+                    </svg>
+                    </span>Journal d’activité
+                </a>
+            </nav>
+            <div class="sidebar-bottom">
+                <a class="side-link" href="#" id="adminHelp">
+                    <span>?</span>Aide &amp; support
+                </a>
+            </div>
+        </aside>
+        <div class="workspace-main">
+            <header class="workspace-topbar">
+                <div class="workspace-context">
+                    <span class="page-context-title" id="adminContext">Chercheurs</span>
+                </div>
+                <div class="account-area">
+                    <button class="account-trigger" type="button"><span class="avatar av">AD</span><span class="account-copy"><b class="account-name"></b><small>Administrateur</small></span><span aria-hidden="true">⌄</span></button>
+                    <div class="account-menu" id="pDD">
+                        <div class="account-menu-head">
+                            <b class="account-name"></b><small class="account-email"></small>
+                        </div>
+                        <button type="button" class="out">Se déconnecter</button>
+                    </div>
+                </div>
+            </header>
+            <main class="content">
+                <section class="welcome-row">
+                    <div>
+                        <h1 id="adminTitle">
+                            Chercheurs
+                        </h1>
+                        <p class="muted" id="adminIntro">
+                            Gérez les comptes, les demandes et la bibliothèque de modèles.
+                        </p>
+                    </div>
+                </section>
+                <section class="admin-pane" id="pane-researchers">
+                    <div class="dashboard-toolbar admin-research-toolbar">
+                        <label class="searchbox">
+                            <span>
+                            <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true">
+                                <circle cx="10.8" cy="10.8" r="6.8">
+                                </circle>
+                                <path d="m4.8 16.8-3 3">
+                                </path>
+                            </svg>
+                            </span><input id="researcherSearch" type="search" placeholder="Rechercher un nom ou un e-mail">
+                        </label>
+                        <select id="researcherFilter" aria-label="État du compte"><option value="all">Tous les comptes</option><option value="active">Actifs</option><option value="disabled">Désactivés</option></select>
+                        <div id="sectionAction">
+                            <button class="button primary" id="newResearcher">＋ Nouveau chercheur</button>
+                        </div>
+                    </div>
+                    <div class="table-wrap admin-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Chercheur
+                                    </th>
+                                    <th>
+                                        E-mail
+                                    </th>
+                                    <th>
+                                        Questionnaires
+                                    </th>
+                                    <th>
+                                        Diffusés
+                                    </th>
+                                    <th>
+                                        État
+                                    </th>
+                                    <th>
+                                        Dernière déconnexion
+                                    </th>
+                                    <th>
+                                        Actions
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="researcherRows">
+                                <tr>
+                                    <td colspan="7">
+                                        Chargement…
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <section class="admin-pane" id="pane-requests" hidden>
+                    <div class="section-heading">
+                        <div>
+                            <h2>
+                                Demandes en attente
+                            </h2>
+                            <p class="muted">
+                                Approuvez les comptes chercheurs ou participants, ou refusez leur demande.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="table-wrap admin-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Nom
+                                    </th>
+                                    <th>
+                                        E-mail
+                                    </th>
+                                    <th>
+                                        Téléphone
+                                    </th>
+                                    <th>
+                                        Type de compte
+                                    </th>
+                                    <th>
+                                        Date de demande
+                                    </th>
+                                    <th>
+                                        Décision
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="accountRequestRows">
+                                <tr>
+                                    <td colspan="6">
+                                        Chargement…
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="admin-subsection">
+                        <h2>
+                            Réinitialisations de mot de passe
+                        </h2>
+                        <div class="table-wrap admin-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Chercheur
+                                        </th>
+                                        <th>
+                                            E-mail
+                                        </th>
+                                        <th>
+                                            Date
+                                        </th>
+                                        <th>
+                                            Décision
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="passwordRequestRows">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+                <section class="admin-pane" id="pane-templates" hidden>
+                    <div class="section-heading">
+                        <div>
+                            <h2>
+                                Bibliothèque des modèles
+                            </h2>
+                            <p class="muted">
+                                Ces questionnaires seront proposés aux chercheurs.
+                            </p>
+                        </div>
+                        <button class="button primary" id="newTemplate">＋ Créer un modèle</button>
+                    </div>
+                    <div id="templateRows" class="template-admin-grid">
+                    </div>
+                </section>
+                <section class="admin-pane" id="pane-activity" hidden>
+                    <div class="toolbar-card">
+                        <p class="muted">
+                            Historique des connexions, comptes, questionnaires et diffusions.
+                        </p>
+                        <button class="button secondary" id="refreshActivity">Actualiser</button>
+                    </div>
+                    <div class="table-wrap admin-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Date
+                                    </th>
+                                    <th>
+                                        Qui
+                                    </th>
+                                    <th>
+                                        Action
+                                    </th>
+                                    <th>
+                                        Objet
+                                    </th>
+                                    <th>
+                                        Détail
+                                    </th>
+                                    <th>
+                                        Adresse IP
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="activityRows">
+                                <tr>
+                                    <td colspan="6">
+                                        Chargement…
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </main>
+        </div>
+        <dialog class="modal" id="researcherDialog">
+            <div class="modal-head">
+                <div>
+                    <p class="eyebrow">
+                        NOUVEAU COMPTE
+                    </p>
+                    <h2>
+                        Ajouter un chercheur
+                    </h2>
+                </div>
+                <button class="icon-button" data-close="researcherDialog">×</button>
+            </div>
+            <div class="form-fields">
+                <label>
+                    Prénom<input id="newFirst">
+                </label>
+                <label>
+                    Nom<input id="newLast">
+                </label>
+                <label>
+                    Adresse e-mail<input id="newEmail" type="email">
+                </label>
+                <label>
+                    Mot de passe provisoire<input id="newPassword" type="password"><small>Au moins 8 caractères, avec une lettre et un chiffre.</small>
+                </label>
+                <div class="editor-error" id="researcherError" hidden>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="button secondary" data-close="researcherDialog">Annuler</button><button class="button primary" id="saveResearcher">Créer le compte</button>
+            </div>
+        </dialog>
+        <dialog class="modal quiz-editor-modal" id="templateDialog">
+            <div class="modal-head">
+                <div>
+                    <p class="eyebrow">
+                        BIBLIOTHÈQUE DE MODÈLES
+                    </p>
+                    <h2 id="templateDialogTitle">
+                        Créer un modèle
+                    </h2>
+                    <p class="muted">
+                        Organisez les questions directement ou avec sections.
+                    </p>
+                </div>
+                <button class="icon-button" data-close="templateDialog">×</button>
+            </div>
+            <div class="form-fields">
+                <label>
+                    Titre du modèle<input id="templateTitle">
+                </label>
+                <label>
+                    Description<textarea id="templateDescription" rows="2"></textarea>
+                </label>
+                <div class="two-col">
+                    <label>
+                        Structure du questionnaire<select id="templateStructure"><option value="direct">Questions directes</option><option value="sections">Avec sections</option><option value="subsections">Avec sections et sous-sections</option></select>
+                    </label>
+                    <button class="button secondary" id="addTemplateQuestion" type="button">＋ Ajouter une question</button>
+                </div>
+                <div id="templateQuestionRows" class="question-list">
+                </div>
+                <div class="editor-error" id="templateError" hidden>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="button secondary" data-close="templateDialog">Annuler</button><button class="button primary" id="saveTemplate">Enregistrer le modèle</button>
+            </div>
+        </dialog>
+        <script src="../js/auth.js">
+        </script>
+        <script src="../js/admin-dashboard.js">
+        </script>
+    </body>
+</html>

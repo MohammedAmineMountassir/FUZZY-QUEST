@@ -1,313 +1,410 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-	<title>Fuzzy-Quest – Espace participant</title>
-	<link rel="stylesheet" href="../css/style.css">
-	<link rel="stylesheet" href="../css/topbare.css">
-</head>
-
-<body>
-
-
-		<header class="topbar">
-<a class="brand" href="participant.html">
-			<img src="../logo.jpeg" alt="Logo Fuzzy-Quest" width="56" height="56">
-			<div>
-				<b>FUZZY-QUEST</b>
-				<small>Beyond yes and no</small>
-			</div>
-		</a>
-		<nav class="tnav" aria-label="Navigation principale">
-<a class="nav on" aria-current="page" href="#">
-			<svg viewBox="0 0 24 24">
-				<path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>
-			</svg>
-			Tableau de bord
-		</a>
-<a class="nav" href="#questionnaires">
-			<svg viewBox="0 0 24 24">
-				<circle cx="9" cy="8" r="3.5"/>
-				<path d="M2.5 20a6.5 6.5 0 0 1 13 0M17 4.5a3.5 3.5 0 0 1 0 7M21.5 20a6 6 0 0 0-4-5.6"/>
-			</svg>
-			Participer
-			<span class="badge">3</span>
-		</a>
-		</nav>
-			<div class="sp"></div>
-			<div class="av">YA</div>
-			<div class="who">
-				<b></b>
-				<small>Participant</small>
-			</div>
-			<div class="dd" id="pDD">
-				<div class="ddhead">
-					<div class="a2">YA</div>
-					<div>
-						<b></b>
-						<span id="ddRole">Participant</span>
-					</div>
-				</div>
-				<div class="sep"></div>
-				<button onclick="document.getElementById('pDD').classList.remove('on');document.getElementById('pOvl').classList.add('on')">
-					<svg viewBox="0 0 24 24">
-						<circle cx="12" cy="8" r="4"/>
-						<path d="M4 21a8 8 0 0 1 16 0"/>
-					</svg>
-					Mon profil
-				</button>
-				<button onclick="document.getElementById('pDD').classList.remove('on')">
-					<svg viewBox="0 0 24 24">
-						<circle cx="12" cy="12" r="9"/>
-						<path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 1.7-2 1.8-2 3.5M12 17h.01"/>
-					</svg>
-					Aide &amp; support
-				</button>
-				<div class="sep"></div>
-				<button class="out" onclick="alert('Déconnexion (démo)');document.getElementById('pDD').classList.remove('on')">
-					<svg viewBox="0 0 24 24">
-						<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>
-					</svg>
-					Se déconnecter
-				</button>
-			</div>
-	</header>
-
-	<main>
-
-
-		<div class="wrap">
-			<div class="top">
-				<div>
-					<h1>Bonjour <span id="welcomeFirstName"></span></h1>
-					<p class="sub">Voici les questionnaires qui vous attendent · <time id="currentDateTime"></time></p>
-				</div>
-				<div class="btns">
-					<button class="btn p">Participer maintenant</button>
-				</div>
-			</div>
-
-			<div class="grid k4">
-				<div class="card kpi">
-					<div class="ic" style="background:var(--brand-s);color:var(--brand)">
-						<svg viewBox="0 0 24 24">
-							<path d="M9 11l3 3 8-8M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/>
-						</svg>
-					</div>
-					<div>
-						<div class="n">3</div>
-						<div class="l">À remplir</div>
-						<small>disponibles maintenant</small>
-					</div>
-				</div>
-				<div class="card kpi">
-					<div class="ic" style="background:var(--ok-s);color:var(--ok)">
-						<svg viewBox="0 0 24 24">
-							<path d="M5 12l5 5 9-10"/>
-						</svg>
-					</div>
-					<div>
-						<div class="n">14</div>
-						<div class="l">Réponses envoyées</div>
-						<small>depuis votre inscription</small>
-					</div>
-				</div>
-				<div class="card kpi">
-					<div class="ic" style="background:var(--warn-s);color:var(--warn)">
-						<svg viewBox="0 0 24 24">
-							<path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>
-						</svg>
-					</div>
-					<div>
-						<div class="n">1</div>
-						<div class="l">Brouillon en cours</div>
-						<small>à terminer</small>
-					</div>
-				</div>
-				<div class="card kpi">
-					<div class="ic" style="background:var(--vio-s);color:var(--vio)">
-						<svg viewBox="0 0 24 24">
-							<circle cx="12" cy="12" r="9"/>
-							<path d="M12 7v5l3 2"/>
-						</svg>
-					</div>
-					<div>
-						<div class="n">2</div>
-						<div class="l">Bientôt clos</div>
-						<small>d'ici 3 jours</small>
-					</div>
-				</div>
-			</div>
-
-			<div class="grid r2">
-				<div class="card">
-					<h2 id="questionnaires">
-						Questionnaires disponibles
-						<a href="#">Voir tout <svg class="icon" aria-hidden="true"><use href="../icons.svg#icon-arrow-right"/></svg></a>
-					</h2>
-					<div class="qc">
-						<div class="ic">
-							<svg viewBox="0 0 24 24">
-								<path d="M9 11l3 3 8-8M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/>
-							</svg>
-						</div>
-						<div class="tx">
-							<b>Satisfaction usagers</b>
-							<span>Donnez votre avis sur la qualité du service.</span>
-							<div class="meta">
-								<span class="pill dn">Clôture le 30/09</span>
-								<span class="pill nu">8 min · 12 questions</span>
-							</div>
-						</div>
-						<button class="btn p">Répondre</button>
-					</div>
-					<div class="qc">
-						<div class="ic">
-							<svg viewBox="0 0 24 24">
-								<path d="M9 11l3 3 8-8M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/>
-							</svg>
-						</div>
-						<div class="tx">
-							<b>Évaluation des risques</b>
-							<span>Estimez le niveau de risque de chaque situation.</span>
-							<div class="meta">
-								<span class="pill dn">Clôture le 01/10</span>
-								<span class="pill nu">10 min · 15 questions</span>
-							</div>
-						</div>
-						<button class="btn p">Répondre</button>
-					</div>
-					<div class="qc">
-						<div class="ic">
-							<svg viewBox="0 0 24 24">
-								<path d="M9 11l3 3 8-8M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/>
-							</svg>
-						</div>
-						<div class="tx">
-							<b>Qualité de service</b>
-							<span>Brouillon commencé le 26/09 · 4 questions sur 10.</span>
-							<div class="meta">
-								<span class="pill up">Ouvert jusqu'au 15/10</span>
-								<span class="pill nu">5 min restantes</span>
-							</div>
-						</div>
-						<button class="btn">Reprendre</button>
-					</div>
-				</div>
-				<div class="card ring">
-					<h2>Ma participation</h2>
-					<svg viewBox="0 0 120 120" width="170" height="170" role="img" aria-label="14 questionnaires sur 20 complétés">
-						<defs>
-							<linearGradient id="g" x1="0" x2="1">
-								<stop offset="0" stop-color="#5b3fd0"/>
-								<stop offset="1" stop-color="#d6479a"/>
-							</linearGradient>
-						</defs>
-						<g fill="none" stroke-width="14" transform="rotate(-90 60 60)">
-							<circle cx="60" cy="60" r="46" stroke="#e9e5f5"/>
-							<circle cx="60" cy="60" r="46" stroke="url(#g)" stroke-linecap="round" stroke-dasharray="202.3 289"/>
-						</g>
-						<text x="60" y="64" text-anchor="middle" font-size="24" font-weight="800" fill="#1b1147">70%</text>
-					</svg>
-					<p class="sub">14 questionnaires complétés sur 20 proposés</p>
-					<div class="note"><svg class="icon" aria-hidden="true"><use href="../icons.svg#icon-lock"/></svg> Les résultats sont réservés à l'équipe d'analyse. Vous ne les verrez pas ici.</div>
-				</div>
-			</div>
-
-			<div class="card">
-				<h2>
-					Mes dernières participations
-					<a href="#">Voir l'historique <svg class="icon" aria-hidden="true"><use href="../icons.svg#icon-arrow-right"/></svg></a>
-				</h2>
-				<div class="tw">
-					<table>
-						<thead>
-							<tr>
-								<th>ID</th>
-								<th>Questionnaire</th>
-								<th>Date</th>
-								<th>Durée</th>
-								<th>Statut</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td><b>#P-14</b></td>
-								<td>Satisfaction usagers (vague 2)</td>
-								<td>25/09/2026</td>
-								<td>7 min</td>
-								<td><span class="pill up">Envoyée</span></td>
-							</tr>
-							<tr>
-								<td><b>#P-13</b></td>
-								<td>Évaluation des risques (vague 1)</td>
-								<td>22/09/2026</td>
-								<td>11 min</td>
-								<td><span class="pill up">Envoyée</span></td>
-							</tr>
-							<tr>
-								<td><b>#P-12</b></td>
-								<td>Qualité de service</td>
-								<td>26/09/2026</td>
-								<td>2 min</td>
-								<td><span class="pill dn">Brouillon</span></td>
-							</tr>
-							<tr>
-								<td><b>#P-11</b></td>
-								<td>Accueil et orientation</td>
-								<td>18/09/2026</td>
-								<td>6 min</td>
-								<td><span class="pill up">Envoyée</span></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-	</main>
-
-	<div class="ovl" id="pOvl">
-		<div class="pmodal">
-			<div class="phead">
-				<button class="x" onclick="document.getElementById('pOvl').classList.remove('on')" aria-label="Fermer"><svg class="icon" aria-hidden="true"><use href="../icons.svg#icon-close"/></svg></button>
-				<div class="bigav">YA</div>
-				<b></b>
-				<span id="pRole">Participant</span>
-			</div>
-			<div class="pbody">
-				<div class="pfield">
-					<label>Nom complet</label>
-					<input id="pName" value="" autocomplete="name">
-				</div>
-				<div class="pfield">
-					<label>Adresse e-mail</label>
-					<input id="pEmail" value="" disabled>
-				</div>
-				<div class="pfield">
-					<label>Téléphone</label>
-					<input id="pPhone" value="+212 6 12 34 56 78" disabled>
-				</div>
-				<div class="pdiv"></div>
-				<button class="plink" onclick="var d=this.parentElement.querySelectorAll('#pEmail,#pPhone');d.forEach(i=>i.disabled=!i.disabled);this.textContent=d[0].disabled' Modifier mes coordonnées':'Verrouiller les champs'">
-					 Modifier mes coordonnées
-				</button>
-				<div class="pdiv"></div>
-				<div class="pfield">
-					<label>Mot de passe</label>
-					<input type="password" value="••••••••" disabled>
-				</div>
-				<button class="plink"> Changer le mot de passe</button>
-				<div class="pdiv"></div>
-				<div class="prow">
-					<button class="btn p" style="justify-content:center" onclick="document.getElementById('pOvl').classList.remove('on')">Enregistrer</button>
-					<button class="btn">Annuler</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<script src="../js/auth.js"></script>
-	<script src="../js/dashboard.js"></script>
-</body>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+        <title>Fuzzy-Quest – Espace participant</title>
+        <link rel="stylesheet" href="../css/style.css">
+        <link rel="stylesheet" href="../css/topbare.css">
+    </head>
+    <body>
+        <header class="topbar">
+            <a class="brand" href="participant.html">
+                <img src="../logo.jpeg" alt="Logo Fuzzy-Quest" width="56" height="56">
+                <div>
+                    <b>FUZZY-QUEST</b><small>Beyond yes and no</small>
+                </div>
+            </a>
+            <nav class="tnav" aria-label="Navigation principale">
+                <a class="nav on" aria-current="page" href="#">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z">
+                        </path>
+                    </svg>
+                    Tableau de bord
+                </a>
+                <a class="nav" href="#questionnaires">
+                    <svg viewBox="0 0 24 24">
+                        <circle cx="9" cy="8" r="3.5">
+                        </circle>
+                        <path d="M2.5 20a6.5 6.5 0 0 1 13 0M17 4.5a3.5 3.5 0 0 1 0 7M21.5 20a6 6 0 0 0-4-5.6">
+                        </path>
+                    </svg>
+                    Participer <span class="badge">3</span>
+                </a>
+            </nav>
+            <div class="sp">
+            </div>
+            <div class="av">
+                YA
+            </div>
+            <div class="who">
+                <b></b><small>Participant</small>
+            </div>
+            <div class="dd" id="pDD">
+                <div class="ddhead">
+                    <div class="a2">
+                        YA
+                    </div>
+                    <div>
+                        <b></b><span id="ddRole">Participant</span>
+                    </div>
+                </div>
+                <div class="sep">
+                </div>
+                <button onclick="document.getElementById(&#x27;pDD&#x27;).classList.remove(&#x27;on&#x27;);document.getElementById(&#x27;pOvl&#x27;).classList.add(&#x27;on&#x27;)">
+                <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="8" r="4">
+                    </circle>
+                    <path d="M4 21a8 8 0 0 1 16 0">
+                    </path>
+                </svg>
+                Mon profil </button><button onclick="document.getElementById(&#x27;pDD&#x27;).classList.remove(&#x27;on&#x27;)">
+                <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="9">
+                    </circle>
+                    <path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 1.7-2 1.8-2 3.5M12 17h.01">
+                    </path>
+                </svg>
+                Aide &amp; support </button>
+                <div class="sep">
+                </div>
+                <button class="out" onclick="alert(&#x27;Déconnexion (démo)&#x27;);document.getElementById(&#x27;pDD&#x27;).classList.remove(&#x27;on&#x27;)">
+                <svg viewBox="0 0 24 24">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9">
+                    </path>
+                </svg>
+                Se déconnecter </button>
+            </div>
+        </header>
+        <main>
+            <div class="wrap">
+                <div class="top">
+                    <div>
+                        <h1>
+                            Bonjour <span id="welcomeFirstName"></span>
+                        </h1>
+                        <p class="sub">
+                            Voici les questionnaires qui vous attendent · <time id="currentDateTime"></time>
+                        </p>
+                    </div>
+                    <div class="btns">
+                        <button class="btn p">Participer maintenant</button>
+                    </div>
+                </div>
+                <div class="grid k4">
+                    <div class="card kpi">
+                        <div class="ic" style="background:var(--brand-s);color:var(--brand)">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M9 11l3 3 8-8M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9">
+                                </path>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="n">
+                                3
+                            </div>
+                            <div class="l">
+                                À remplir
+                            </div>
+                            <small>disponibles maintenant</small>
+                        </div>
+                    </div>
+                    <div class="card kpi">
+                        <div class="ic" style="background:var(--ok-s);color:var(--ok)">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M5 12l5 5 9-10">
+                                </path>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="n">
+                                14
+                            </div>
+                            <div class="l">
+                                Réponses envoyées
+                            </div>
+                            <small>depuis votre inscription</small>
+                        </div>
+                    </div>
+                    <div class="card kpi">
+                        <div class="ic" style="background:var(--warn-s);color:var(--warn)">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z">
+                                </path>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="n">
+                                1
+                            </div>
+                            <div class="l">
+                                Brouillon en cours
+                            </div>
+                            <small>à terminer</small>
+                        </div>
+                    </div>
+                    <div class="card kpi">
+                        <div class="ic" style="background:var(--vio-s);color:var(--vio)">
+                            <svg viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="9">
+                                </circle>
+                                <path d="M12 7v5l3 2">
+                                </path>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="n">
+                                2
+                            </div>
+                            <div class="l">
+                                Bientôt clos
+                            </div>
+                            <small>d'ici 3 jours</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid r2">
+                    <div class="card">
+                        <h2 id="questionnaires">
+                            Questionnaires disponibles
+                            <a href="#">
+                                Voir tout
+                                <svg class="icon" aria-hidden="true">
+                                    <use href="../icons.svg#icon-arrow-right"></use>
+                                </svg>
+                            </a>
+                        </h2>
+                        <div class="qc">
+                            <div class="ic">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M9 11l3 3 8-8M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9">
+                                    </path>
+                                </svg>
+                            </div>
+                            <div class="tx">
+                                <b>Satisfaction usagers</b><span>Donnez votre avis sur la qualité du service.</span>
+                                <div class="meta">
+                                    <span class="pill dn">Clôture le 30/09</span><span class="pill nu">8 min · 12 questions</span>
+                                </div>
+                            </div>
+                            <button class="btn p">Répondre</button>
+                        </div>
+                        <div class="qc">
+                            <div class="ic">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M9 11l3 3 8-8M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9">
+                                    </path>
+                                </svg>
+                            </div>
+                            <div class="tx">
+                                <b>Évaluation des risques</b><span>Estimez le niveau de risque de chaque situation.</span>
+                                <div class="meta">
+                                    <span class="pill dn">Clôture le 01/10</span><span class="pill nu">10 min · 15 questions</span>
+                                </div>
+                            </div>
+                            <button class="btn p">Répondre</button>
+                        </div>
+                        <div class="qc">
+                            <div class="ic">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M9 11l3 3 8-8M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9">
+                                    </path>
+                                </svg>
+                            </div>
+                            <div class="tx">
+                                <b>Qualité de service</b><span>Brouillon commencé le 26/09 · 4 questions sur 10.</span>
+                                <div class="meta">
+                                    <span class="pill up">Ouvert jusqu'au 15/10</span><span class="pill nu">5 min restantes</span>
+                                </div>
+                            </div>
+                            <button class="btn">Reprendre</button>
+                        </div>
+                    </div>
+                    <div class="card ring">
+                        <h2>
+                            Ma participation
+                        </h2>
+                        <svg viewBox="0 0 120 120" width="170" height="170" role="img" aria-label="14 questionnaires sur 20 complétés">
+                            <defs><lineargradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#5b3fd0"></stop><stop offset="1" stop-color="#d6479a"></stop></lineargradient></defs><g fill="none" stroke-width="14" transform="rotate(-90 60 60)">
+                            <circle cx="60" cy="60" r="46" stroke="#e9e5f5">
+                            </circle>
+                            <circle cx="60" cy="60" r="46" stroke="url(#g)" stroke-linecap="round" stroke-dasharray="202.3 289">
+                            </circle>
+                            </g><text x="60" y="64" text-anchor="middle" font-size="24" font-weight="800" fill="#1b1147">70%</text>
+                        </svg>
+                        <p class="sub">
+                            14 questionnaires complétés sur 20 proposés
+                        </p>
+                        <div class="note">
+                            <svg class="icon" aria-hidden="true">
+                                <use href="../icons.svg#icon-lock"></use>
+                            </svg>
+                            Les résultats sont réservés à l'équipe d'analyse. Vous ne les verrez pas ici.
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <h2>
+                        Mes dernières participations
+                        <a href="#">
+                            Voir l'historique
+                            <svg class="icon" aria-hidden="true">
+                                <use href="../icons.svg#icon-arrow-right"></use>
+                            </svg>
+                        </a>
+                    </h2>
+                    <div class="tw">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>
+                                        ID
+                                    </th>
+                                    <th>
+                                        Questionnaire
+                                    </th>
+                                    <th>
+                                        Date
+                                    </th>
+                                    <th>
+                                        Durée
+                                    </th>
+                                    <th>
+                                        Statut
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <b>#P-14</b>
+                                    </td>
+                                    <td>
+                                        Satisfaction usagers (vague 2)
+                                    </td>
+                                    <td>
+                                        25/09/2026
+                                    </td>
+                                    <td>
+                                        7 min
+                                    </td>
+                                    <td>
+                                        <span class="pill up">Envoyée</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <b>#P-13</b>
+                                    </td>
+                                    <td>
+                                        Évaluation des risques (vague 1)
+                                    </td>
+                                    <td>
+                                        22/09/2026
+                                    </td>
+                                    <td>
+                                        11 min
+                                    </td>
+                                    <td>
+                                        <span class="pill up">Envoyée</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <b>#P-12</b>
+                                    </td>
+                                    <td>
+                                        Qualité de service
+                                    </td>
+                                    <td>
+                                        26/09/2026
+                                    </td>
+                                    <td>
+                                        2 min
+                                    </td>
+                                    <td>
+                                        <span class="pill dn">Brouillon</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <b>#P-11</b>
+                                    </td>
+                                    <td>
+                                        Accueil et orientation
+                                    </td>
+                                    <td>
+                                        18/09/2026
+                                    </td>
+                                    <td>
+                                        6 min
+                                    </td>
+                                    <td>
+                                        <span class="pill up">Envoyée</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <div class="ovl" id="pOvl">
+            <div class="pmodal">
+                <div class="phead">
+                    <button class="x" onclick="document.getElementById(&#x27;pOvl&#x27;).classList.remove(&#x27;on&#x27;)" aria-label="Fermer">
+                    <svg class="icon" aria-hidden="true">
+                        <use href="../icons.svg#icon-close"></use>
+                    </svg>
+                    </button>
+                    <div class="bigav">
+                        YA
+                    </div>
+                    <b></b><span id="pRole">Participant</span>
+                </div>
+                <div class="pbody">
+                    <div class="pfield">
+                        <label>
+                            Nom complet
+                        </label>
+                        <input id="pName" value="" autocomplete="name">
+                    </div>
+                    <div class="pfield">
+                        <label>
+                            Adresse e-mail
+                        </label>
+                        <input id="pEmail" value="" disabled>
+                    </div>
+                    <div class="pfield">
+                        <label>
+                            Téléphone
+                        </label>
+                        <input id="pPhone" value="+212 6 12 34 56 78" disabled>
+                    </div>
+                    <div class="pdiv">
+                    </div>
+                    <button class="plink" onclick="var d=this.parentElement.querySelectorAll(&#x27;#pEmail,#pPhone&#x27;);d.forEach(i=&gt;i.disabled=!i.disabled);this.textContent=d[0].disabled&#x27; Modifier mes coordonnées&#x27;:&#x27;Verrouiller les champs&#x27;">Modifier mes coordonnées </button>
+                    <div class="pdiv">
+                    </div>
+                    <div class="pfield">
+                        <label>
+                            Mot de passe
+                        </label>
+                        <input type="password" value="••••••••" disabled>
+                    </div>
+                    <button class="plink">Changer le mot de passe</button>
+                    <div class="pdiv">
+                    </div>
+                    <div class="prow">
+                        <button class="btn p" style="justify-content:center" onclick="document.getElementById(&#x27;pOvl&#x27;).classList.remove(&#x27;on&#x27;)">Enregistrer</button><button class="btn">Annuler</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="../js/auth.js">
+        </script>
+        <script src="../js/dashboard.js">
+        </script>
+    </body>
 </html>

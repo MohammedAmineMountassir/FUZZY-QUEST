@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>Éditeur de questionnaire · FUZZY-QUEST</title>
+        <link rel="stylesheet" href="../css/workspace.css">
+        <link rel="stylesheet" href="../css/admin.css">
+    </head>
+    <body class="workspace">
+        <aside class="sidebar">
+            <a class="workspace-brand" href="/chercheur.html">
+                <img src="/LOGO_FQ.png" alt=""><span><b>FUZZY-QUEST</b><small>Quest for truth</small></span>
+            </a>
+            <nav>
+                <a class="side-link" href="/chercheur.html">
+                    Dashboard
+                </a>
+                <a class="side-link" href="/mon-espace.html">
+                    Mon espace
+                </a>
+                <a class="side-link" href="/parametres.html">
+                    Paramètres
+                </a>
+            </nav>
+        </aside>
+        <div class="workspace-main">
+            <header class="workspace-topbar">
+                <div class="workspace-context">
+                    <span>Questionnaire</span>
+                </div>
+                <div class="account-area">
+                    <button class="account-trigger" type="button"><span class="avatar av">--</span><span class="account-copy"><b class="account-name"></b><small>Chercheur</small></span></button>
+                    <div class="account-menu" id="pDD">
+                        <button class="out" type="button">Se déconnecter</button>
+                    </div>
+                </div>
+            </header>
+            <main class="content">
+                <section class="section-heading">
+                    <div>
+                        <h1 id="pageTitle">
+                            Nouveau questionnaire
+                        </h1>
+                        <p class="muted">
+                            Créez un questionnaire et structurez ses questions.
+                        </p>
+                    </div>
+                    <a class="button secondary" href="/chercheur.html">
+                        Retour au tableau
+                    </a>
+                </section>
+                <div class="editor-page form-fields">
+                    <label>
+                        Titre du questionnaire<input id="title" maxlength="160" required>
+                    </label>
+                    <label>
+                        Description<textarea id="description" rows="3"></textarea>
+                    </label>
+                    <div class="two-col">
+                        <label>
+                            Statut<select id="status"><option value="draft">Brouillon</option><option value="open">Ouvert</option><option value="closed">Terminé</option></select>
+                        </label>
+                        <label>
+                            Objectif de réponses<input id="target" type="number" min="0" value="100">
+                        </label>
+                    </div>
+                    <label>
+                        Structure du questionnaire<select id="structure"><option value="question">Questions directes</option><option value="section">Questions avec sections</option><option value="subsection">Questions avec sections et sous-sections</option></select><small>Ce choix définit le niveau des nouvelles questions. Vous pourrez le modifier question par question.</small>
+                    </label>
+                    <section class="question-builder-head">
+                        <div>
+                            <h2>
+                                Questions <span id="count">(0)</span><button class="help-dot inline-help" title="Une question peut être directe ou organisée dans une section et une sous-section.">?</button>
+                            </h2>
+                            <p class="muted">
+                                Choisissez une structure et un type de réponse.
+                            </p>
+                        </div>
+                    </section>
+                    <div id="error" class="editor-error" hidden>
+                    </div>
+                    <div id="questions" class="question-list">
+                    </div>
+                    <div class="toolbar-card">
+                        <label>
+                            Type de réponse<select id="type"><option value="scale">Échelle</option><option value="single">Choix unique</option><option value="multi">Choix multiple</option><option value="triangle">Logique floue — Triangle</option><option value="trapeze">Logique floue — Trapèze</option></select>
+                        </label>
+                        <button class="button secondary" id="add" type="button">＋ Ajouter une question</button><button class="button primary" id="save" type="button">Enregistrer</button>
+                    </div>
+                </div>
+            </main>
+        </div>
+        <script src="../js/auth.js">
+        </script>
+        <script src="../js/questionnaire-editor.js">
+        </script>
+    </body>
+</html>

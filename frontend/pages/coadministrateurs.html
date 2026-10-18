@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>Co-administrateurs · FUZZY-QUEST</title>
+        <link rel="stylesheet" href="../css/workspace.css">
+        <link rel="stylesheet" href="../css/admin.css">
+    </head>
+    <body class="workspace">
+        <aside class="sidebar">
+            <a class="workspace-brand" href="/chercheur.html">
+                <img src="/LOGO_FQ.png" alt=""><span><b>FUZZY-QUEST</b><small>Quest for truth</small></span>
+            </a>
+            <nav>
+                <a class="side-link" href="/chercheur.html">
+                    Dashboard
+                </a>
+                <a class="side-link" href="/mon-espace.html">
+                    Mon espace
+                </a>
+                <a class="side-link active" href="/parametres.html">
+                    Paramètres
+                </a>
+            </nav>
+        </aside>
+        <div class="workspace-main">
+            <header class="workspace-topbar">
+                <div class="workspace-context">
+                    <span>Co-administrateurs</span>
+                </div>
+                <div class="account-area">
+                    <button class="account-trigger" type="button"><span class="avatar av">--</span><span class="account-copy"><b class="account-name"></b><small>Chercheur</small></span></button>
+                    <div class="account-menu" id="pDD">
+                        <button class="out" type="button">Se déconnecter</button>
+                    </div>
+                </div>
+            </header>
+            <main class="content">
+                <section class="section-heading">
+                    <div>
+                        <h1>
+                            Co-administrateurs
+                        </h1>
+                        <p class="muted">
+                            Invitez des collègues chercheurs à collaborer sur vos questionnaires et groupes.
+                        </p>
+                    </div>
+                    <a class="button secondary" href="/parametres.html">
+                        Retour aux paramètres
+                    </a>
+                </section>
+                <div class="toolbar-card">
+                    <label>
+                        Adresse e-mail du chercheur<input type="email" id="email" placeholder="collegue@exemple.com">
+                    </label>
+                    <button class="button primary" id="add">Ajouter un collègue</button>
+                </div>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>
+                                    Nom
+                                </th>
+                                <th>
+                                    E-mail
+                                </th>
+                                <th>
+                                    Depuis
+                                </th>
+                                <th>
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="rows">
+                        </tbody>
+                    </table>
+                </div>
+            </main>
+        </div>
+        <script src="../js/auth.js">
+        </script>
+        <script src="../js/collaborators-page.js">
+        </script>
+    </body>
+</html>

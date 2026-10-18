@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>Mon espace · FUZZY-QUEST</title>
+        <link rel="stylesheet" href="../css/workspace.css">
+        <link rel="stylesheet" href="../css/admin.css">
+    </head>
+    <body class="workspace">
+        <aside class="sidebar">
+            <a class="workspace-brand" href="/chercheur.html">
+                <img src="/LOGO_FQ.png" alt=""><span><b>FUZZY-QUEST</b><small>Quest for truth</small></span>
+            </a>
+            <nav aria-label="Navigation">
+                <a class="side-link researcher-only" href="/chercheur.html">
+                    <span>
+                    <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z">
+                        </path>
+                    </svg>
+                    </span>Dashboard
+                </a>
+                <a class="side-link active" href="/mon-espace.html">
+                    <span>
+                    <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M4 5h16v14H4zM8 9h8M8 13h5">
+                        </path>
+                    </svg>
+                    </span>Mon espace
+                </a>
+                <a class="side-link researcher-only" href="/parametres.html">
+                    <span>
+                    <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M4 6h16M4 12h16M4 18h16">
+                        </path>
+                        <circle cx="9" cy="6" r="2" fill="white">
+                        </circle>
+                        <circle cx="15" cy="12" r="2" fill="white">
+                        </circle>
+                        <circle cx="8" cy="18" r="2" fill="white">
+                        </circle>
+                    </svg>
+                    </span>Paramètres
+                </a>
+            </nav>
+            <div class="sidebar-bottom">
+                <a class="side-link" href="#" id="spaceHelp">
+                    <span>?</span>Aide &amp; support
+                </a>
+            </div>
+        </aside>
+        <div class="workspace-main">
+            <header class="workspace-topbar">
+                <div class="workspace-context">
+                    <span class="page-context-title">Mon espace</span>
+                </div>
+                <div class="account-area">
+                    <button class="account-trigger" type="button"><span class="avatar av">--</span><span class="account-copy"><b class="account-name"></b><small id="spaceRole">Participant</small></span><span>⌄</span></button>
+                    <div class="account-menu" id="pDD">
+                        <div class="account-menu-head">
+                            <b class="account-name"></b><small class="account-email"></small>
+                        </div>
+                        <a class="researcher-only" href="/chercheur.html">
+                            Dashboard
+                        </a>
+                        <button class="out" type="button">Se déconnecter</button>
+                    </div>
+                </div>
+            </header>
+            <main class="content">
+                <section class="welcome-row">
+                    <div>
+                        <h1>
+                            Questionnaires disponibles
+                        </h1>
+                        <p class="muted">
+                            Retrouvez les questionnaires auxquels vous pouvez répondre et ceux déjà remplis.
+                        </p>
+                    </div>
+                    <div class="quick-stats">
+                        <div>
+                            <b id="availableCount">0</b><span>À remplir</span>
+                        </div>
+                        <div>
+                            <b id="answeredCount">0</b><span>Déjà traités</span>
+                        </div>
+                    </div>
+                </section>
+                <section class="toolbar-card">
+                    <label class="searchbox">
+                        <span>
+                        <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <circle cx="10.8" cy="10.8" r="6.8">
+                            </circle>
+                            <path d="m4.8 16.8-3 3">
+                            </path>
+                        </svg>
+                        </span><input id="spaceSearch" type="search" placeholder="Rechercher un questionnaire…" aria-label="Rechercher">
+                    </label>
+                    <select id="spaceFilter" aria-label="Filtrer les questionnaires"><option value="all">Tous</option><option value="todo">À remplir</option><option value="done">Déjà traités</option></select>
+                </section>
+                <section class="quiz-grid" id="spaceQuizGrid" aria-live="polite">
+                </section>
+            </main>
+        </div>
+        <script src="../js/auth.js">
+        </script>
+        <script src="../js/dashboard.js">
+        </script>
+        <script src="../js/my-space.js">
+        </script>
+    </body>
+</html>
