@@ -326,8 +326,8 @@ h1,h2,h3 {
     border:0;
     outline:0;
     box-shadow:none;
-    border-radius:7px;
-    background:#070311
+    border-radius:0;
+    background:transparent
 }
 .footer-main p {
     font-size:12px;
