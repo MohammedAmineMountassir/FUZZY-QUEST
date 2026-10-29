@@ -64,9 +64,13 @@ body {
     text-decoration: none;
 }
 .brand img {
-    clip-path: circle(47%);
-    width: 60px;
-    height: 60px;
+    width: 72px;
+    height: 72px;
+	padding: 3px;
+	border: none;
+	border-radius: 14px;
+	background: #ffffff;
+	object-fit: contain;
     flex-shrink: 0;
 }
 .brand b {

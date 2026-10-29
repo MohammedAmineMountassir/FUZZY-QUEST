@@ -36,10 +36,13 @@ h1,h2,h3 {
     gap:10px
 }
 .public-brand img {
-    width:43px;
-    height:43px;
-    object-fit:cover;
-    border-radius:11px
+	width:72px;
+	height:72px;
+	padding:3px;
+	border:none;
+	object-fit:contain;
+	border-radius:12px;
+	background:#ffffff
 }
 .public-brand b,.public-brand small {
     display:block

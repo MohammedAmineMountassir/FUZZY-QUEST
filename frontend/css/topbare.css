@@ -1,4 +1,4 @@
-﻿
+
 :root {
     color-scheme: light;
     --bg: #f4f6fa;
@@ -52,10 +52,13 @@ header.topbar {
     text-decoration: none;
 }
 .topbar .brand img {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    object-fit: cover;
+    width: 68px;
+    height: 68px;
+    padding: 3px;
+    border: none;
+    border-radius: 12px;
+    background: #ffffff;
+    object-fit: contain;
 }
 .topbar .brand b {
     display: block;
@@ -283,8 +286,8 @@ h2 {
         font-size: 13px;
     }
     .topbar .brand img {
-        width: 36px;
-        height: 36px;
+        width: 58px;
+        height: 58px;
     }
     .topbar a.nav {
         padding: 8px 10px;

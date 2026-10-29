@@ -44,10 +44,13 @@ a {
     padding:0 9px 29px
 }
 .workspace-brand img {
-    height:43px;
-    width:43px;
-    object-fit:cover;
-    border-radius:12px
+    height:64px;
+    width:64px;
+	padding:3px;
+	border:none;
+	object-fit:contain;
+	border-radius:12px;
+	background:#ffffff
 }
 .workspace-brand b,.workspace-brand small,.account-copy b,.account-copy small {
     display:block
