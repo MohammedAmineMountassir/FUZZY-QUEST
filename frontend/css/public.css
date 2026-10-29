@@ -320,6 +320,15 @@ h1,h2,h3 {
 .footer-main .public-brand small {
     color:#aab2c5
 }
+.footer-main .public-brand img {
+    display:block;
+    padding:0;
+    border:0;
+    outline:0;
+    box-shadow:none;
+    border-radius:7px;
+    background:#070311
+}
 .footer-main p {
     font-size:12px;
     color:#b9c1d1;
