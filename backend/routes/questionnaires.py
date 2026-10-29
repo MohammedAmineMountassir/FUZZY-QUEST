@@ -1,7 +1,9 @@
 """CRUD des questionnaires et collecte des réponses."""
 import json
+from backend import n8n
 from flask import Blueprint, jsonify, request
 from ..db import get_current_user, get_db, login_required, log_activity, serialize_questionnaire, utc_now
+
 questionnaires_bp = Blueprint('questionnaires', __name__, url_prefix='/api')
 VALID_STATUSES = {'open', 'draft', 'closed'}
 
@@ -28,6 +30,44 @@ def questionnaire_templates():
         builtins.insert(0, item)
     return jsonify(templates=builtins)
 
+@questionnaires_bp.get('/questionnaires/<int:item_id>/recipients')
+def get_questionnaire_recipients(item_id):
+    """Endpoint dédié à n8n : récupère la liste des e-mails des participants concernés par un questionnaire ouvert."""
+    row = get_db().execute('SELECT id, title, status FROM questionnaires WHERE id=?', (item_id,)).fetchone()
+    if not row:
+        return jsonify(error='NOT_FOUND'), 404
+        
+    # Vérifie si le questionnaire a des groupes spécifiques assignés
+    assigned = get_db().execute('SELECT 1 FROM questionnaire_groups WHERE questionnaire_id=?', (item_id,)).fetchone()
+    
+    if not assigned:
+        # Aucun groupe assigné = public, on prend tous les utilisateurs ayant un e-mail
+        rows = get_db().execute('SELECT email FROM users WHERE email IS NOT NULL').fetchall()
+    else:
+        # Groupes assignés : on récupère les membres de ces groupes ou des groupes publics liés
+        query = """
+            SELECT DISTINCT u.email 
+            FROM users u
+            JOIN group_members gm ON u.id = gm.user_id
+            JOIN questionnaire_groups qg ON gm.group_id = qg.group_id
+            WHERE qg.questionnaire_id = ? AND u.email IS NOT NULL
+            UNION
+            SELECT DISTINCT u.email
+            FROM users u
+            JOIN research_groups g ON g.is_public = 1
+            JOIN questionnaire_groups qg ON g.id = qg.group_id
+            WHERE qg.questionnaire_id = ? AND u.email IS NOT NULL
+        """
+        rows = get_db().execute(query, (item_id, item_id)).fetchall()
+        
+    emails = [r['email'] for r in rows]
+    
+    return jsonify(
+        questionnaire_id=row['id'],
+        title=row['title'],
+        recipients=emails
+    )
+
 @questionnaires_bp.post('/questionnaires')
 @login_required
 def create_questionnaire():
@@ -46,9 +86,13 @@ def create_questionnaire():
         return (jsonify(error='INVALID_INPUT', message='L’objectif de réponses doit être un nombre.'), 400)
     now = utc_now()
     cursor = get_db().execute('INSERT INTO questionnaires(owner_id,title,description,status,target,questions,created_at,updated_at) VALUES(?,?,?,?,?,?,?,?)', (user['id'], title, str(data.get('description', '')).strip(), status, target, json.dumps(questions, ensure_ascii=False), now, now))
-    get_db().commit()
     log_activity('Questionnaire publié' if status == 'open' else 'Questionnaire créé', title, 'Publication initiale' if status == 'open' else 'Brouillon créé', user)
     get_db().commit()
+    
+    # n8n : notifie si le questionnaire est créé directement en mode "open"
+    if status == 'open':
+        n8n.notify_open(get_db(), cursor.lastrowid, title)
+        
     row = get_db().execute('SELECT * FROM questionnaires WHERE id=?', (cursor.lastrowid,)).fetchone()
     return (jsonify(questionnaire=serialize_questionnaire(row)), 201)
 
@@ -91,6 +135,11 @@ def questionnaire_detail(item_id):
     action = 'Questionnaire publié' if status == 'open' and row['status'] != 'open' else 'Questionnaire modifié'
     log_activity(action, title, 'Questionnaire mis à jour', user)
     get_db().commit()
+    
+    # n8n : déclenché uniquement au passage de brouillon (ou fermé) vers "open"
+    if status == 'open' and row['status'] != 'open':
+        n8n.notify_open(get_db(), item_id, title)
+        
     updated = get_db().execute('SELECT * FROM questionnaires WHERE id=?', (item_id,)).fetchone()
     return jsonify(questionnaire=serialize_questionnaire(updated))
 
