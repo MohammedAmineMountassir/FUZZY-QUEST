@@ -39,6 +39,6 @@ def javascript(name):
 
 @pages_bp.get('/<asset>')
 def asset(asset):
-    if asset in {'logo.jpeg', 'LOGO_FQ.png', 'LOGO_FQ_dark.png', 'LOGO_FQ_footer.png', 'icons.svg'}:
-        return send_from_directory(FRONTEND, 'LOGO_FQ.png' if asset == 'logo.jpeg' else asset)
+    if asset in {'LOGO_FQ.png', 'icons.svg'}:
+        return send_from_directory(FRONTEND, asset)
     return ('Ressource introuvable', 404)

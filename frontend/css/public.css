@@ -38,11 +38,11 @@ h1,h2,h3 {
 .public-brand img {
 	width:72px;
 	height:72px;
-	padding:3px;
+	padding:0;
 	border:none;
 	object-fit:contain;
-	border-radius:12px;
-	background:#ffffff
+	border-radius:0;
+	background:transparent
 }
 .public-brand b,.public-brand small {
     display:block

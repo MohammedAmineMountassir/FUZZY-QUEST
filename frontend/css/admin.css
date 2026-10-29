@@ -313,7 +313,7 @@
     width:64px;
     height:64px;
     object-fit:contain;
-    background:#fff
+    background:transparent
 }
 @media(max-width:760px) {
     .dashboard-toolbar {

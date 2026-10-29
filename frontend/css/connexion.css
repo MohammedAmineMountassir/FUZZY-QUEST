@@ -66,10 +66,10 @@ body {
 .brand img {
     width: 72px;
     height: 72px;
-	padding: 3px;
+	padding: 0;
 	border: none;
-	border-radius: 14px;
-	background: #ffffff;
+	border-radius: 0;
+	background: transparent;
 	object-fit: contain;
     flex-shrink: 0;
 }

@@ -54,10 +54,10 @@ header.topbar {
 .topbar .brand img {
     width: 68px;
     height: 68px;
-    padding: 3px;
+    padding: 0;
     border: none;
-    border-radius: 12px;
-    background: #ffffff;
+    border-radius: 0;
+    background: transparent;
     object-fit: contain;
 }
 .topbar .brand b {
