@@ -54,7 +54,7 @@
         var result = await api('/api/admin/researchers');
         researchers = result.users;
         $('researcherRows').innerHTML = researchers.length ? researchers.map(function (u) {
-            return '<tr data-user-row="' + u.id + '"><td><b>' + esc(u.first_name + ' ' + u.last_name) + '</b></td><td>' + esc(u.email) + '</td><td>' + u.questionnaire_count + '</td><td>' + u.distributed_count + '</td><td><span class="status-badge ' + (u.is_active ? 'status-open' : 'status-closed') + '">' + (u.is_active ? 'Actif' : 'Désactivé') + '</span></td><td>' + date(u.last_logout_at, true) + '</td><td><button class="button text small" data-researcher-action="' + (u.is_active ? 'disable' : 'enable') + '" data-id="' + u.id + '">' + (u.is_active ? 'Désactiver' : 'Réactiver') + '</button><button class="button text small" data-researcher-action="reset-password" data-id="' + u.id + '">Réinitialiser le mot de passe</button></td></tr>';
+            return '<tr data-user-row="' + u.id + '"><td><b>' + esc(u.first_name + ' ' + u.last_name) + '</b></td><td>' + esc(u.email) + '</td><td>' + u.questionnaire_count + '</td><td>' + u.distributed_count + '</td><td><span class="status-badge ' + (u.is_active ? 'status-open' : 'status-closed') + '">' + (u.is_active ? 'Actif' : 'Désactivé') + '</span></td><td>' + date(u.last_logout_at, true) + '</td><td><button class="button text small" data-researcher-action="' + (u.is_active ? 'disable' : 'enable') + '" data-id="' + u.id + '">' + (u.is_active ? 'Désactiver' : 'Réactiver') + '</button></td></tr>';
         }).join(''): '<tr><td colspan="7">Aucun compte chercheur.</td></tr>';
         filterResearchers();
     }
@@ -69,16 +69,13 @@
         });
     }
     async function loadRequests() {
-        var result = await Promise.all([api('/api/admin/account-requests'),
-            api('/api/admin/password-requests')]), accounts = result[0].requests, passwords = result[1].requests;
+        var result = await api('/api/admin/account-requests');
+        var accounts = result.requests;
         var badge = $('requestBadge');
         if (badge) badge.textContent = accounts.length;
         $('accountRequestRows').innerHTML = accounts.length ? accounts.map(function (r) {
             return '<tr><td><b>' + esc(r.first_name + ' ' + r.last_name) + '</b></td><td>' + esc(r.email) + '</td><td>' + esc(r.phone) + '</td><td>' + (r.requested_role === 'participant' ? 'Participant' : 'Chercheur') + '</td><td>' + date(r.created_at, true) + '</td><td><button class="button primary small" data-account="approve" data-id="' + r.id + '">Accepter</button> <button class="button danger-text small" data-account="reject" data-id="' + r.id + '">Refuser</button></td></tr>';
         }).join(''): '<tr><td colspan="6">Aucune demande en attente.</td></tr>';
-        $('passwordRequestRows').innerHTML = passwords.length ? passwords.map(function (r) {
-            return '<tr><td><b>' + esc(r.first_name + ' ' + r.last_name) + '</b></td><td>' + esc(r.email) + '</td><td>' + date(r.created_at, true) + '</td><td><button class="button primary small" data-password="approve" data-id="' + r.id + '">Créer un lien de réinitialisation</button> <button class="button danger-text small" data-password="reject" data-id="' + r.id + '">Refuser</button></td></tr>';
-        }).join(''): '<tr><td colspan="4">Aucune demande en attente.</td></tr>';
     }
     async function loadTemplates() {
         var result = await api('/api/admin/templates');
@@ -170,12 +167,13 @@
                         alert(err.message);
                     }
                 }
-                var account = e.target.closest('[data-account]'), password = e.target.closest('[data-password]');
-                if (account || password) {
-                    var target = account || password, kind = account ? 'account-requests' : 'password-requests';
-                    if (target.dataset[account ? 'account' : 'password'] === 'reject' && !confirm('Refuser cette demande ?')) return;
+                var account = e.target.closest('[data-account]');
+                if (account) {
+                    var target = account;
+                    var kind = 'account-requests';
+                    if (target.dataset.account === 'reject' && !confirm('Refuser cette demande ?')) return;
                     try {
-                        var out2 = await api('/api/admin/' + kind + '/' + target.dataset.id + '/' + target.dataset[account ? 'account' : 'password'], {
+                        var out2 = await api('/api/admin/' + kind + '/' + target.dataset.id + '/' + target.dataset.account, {
                             method: 'POST'
                         });
                         if (out2.dev_link) alert(out2.message + '\n\nLien de test : ' + out2.dev_link);
