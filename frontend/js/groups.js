@@ -27,7 +27,7 @@
         var r = await api('/api/groups');
         groups = r.groups;
         $('groupRows').innerHTML = groups.length ? groups.map(function (g) {
-            return '<tr><td><b>' + esc(g.name) + '</b><small class="table-subline">Créé le ' + date(g.created_at) + '</small></td><td>' + esc(g.description || '—') + '</td><td>' + g.participant_count + '</td><td>' + g.distributed_count + '</td><td><button class="button secondary small" data-open-group="' + g.id + '">Ouvrir</button></td></tr>';
+            return '<tr><td><b>' + esc(g.name) + '</b><small class="table-subline">Créé le ' + date(g.created_at) + '</small></td><td>' + esc(g.description || '—') + '</td><td>' + g.participant_count + '</td><td>' + g.distributed_count + '</td><td><div class="row-actions"><a class="button secondary small" href="/groupe.html?id=' + g.id + '">Ouvrir</a><button class="button danger small" type="button" data-delete-group="' + g.id + '">Supprimer</button></div></td></tr>';
         }).join(''): '<tr><td colspan="5">Aucun groupe. Créez votre premier groupe.</td></tr>';
     }
     async function openGroup(id) {
@@ -75,32 +75,10 @@
     document.addEventListener('DOMContentLoaded', async function () {
         try {
             await load();
-            $('newGroup').onclick = function () {
-                $('newGroupName').value = '';
-                $('newGroupDescription').value = '';
-                $('newGroupPublic').checked = false;
-                $('createGroupDialog').showModal();
-            };
             $('groupRows').addEventListener('click', function (e) {
-                var b = e.target.closest('[data-open-group]');
-                if (b) openGroup(Number(b.dataset.openGroup));
+                var b = e.target.closest('[data-delete-group]');
+                if (b) deleteGroup(Number(b.dataset.deleteGroup), b);
             });
-            $('createGroup').onclick = async function () {
-                try {
-                    await api('/api/groups', {
-                        method: 'POST',
-                        body: JSON.stringify({
-                            name: $('newGroupName').value.trim(),
-                            description: $('newGroupDescription').value.trim(),
-                            is_public: $('newGroupPublic').checked
-                        })
-                    });
-                    $('createGroupDialog').close();
-                    await load();
-                } catch (e) {
-                    alert(e.message);
-                }
-            };
             $('saveGroupName').onclick = async function () {
                 if (!active) return;
                 try {
@@ -221,4 +199,10 @@
             $('groupRows').innerHTML = '<tr><td colspan="5">' + esc(e.message) + '</td></tr>';
         }
     });
+    async function deleteGroup(id, button) {
+        if (!confirm('Supprimer ce groupe ? Cette action est définitive.')) return;
+        button.disabled = true;
+        try { await api('/api/groups/' + id, {method:'DELETE'}); await load(); }
+        catch (e) { alert(e.message); button.disabled = false; }
+    }
 })();

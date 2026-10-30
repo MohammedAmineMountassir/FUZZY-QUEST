@@ -25,7 +25,7 @@ def page(page):
         admin_exists = get_db().execute("SELECT 1 FROM users WHERE role='admin' LIMIT 1").fetchone()
         if not admin_exists:
             return redirect('/administration-initiale.html')
-    if page not in {'connexion', 'inscription', 'chercheur', 'participant', 'mon-espace', 'parametres', 'mes_questionnaires', 'questionnaire', 'administration', 'groupes', 'activation', 'mot-de-passe', 'creer-questionnaire', 'bibliotheque', 'coadministrateurs', 'journal-chercheur', 'administration-initiale'}:
+    if page not in {'connexion', 'inscription', 'chercheur', 'participant', 'mon-espace', 'parametres', 'mes_questionnaires', 'questionnaire', 'administration', 'groupes', 'activation', 'mot-de-passe', 'creer-questionnaire', 'bibliotheque', 'coadministrateurs', 'journal-chercheur', 'administration-initiale', 'nouveau-groupe', 'groupe', 'creer-modele'}:
         return ('Page introuvable', 404)
     return send_from_directory(FRONTEND / 'pages', page + '.html')
 

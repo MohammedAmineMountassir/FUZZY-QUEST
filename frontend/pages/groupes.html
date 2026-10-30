@@ -27,7 +27,7 @@
         <div class="workspace-main">
             <header class="workspace-topbar">
                 <div class="workspace-context">
-                    <span class="eyebrow">PARAMÈTRES</span><span>Groupes de participants</span>
+                    <span>Groupes</span>
                 </div>
                 <div class="account-area">
                     <button class="account-trigger" type="button"><span class="avatar av">--</span><span class="account-copy"><b class="account-name"></b><small>Chercheur</small></span>⌄</button>
@@ -59,7 +59,7 @@
                         <a class="button secondary" href="/api/groups/import-template.xlsx" download="modele-participants.xlsx">
                             Télécharger le modèle Excel
                         </a>
-                        <button id="newGroup" class="button primary">＋ Nouveau groupe</button>
+                        <a id="newGroup" class="button primary" href="/nouveau-groupe.html">＋ Nouveau groupe</a>
                     </div>
                 </section>
                 <div class="table-wrap">
@@ -94,7 +94,7 @@
                 </div>
             </main>
         </div>
-        <dialog class="modal" id="createGroupDialog">
+        <dialog class="modal" id="createGroupDialog" hidden>
             <div class="modal-head">
                 <div>
                     <p class="eyebrow">
@@ -174,7 +174,7 @@
                 <button class="button danger-text" id="deleteGroup">Supprimer le groupe</button><button class="button secondary" data-close="groupDialog">Fermer</button>
             </div>
         </dialog>
-        <script src="../js/auth.js">
+        <script src="/js/workspace-shell.js"></script><script src="../js/auth.js">
         </script>
         <script src="../js/dashboard.js">
         </script>

@@ -143,9 +143,6 @@
             $('newResearcher').onclick = function () {
                 $('researcherDialog').showModal();
             };
-            $('newTemplate').onclick = function () {
-                openTemplate(null);
-            };
             $('addTemplateQuestion').onclick = function () {
                 addQuestion();
             };

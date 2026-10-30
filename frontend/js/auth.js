@@ -57,6 +57,16 @@
             return api('/api/auth/me');
         }
     };
+    window.FQAuth.me().then(function (result) {
+        var user = result && result.user;
+        if (!user) return;
+        var fullName = [user.first_name, user.last_name].filter(Boolean).join(' ');
+        var role = user.role === 'admin' ? 'Administrateur' : user.role === 'researcher' ? 'Chercheur' : 'Participant';
+        document.querySelectorAll('.account-name').forEach(function (el) { el.textContent = fullName; });
+        document.querySelectorAll('.account-email').forEach(function (el) { el.textContent = user.email || ''; });
+        document.querySelectorAll('.account-copy small').forEach(function (el) { el.textContent = role; });
+        document.querySelectorAll('.av').forEach(function (el) { el.textContent = [user.first_name, user.last_name].filter(Boolean).map(function (s) { return s[0]; }).join('').toUpperCase(); });
+    }).catch(function () {});
     document.querySelectorAll('.account-trigger, .av, .who').forEach(function (trigger) {
         trigger.addEventListener('click', function (event) {
             if (trigger.classList.contains('av') && trigger.closest('.account-trigger')) return;
@@ -89,7 +99,7 @@
     });
     document.querySelectorAll('.help-link').forEach(function (button) {
         button.addEventListener('click', function () {
-            alert('Besoin d’aide ? Utilisez la navigation latérale pour accéder aux questionnaires, aux groupes ou aux paramètres.');
+            alert('Aide & support\n\nDashboard : retrouvez vos questionnaires et leurs résultats.\nNouveau questionnaire : créez une étude et ajoutez ses questions.\nGroupes : organisez vos participants et gérez leurs invitations.\nBibliothèque : démarrez à partir d’un modèle prêt à l’emploi.\nParamètres : gérez votre profil et vos accès.\n\nPour obtenir de l’aide, contactez l’administrateur de votre espace.');
         });
     });
 })();
