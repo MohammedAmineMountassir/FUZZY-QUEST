@@ -645,7 +645,39 @@ a {
     gap:11px;
     border:1px solid var(--line);
     border-radius:9px;
-    padding:11px
+    padding:11px;
+    cursor:pointer;
+    transition:border-color .15s,background-color .15s,box-shadow .15s
+}
+.check-row:hover {
+    border-color:#c9c4f8;
+    background:#faf9ff
+}
+.check-row:focus-within {
+    border-color:var(--purple);
+    box-shadow:0 0 0 3px rgba(81,69,205,.12)
+}
+.form-fields .check-row input[type="checkbox"],
+.check-list .check-row input[type="checkbox"] {
+    appearance:auto;
+    -webkit-appearance:checkbox;
+    width:17px;
+    height:17px;
+    min-width:17px;
+    margin:0;
+    padding:0;
+    flex:0 0 17px;
+    accent-color:var(--purple);
+}
+.form-fields label.check-row {
+    display:flex;
+    grid-template-columns:none;
+    align-items:center;
+    gap:11px;
+}
+.check-row span {
+    min-width:0;
+    flex:1;
 }
 .check-row span b,.check-row span small {
     display:block

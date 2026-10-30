@@ -27,6 +27,12 @@
         return '<a' + adminAttribute + ' class="side-link' + (active ? ' active' : '') + '" href="' + href + '"><span>' + icon(glyph) + '</span>' + label + '</a>';
     }
     function render() {
+        if (!document.querySelector('script[data-fq-help]')) {
+            var helpScript = document.createElement('script');
+            helpScript.src = '/js/help.js?v=help-panel-20261030';
+            helpScript.dataset.fqHelp = '';
+            document.body.appendChild(helpScript);
+        }
         // La page historique reste le portail des participants, avec sa propre navigation.
         if (path === '/mon-espace.html') return;
         var aside = document.querySelector('.sidebar');
@@ -64,6 +70,14 @@
     render();
     window.addEventListener('group-name-updated', function (event) {
         var label = event.detail && event.detail.name;
-        if (label) { var context = document.querySelector('.workspace-context'); if (context) context.innerHTML = '<span class="page-context-title">' + label + '</span>'; }
+        if (label) {
+            var context = document.querySelector('.workspace-context');
+            if (context) {
+                var title = document.createElement('span');
+                title.className = 'page-context-title';
+                title.textContent = label;
+                context.replaceChildren(title);
+            }
+        }
     });
 })();
