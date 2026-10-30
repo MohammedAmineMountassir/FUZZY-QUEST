@@ -193,13 +193,13 @@
             var chips = assigned.map(function (name) {
                 return '<span class="tag">' + esc(name) + '</span>';
             }).join('');
-            if (q.is_public) chips += '<span class="tag public-tag">Public</span>';
+            if (q.is_public) chips += '<span class="tag public-tag">Lien public</span>';
             if (!chips) chips = '<span class="tag muted-tag">Aucun groupe</span>';
             return '<article class="quiz-card"><div class="quiz-card-top"><span class="status-badge status-' + q.status + '">' + statusLabels[q.status] + '</span><button class="more-button" data-action="menu" data-id="' + q.id + '" aria-label="Actions">•••</button></div>' + '<h3>' + esc(q.title) + '</h3><p class="quiz-description">' + esc(q.description || 'Aucune description') + '</p><small class="progress-caption">Créé le ' + esc(new Intl.DateTimeFormat('fr-FR', {
                 dateStyle: 'medium'
             }).format(new Date(q.created_at))) + ' · modifié le ' + esc(new Intl.DateTimeFormat('fr-FR', {
                 dateStyle: 'medium'
-            }).format(new Date(q.updated_at))) + (q.target ? ' · Objectif : ' + q.target + ' réponses': '') + '</small>' + '<div class="quiz-metrics"><span>' + q.questions.length + ' question' + (q.questions.length > 1 ? 's' : '') + '</span><span>' + q.responses + ' réponse' + (q.responses > 1 ? 's' : '') + '</span></div>' + '<div class="progress-track"><i style="width:' + percent + '%"></i></div><small class="progress-caption">' + (q.target ? q.responses + ' sur ' + q.target + ' réponses visées': 'Aucun objectif défini') + '</small>' + '<div class="group-tags">' + chips + '</div><div class="card-actions"><a class="button primary small" href="/questionnaire.html?id=' + q.id + '">Consulter</a><button class="button text small" data-action="edit" data-id="' + q.id + '">Éditer</button><button class="button text small" data-action="link" data-id="' + q.id + '" ' + (q.status !== 'open' || (q.group_ids.length && !q.is_public) ? 'disabled title="Ouvrez le questionnaire et activez sa diffusion publique dans Groupes"' : '') + '>Lien public</button><button class="button text small" data-action="duplicate" data-id="' + q.id + '">Dupliquer</button><button class="button text small" data-action="assign" data-id="' + q.id + '">Groupes</button><button class="button danger-text small" data-action="delete" data-id="' + q.id + '">Supprimer</button></div></article>';
+            }).format(new Date(q.updated_at))) + (q.target ? ' · Objectif : ' + q.target + ' réponses': '') + '</small>' + '<div class="quiz-metrics"><span>' + q.questions.length + ' question' + (q.questions.length > 1 ? 's' : '') + '</span><span>' + q.responses + ' réponse' + (q.responses > 1 ? 's' : '') + '</span></div>' + '<div class="progress-track"><i style="width:' + percent + '%"></i></div><small class="progress-caption">' + (q.target ? q.responses + ' sur ' + q.target + ' réponses visées': 'Aucun objectif défini') + '</small>' + '<div class="group-tags">' + chips + '</div><div class="card-actions"><button class="button text small" data-action="duplicate" data-id="' + q.id + '"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="13" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg><span>Dupliquer</span></button><button class="button text small" data-action="edit" data-id="' + q.id + '"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 5 5 5M4 20l4-.8L19 8a2.1 2.1 0 0 0-3-3L5 16z"/></svg><span>Éditer</span></button><button class="button text small" data-action="link" data-id="' + q.id + '" ' + (q.status !== 'open' || (!q.group_ids.length && !q.is_public) ? 'disabled title="Ouvrez le questionnaire et attribuez-le à un groupe ou publiez-le"' : '') + '><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.1 0l3-3A5 5 0 0 0 13 2.9l-1.7 1.7M14 11a5 5 0 0 0-7.1 0l-3 3A5 5 0 0 0 11 21.1l1.7-1.7"/></svg><span>Lien</span></button><button class="button text small" data-action="assign" data-id="' + q.id + '"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3 20v-1a6 6 0 0 1 12 0v1M16 5a3 3 0 0 0 0 6"/></svg><span>Groupe</span></button><button class="button danger-text small" data-action="delete" data-id="' + q.id + '"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M5 7l1 14h12l1-14M9 7V4h6v3"/></svg><span>Supprimer</span></button></div></article>';
         }).join('');
     }
     function renderAnalytics(rows) {
@@ -250,14 +250,14 @@
         if (button.dataset.action === 'new') location.href = '/creer-questionnaire.html';
         if (button.dataset.action === 'edit') location.href = '/creer-questionnaire.html?id=' + id;
         if (button.dataset.action === 'assign') openAssignment(id);
-        if (button.dataset.action === 'link' && item && item.status === 'open' && (!item.group_ids.length || item.is_public)) {
+        if (button.dataset.action === 'link' && item && item.status === 'open' && (item.group_ids.length || item.is_public)) {
             var link = new URL('/questionnaire.html?id=' + id, location.origin).href;
-            try {
-                await navigator.clipboard.writeText(link);
-                button.textContent = 'Lien copié';
-            } catch (_) {
-                window.prompt('Copiez le lien public du questionnaire :', link);
-            }
+            $('linkTitle').textContent = item.title; $('questionnaireLink').href = link; $('questionnaireLink').textContent = link; $('openQuizLink').href = link; $('qrOpenLink').href = link;
+            $('questionnaireQr').src = 'https://api.qrserver.com/v1/create-qr-code/?size=240x240&margin=8&data=' + encodeURIComponent(link);
+            var hasRecipients = groups.some(function(group){return !group.is_public && item.group_ids.indexOf(group.id) !== -1;});
+            $('linkNotice').textContent = hasRecipients ? 'Lien destiné aux participants des groupes attribués.' : 'Ce questionnaire est accessible à toute personne disposant du lien.';
+            $('sendQuizLink').disabled = !hasRecipients;
+            $('linkDialog').showModal();
         }
         if (button.dataset.action === 'duplicate' && confirm('Créer une copie brouillon de ce questionnaire ?')) {
             await api('/api/questionnaires/' + id + '/duplicate', {
@@ -391,6 +391,8 @@
                     status: 'draft'
                 });
             });
+            $('copyQuizLink').onclick = async function(){var input=$('questionnaireLink');try{await navigator.clipboard.writeText(input.href);$('copyQuizLink').textContent='Lien copié';}catch(_){var range=document.createRange();range.selectNodeContents(input);window.getSelection().removeAllRanges();window.getSelection().addRange(range);document.execCommand('copy');window.getSelection().removeAllRanges();}};
+            $('sendQuizLink').onclick = async function(){var button=$('sendQuizLink'),id=new URL($('questionnaireLink').href).searchParams.get('id');button.disabled=true;try{var result=await api('/api/questionnaires/'+encodeURIComponent(id)+'/send-link',{method:'POST'});$('linkNotice').textContent=result.message;}catch(error){$('linkNotice').textContent=error.message;}finally{button.disabled=false;}};
             $('saveAssignment').onclick = async function () {
                 var groupIds = Array.from($('assignGroups').querySelectorAll('input:checked')).map(function (input) {
                     return Number(input.value);

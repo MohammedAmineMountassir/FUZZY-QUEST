@@ -1,1 +1,149 @@
-<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Groupe · FUZZY-QUEST</title><link rel="stylesheet" href="/css/workspace.css"><link rel="stylesheet" href="/css/admin.css"></head><body class="workspace"><aside class="sidebar"><a class="workspace-brand" href="/chercheur.html"><img src="/LOGO_FQ.png" alt=""><span><b>FUZZY-QUEST</b><small>Quest For Truth</small></span></a><nav aria-label="Navigation chercheur"><a class="side-link" href="/chercheur.html"><span>⌂</span>Dashboard</a><a class="side-link" href="/mon-espace.html"><span>▣</span>Mon espace</a><a class="side-link active" href="/groupes.html"><span>♧</span>Groupes</a><a class="side-link" href="/parametres.html"><span>⚙</span>Paramètres</a></nav></aside><div class="workspace-main"><header class="workspace-topbar"><div class="workspace-context"><span id="pageContext">Groupe</span></div><div class="account-area"><button class="account-trigger" type="button"><span class="avatar av">--</span><span class="account-copy"><b class="account-name"></b><small>Chercheur</small></span>⌄</button><div class="account-menu" id="pDD"><div class="account-menu-head"><b class="account-name"></b><small class="account-email"></small></div><button type="button" class="help-link">Aide &amp; support</button><button type="button" class="out">Se déconnecter</button></div></div></header><main class="content"><section class="welcome-row"><div><p class="eyebrow">GESTION DU GROUPE</p><h1 id="groupTitle">Chargement…</h1><p class="muted">Gérez les informations et les participants de ce groupe.</p></div><a class="button secondary" href="/groupes.html">← Tous les groupes</a></section><div class="editor-page form-fields"><section><h2>Informations</h2><label>Nom du groupe<input id="groupName" maxlength="120"></label><label>Description<textarea id="groupDescription" rows="2"></textarea></label><button class="button secondary" id="saveGroup">Enregistrer les modifications</button></section><section class="question-builder-head"><h2>Inscription par lien</h2><p class="muted">Créez un lien que les participants pourront utiliser pour demander à rejoindre ce groupe.</p><button class="button secondary" id="inviteLink">Générer et copier le lien d’inscription</button></section><section class="question-builder-head"><h2>Importer des participants</h2><p class="muted">Importez une liste CSV ou Excel avec les colonnes E-mail, Nom et Prénom.</p><a class="button text" href="/api/groups/import-template.xlsx" download="modele-participants.xlsx">Télécharger le modèle Excel</a><label class="button secondary file-button">Choisir un fichier Excel ou CSV<input type="file" id="memberFile" accept=".xlsx,.csv,.txt" hidden></label></section><section class="question-builder-head"><h2>Ajouter un participant</h2><div class="two-col"><label>Nom et prénom<input id="memberName" placeholder="Prénom Nom"></label><label>Adresse e-mail<input id="memberEmail" type="email" placeholder="nom@exemple.com"></label></div><button class="button primary" id="addMember">＋ Ajouter le participant</button></section><section class="question-builder-head"><h2>Participants <span id="memberCount"></span></h2><div id="memberRows" class="member-list"></div></section><div class="editor-error" id="error" role="alert" hidden></div></div></main></div><script src="/js/workspace-shell.js"></script><script src="/js/auth.js"></script><script src="/js/group-detail.js"></script></body></html>
+<!doctype html>
+<html lang="fr">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>Groupe · FUZZY-QUEST</title>
+	<link rel="stylesheet" href="/css/workspace.css">
+	<link rel="stylesheet" href="/css/admin.css">
+</head>
+
+<body class="workspace">
+	<aside class="sidebar">
+            <a class="workspace-brand" href="/chercheur.html">
+                <img src="/LOGO_FQ.png" alt=""><span><b>FUZZY-QUEST</b><small>Quest For Truth</small></span>
+            </a>
+            <nav aria-label="Navigation chercheur">
+                <a class="side-link" href="/chercheur.html">
+                    <span>
+                    <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z">
+                        </path>
+                    </svg>
+                    </span>Dashboard
+                </a>
+                <a class="side-link" href="/mon-espace.html">
+                    <span>
+                    <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M4 5h16v14H4zM8 9h8M8 13h5">
+                        </path>
+                    </svg>
+                    </span>Mon espace
+                </a>
+                <a class="side-link active" href="/parametres.html">
+                    <span>
+                    <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M4 6h16M4 12h16M4 18h16">
+                        </path>
+                        <circle cx="9" cy="6" r="2" fill="white">
+                        </circle>
+                        <circle cx="15" cy="12" r="2" fill="white">
+                        </circle>
+                        <circle cx="8" cy="18" r="2" fill="white">
+                        </circle>
+                    </svg>
+                    </span>Paramètres
+                </a>
+            </nav>
+            <div class="sidebar-bottom">
+                <a class="side-link" href="#" id="helpSettings">
+                    <span>?</span>Aide &amp; support
+                </a>
+            </div>
+        </aside>
+
+	<div class="workspace-main">
+		<header class="workspace-topbar">
+			<div class="workspace-context">
+				<span id="pageContext">Groupe</span>
+			</div>
+			<div class="account-area">
+				<button class="account-trigger" type="button">
+					<span class="avatar av">--</span>
+					<span class="account-copy">
+						<b class="account-name"></b>
+						<small>Chercheur</small>
+					</span>
+					⌄
+				</button>
+				<div class="account-menu" id="pDD">
+					<div class="account-menu-head">
+						<b class="account-name"></b>
+						<small class="account-email"></small>
+					</div>
+					<button type="button" class="help-link">Aide &amp; support</button>
+					<button type="button" class="out">Se déconnecter</button>
+				</div>
+			</div>
+		</header>
+
+		<main class="content">
+			<section class="welcome-row">
+				<div>
+					<p class="eyebrow">GESTION DU GROUPE</p>
+					<h1 id="groupTitle">Chargement…</h1>
+					<p class="muted">Gérez les informations et les participants de ce groupe.</p>
+				</div>
+				<a class="button secondary" href="/groupes.html">← Tous les groupes</a>
+			</section>
+
+			<div class="editor-page form-fields">
+				<section>
+					<h2>Informations</h2>
+					<label>
+						Nom du groupe
+						<input id="groupName" maxlength="120">
+					</label>
+					<label>
+						Description
+						<textarea id="groupDescription" rows="2"></textarea>
+					</label>
+					<button class="button secondary" id="saveGroup">Enregistrer les modifications</button>
+				</section>
+
+				<section class="question-builder-head">
+					<h2>Inscription par lien</h2>
+					<p class="muted">Créez un lien que les participants pourront utiliser pour demander à rejoindre ce groupe.</p>
+					<button class="button secondary" id="inviteLink">Générer et copier le lien d’inscription</button>
+				</section>
+
+				<section class="question-builder-head">
+					<h2>Importer des participants</h2>
+					<p class="muted">Importez une liste CSV ou Excel avec les colonnes E-mail, Nom et Prénom.</p>
+					<a class="button text" href="/api/groups/import-template.xlsx" download="modele-participants.xlsx">Télécharger le modèle Excel</a>
+					<label class="button secondary file-button">
+						Choisir un fichier Excel ou CSV
+						<input type="file" id="memberFile" accept=".xlsx,.csv,.txt" hidden>
+					</label>
+				</section>
+
+				<section class="question-builder-head">
+					<h2>Ajouter un participant</h2>
+					<div class="two-col">
+						<label>
+							Nom et prénom
+							<input id="memberName" placeholder="Prénom Nom">
+						</label>
+						<label>
+							Adresse e-mail
+							<input id="memberEmail" type="email" placeholder="nom@exemple.com">
+						</label>
+					</div>
+					<button class="button primary" id="addMember">＋ Ajouter le participant</button>
+				</section>
+
+				<section class="question-builder-head">
+					<h2>Participants <span id="memberCount"></span></h2>
+					<div id="memberRows" class="member-list"></div>
+				</section>
+
+				<div class="editor-error" id="error" role="alert" hidden></div>
+			</div>
+		</main>
+	</div>
+
+	<script src="/js/workspace-shell.js"></script>
+	<script src="/js/auth.js"></script>
+	<script src="/js/group-detail.js"></script>
+</body>
+</html>

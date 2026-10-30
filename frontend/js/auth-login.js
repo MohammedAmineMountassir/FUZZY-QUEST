@@ -21,7 +21,8 @@
         button.textContent = 'Connexion…';
         try {
             var user = await FQAuth.login(document.getElementById('identifiant').value.trim(), document.getElementById('motdepasse').value);
-            location.assign(FQAuth.pageFor(user.role));
+            var next = new URLSearchParams(location.search).get('next');
+            location.assign(next && next.charAt(0) === '/' && next.charAt(1) !== '/' ? next : FQAuth.pageFor(user.role));
         } catch (error) {
             alertBox.textContent = error.message;
             alertBox.classList.add('on');

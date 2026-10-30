@@ -8,21 +8,47 @@
         <link rel="stylesheet" href="../css/admin.css">
     </head>
     <body class="workspace">
-        <aside class="sidebar">
+       <aside class="sidebar">
             <a class="workspace-brand" href="/chercheur.html">
                 <img src="/LOGO_FQ.png" alt=""><span><b>FUZZY-QUEST</b><small>Quest For Truth</small></span>
             </a>
-            <nav>
+            <nav aria-label="Navigation chercheur">
                 <a class="side-link" href="/chercheur.html">
-                    <span>⌂</span>Dashboard
+                    <span>
+                    <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z">
+                        </path>
+                    </svg>
+                    </span>Dashboard
                 </a>
                 <a class="side-link" href="/mon-espace.html">
-                    <span>▣</span>Mon espace
+                    <span>
+                    <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M4 5h16v14H4zM8 9h8M8 13h5">
+                        </path>
+                    </svg>
+                    </span>Mon espace
                 </a>
                 <a class="side-link active" href="/parametres.html">
-                    <span>⚙</span>Paramètres
+                    <span>
+                    <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M4 6h16M4 12h16M4 18h16">
+                        </path>
+                        <circle cx="9" cy="6" r="2" fill="white">
+                        </circle>
+                        <circle cx="15" cy="12" r="2" fill="white">
+                        </circle>
+                        <circle cx="8" cy="18" r="2" fill="white">
+                        </circle>
+                    </svg>
+                    </span>Paramètres
                 </a>
             </nav>
+            <div class="sidebar-bottom">
+                <a class="side-link" href="#" id="helpSettings">
+                    <span>?</span>Aide &amp; support
+                </a>
+            </div>
         </aside>
         <div class="workspace-main">
             <header class="workspace-topbar">

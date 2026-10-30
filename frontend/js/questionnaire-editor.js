@@ -2,7 +2,7 @@
     'use strict';
     var $ = function (id) {
         return document.getElementById(id)
-    }, qs = [], id = new URLSearchParams(location.search).get('id'), template = new URLSearchParams(location.search).get('template');
+    }, qs = [], id = new URLSearchParams(location.search).get('id'), template = new URLSearchParams(location.search).get('template'), groups = [];
     function esc(s) {
         return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
             return {
@@ -27,6 +27,8 @@
     async function init() {
         try {
             await FQAuth.api('/api/auth/me');
+            var groupResult = await FQAuth.api('/api/groups'); groups = groupResult.groups.filter(function(g){return !g.is_public;});
+            $('groupChoices').innerHTML = groups.map(function(g){return '<label class="check-row"><input type="checkbox" value="'+g.id+'" data-group-choice><span><b>'+esc(g.name)+'</b><small>'+g.participant_count+' participant(s)</small></span></label>';}).join('') || '<p class="muted">Aucun groupe créé. Vous pouvez publier le questionnaire en accès public.</p>';
             if (id) {
                 var r = await FQAuth.api('/api/questionnaires/' + id), q = r.questionnaire;
                 $('pageTitle').textContent = 'Modifier le questionnaire';
@@ -34,6 +36,8 @@
                 $('description').value = q.description || '';
                 $('status').value = q.status;
                 $('target').value = q.target || 0;
+                $('publicAccess').checked = !!q.is_public;
+                (q.group_ids || []).forEach(function(groupId){var choice=document.querySelector('[data-group-choice][value="'+groupId+'"]');if(choice)choice.checked=true;});
                 qs = q.questions || [];
                 if (qs.length) $('structure').value = qs.some(function (x) {
                     return x.level === 'subsection'
@@ -104,11 +108,14 @@
                 if (qs[i].level !== 'question' && !qs[i].section.trim()) throw Error('Renseignez la section de chaque question structurée.');
                 if (qs[i].level === 'subsection' && !qs[i].subsection.trim()) throw Error('Renseignez la sous-section.')
             }
+            var groupIds = Array.from(document.querySelectorAll('[data-group-choice]:checked')).map(function(el){return Number(el.value);}), isPublic = $('publicAccess').checked;
+            if ($('status').value === 'open' && !groupIds.length && !isPublic) throw Error('Pour ouvrir le questionnaire, attribuez-le à un groupe ou cochez « Publier aussi avec un lien public ».');
             var body = {
                 title: $('title').value.trim(),
                 description: $('description').value.trim(),
                 status: $('status').value,
                 target: Number($('target').value || 0),
+                group_ids: groupIds, public: isPublic,
                 questions: qs.map(function (q, i) {
                     return Object.assign({
                     }, q, {

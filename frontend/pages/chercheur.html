@@ -266,6 +266,11 @@
                 <button class="button secondary" data-close="assignDialog">Annuler</button><button class="button primary" id="saveAssignment">Enregistrer les groupes</button>
             </div>
         </dialog>
+        <dialog class="modal" id="linkDialog">
+            <div class="modal-head"><div><p class="eyebrow">DIFFUSION</p><h2>Lien du questionnaire</h2><p class="muted" id="linkTitle"></p></div><button class="icon-button" data-close="linkDialog" aria-label="Fermer">×</button></div>
+            <div class="link-share"><a id="qrOpenLink" href="#" target="_blank" rel="noopener" aria-label="Ouvrir le questionnaire"><img id="questionnaireQr" alt="QR code du questionnaire"></a><div class="share-link-copy"><b>Lien à partager</b><a id="questionnaireLink" href="#" target="_blank" rel="noopener"></a></div></div>
+            <p class="muted" id="linkNotice"></p><div class="modal-actions"><button class="button secondary" id="copyQuizLink" type="button">Copier le lien</button><a class="button secondary" id="openQuizLink" href="#" target="_blank" rel="noopener">Ouvrir</a><button class="button primary" id="sendQuizLink" type="button">Envoyer aux participants</button></div>
+        </dialog>
         <script src="/js/workspace-shell.js"></script><script src="../js/auth.js">
         </script>
         <script src="../js/dashboard.js">

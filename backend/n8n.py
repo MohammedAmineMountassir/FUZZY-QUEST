@@ -44,5 +44,5 @@ def notify_open(db, questionnaire_id, title):
     ).fetchall()
     recipients = [{"name": r["name"], "email": r["email"]} for r in rows]
     base = os.environ.get("APP_BASE_URL", "http://localhost:5000").rstrip("/")
-    link = f"{base}/api/questionnaires/{questionnaire_id}"
+    link = f"{base}/questionnaire.html?id={questionnaire_id}"
     send_invitations(title, link, recipients)

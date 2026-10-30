@@ -86,6 +86,10 @@
             }
         };
     } catch (error) {
+        if (error.code === 'AUTH_REQUIRED') {
+            location.assign('/connexion.html?next=' + encodeURIComponent(location.pathname + location.search));
+            return;
+        }
         $('qTitle').textContent = error.message;
         $('sendBtn').disabled = true;
     }

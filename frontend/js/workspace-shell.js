@@ -34,7 +34,10 @@
                 link('/administration.html?section=templates', 'Modèles', 'file', current === 'templates') +
                 link('/administration.html?section=activity', 'Journal d’activité', 'clock', current === 'activity');
         } else {
-            var active = path === '/mon-espace.html' ? 'space' : path === '/parametres.html' ? 'settings' : 'home';
+            var active = path === '/mon-espace.html' ? 'space' :
+             ['/parametres.html', '/groupes.html', '/nouveau-groupe.html',
+              '/groupe.html', '/bibliotheque.html', '/journal-chercheur.html',
+              '/coadministrateurs.html'].includes(path) ? 'settings' : 'home';
             nav = link('/chercheur.html', 'Dashboard', 'home', active === 'home') +
                 link('/mon-espace.html', 'Mon espace', 'space', active === 'space') +
                 link('/parametres.html', 'Paramètres', 'settings', active === 'settings');
