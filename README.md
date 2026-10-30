@@ -32,6 +32,7 @@ En développement (`APP_ENV=development`), si SMTP n'est pas configuré, le lien
 ## Parcours disponibles
 
 - Les chercheurs créent, modifient, suppriment et dupliquent des questionnaires, puis les affectent à plusieurs groupes ou à l'espace public.
+- Les liens de questionnaires ouverts mènent directement à une page de réponse avec le logo et le titre de l'étude. Les participants peuvent répondre anonymement ou indiquer leur nom et leur e-mail.
 - La bibliothèque fournit des modèles d'études. Les réponses et les indicateurs de participation sont conservés dans SQLite.
 - Les groupes ont une liste de participants modifiable et un tableau de suivi.
 - L'administrateur approuve les demandes de compte et de changement de mot de passe.
@@ -56,3 +57,5 @@ frontend/
 ├── js/
 └── pages/
 ```
+
+Les données locales de `instance/`, le fichier `.env`, l'environnement `.venv/` et les caches Python ne font pas partie du code source versionné. Le déploiement Docker démarre la même application Flask et conserve SQLite dans un volume persistant.

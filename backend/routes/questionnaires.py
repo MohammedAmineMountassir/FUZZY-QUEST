@@ -122,13 +122,6 @@ def questionnaire_detail(item_id):
     if request.method == 'GET':
         if row['status'] != 'open' and (not user or (user['id'] != row['owner_id'] and (not collaborator))):
             return (jsonify(error='NOT_FOUND'), 404)
-        if row['status'] == 'open' and (not user or (user['id'] != row['owner_id'] and (not collaborator))):
-            allowed = get_db().execute('SELECT 1 FROM questionnaire_groups qg JOIN research_groups g ON g.id=qg.group_id LEFT JOIN group_members gm ON gm.group_id=g.id AND (gm.user_id=? OR lower(gm.email)=lower(?)) WHERE qg.questionnaire_id=? GROUP BY qg.questionnaire_id HAVING SUM(CASE WHEN g.is_public=1 OR gm.id IS NOT NULL THEN 1 ELSE 0 END)>0', (user['id'] if user else -1, user['email'] if user else '', item_id)).fetchone()
-            assigned = get_db().execute('SELECT 1 FROM questionnaire_groups WHERE questionnaire_id=?', (item_id,)).fetchone()
-            if assigned and (not allowed):
-                if not user:
-                    return jsonify(error='AUTH_REQUIRED', message='Connectez-vous avec le compte associé à ce groupe pour répondre.'), 401
-                return jsonify(error='FORBIDDEN', message='Ce questionnaire est réservé aux participants des groupes sélectionnés.'), 403
         return jsonify(questionnaire=serialize_questionnaire(row))
     if not user:
         return (jsonify(error='AUTH_REQUIRED'), 401)
@@ -207,15 +200,19 @@ def submit_response(item_id):
     if not row or row['status'] != 'open':
         return (jsonify(error='NOT_FOUND'), 404)
     user = get_current_user()
-    assigned = get_db().execute('SELECT 1 FROM questionnaire_groups WHERE questionnaire_id=?', (item_id,)).fetchone()
-    if assigned and (not get_db().execute('SELECT 1 FROM questionnaire_groups qg JOIN research_groups g ON g.id=qg.group_id LEFT JOIN group_members gm ON gm.group_id=g.id AND (gm.user_id=? OR lower(gm.email)=lower(?)) WHERE qg.questionnaire_id=? AND (g.is_public=1 OR gm.id IS NOT NULL) LIMIT 1', (user['id'] if user else -1, user['email'] if user else '', item_id)).fetchone()):
-        return (jsonify(error='FORBIDDEN', message="Ce questionnaire n'est pas accessible à votre compte."), 403)
-    if user and get_db().execute('SELECT 1 FROM responses WHERE questionnaire_id=? AND user_id=? LIMIT 1', (item_id, user['id'])).fetchone():
-        return (jsonify(error='ALREADY_RESPONDED', message='Vous avez déjà répondu à ce questionnaire.'), 409)
-    answers = (request.get_json(silent=True) or {}).get('answers')
+    data = request.get_json(silent=True) or {}
+    answers = data.get('answers')
     if not isinstance(answers, (dict, list)):
         return (jsonify(error='INVALID_INPUT'), 400)
-    get_db().execute('INSERT INTO responses(questionnaire_id,user_id,answers,submitted_at) VALUES(?,?,?,?)', (item_id, user['id'] if user else None, json.dumps(answers, ensure_ascii=False), utc_now()))
-    log_activity('Réponse reçue', row['title'], 'Un participant a envoyé ses réponses', user)
+    respondent_name = str(data.get('respondent_name', '')).strip()[:160]
+    respondent_email = str(data.get('respondent_email', '')).strip().lower()[:254]
+    if bool(respondent_name) != bool(respondent_email):
+        return jsonify(error='INVALID_INPUT', message='Indiquez votre nom et votre e-mail, ou laissez les deux champs vides pour répondre anonymement.'), 400
+    if respondent_email and ('@' not in respondent_email or '.' not in respondent_email.rsplit('@', 1)[-1]):
+        return jsonify(error='INVALID_INPUT', message='Adresse e-mail invalide.'), 400
+    respondent_user_id = user['id'] if user and respondent_name and respondent_email else None
+    get_db().execute('INSERT INTO responses(questionnaire_id,user_id,answers,submitted_at,respondent_name,respondent_email) VALUES(?,?,?,?,?,?)', (item_id, respondent_user_id, json.dumps(answers, ensure_ascii=False), utc_now(), respondent_name, respondent_email))
+    if respondent_name:
+        log_activity('Réponse reçue', row['title'], 'Réponse envoyée — ' + respondent_name, user)
     get_db().commit()
     return (jsonify(ok=True), 201)

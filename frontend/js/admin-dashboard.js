@@ -45,7 +45,8 @@
             p.hidden = p.id !== 'pane-' + key;
         });
         $('adminTitle').textContent = titles[key][0];
-        $('adminContext').textContent = titles[key][0];
+        var context = $('adminContext');
+        if (context) context.textContent = titles[key][0];
         $('adminIntro').textContent = titles[key][1];
         $('sectionAction').hidden = key !== 'researchers';
     }
@@ -70,7 +71,8 @@
     async function loadRequests() {
         var result = await Promise.all([api('/api/admin/account-requests'),
             api('/api/admin/password-requests')]), accounts = result[0].requests, passwords = result[1].requests;
-        $('requestBadge').textContent = accounts.length;
+        var badge = $('requestBadge');
+        if (badge) badge.textContent = accounts.length;
         $('accountRequestRows').innerHTML = accounts.length ? accounts.map(function (r) {
             return '<tr><td><b>' + esc(r.first_name + ' ' + r.last_name) + '</b></td><td>' + esc(r.email) + '</td><td>' + esc(r.phone) + '</td><td>' + (r.requested_role === 'participant' ? 'Participant' : 'Chercheur') + '</td><td>' + date(r.created_at, true) + '</td><td><button class="button primary small" data-account="approve" data-id="' + r.id + '">Accepter</button> <button class="button danger-text small" data-account="reject" data-id="' + r.id + '">Refuser</button></td></tr>';
         }).join(''): '<tr><td colspan="6">Aucune demande en attente.</td></tr>';

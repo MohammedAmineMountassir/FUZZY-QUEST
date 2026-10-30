@@ -21,7 +21,10 @@
         clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>'
     };
     function icon(name) { return '<svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true">' + icons[name] + '</svg>'; }
-    function link(href, label, glyph, active) { return '<a class="side-link' + (active ? ' active' : '') + '" href="' + href + '"><span>' + icon(glyph) + '</span>' + label + '</a>'; }
+    function link(href, label, glyph, active, adminSection) {
+        var adminAttribute = adminSection ? ' data-admin-nav="' + adminSection + '"' : '';
+        return '<a' + adminAttribute + ' class="side-link' + (active ? ' active' : '') + '" href="' + href + '"><span>' + icon(glyph) + '</span>' + label + '</a>';
+    }
     function render() {
         var aside = document.querySelector('.sidebar');
         var topbar = document.querySelector('.workspace-topbar');
@@ -29,10 +32,10 @@
         var nav;
         if (admin) {
             var current = path === '/creer-modele.html' ? 'templates' : section;
-            nav = link('/administration.html?section=researchers', 'Chercheurs', 'users', current === 'researchers') +
-                link('/administration.html?section=requests', 'Demandes de compte', 'mail', current === 'requests') +
-                link('/administration.html?section=templates', 'Modèles', 'file', current === 'templates') +
-                link('/administration.html?section=activity', 'Journal d’activité', 'clock', current === 'activity');
+            nav = link('/administration.html?section=researchers', 'Chercheurs', 'users', current === 'researchers', 'researchers') +
+                link('/administration.html?section=requests', 'Demandes de compte <i id="requestBadge" class="nav-badge">0</i>', 'mail', current === 'requests', 'requests') +
+                link('/administration.html?section=templates', 'Modèles', 'file', current === 'templates', 'templates') +
+                link('/administration.html?section=activity', 'Journal d’activité', 'clock', current === 'activity', 'activity');
         } else {
             var active = path === '/mon-espace.html' ? 'space' :
              ['/parametres.html', '/groupes.html', '/nouveau-groupe.html',
@@ -43,11 +46,14 @@
                 link('/parametres.html', 'Paramètres', 'settings', active === 'settings');
         }
         aside.innerHTML = '<a class="workspace-brand" href="' + (admin ? '/administration.html' : '/chercheur.html') + '"><img src="/LOGO_FQ.png" alt=""><span><b>FUZZY-QUEST</b><small>Quest For Truth</small></span></a><nav aria-label="Navigation principale">' + nav + '</nav>' +
-            '<div class="sidebar-bottom"><button class="side-link help-link" type="button"><span>' + icon('clock') + '</span>Aide &amp; support</button></div>';
+            '<div class="sidebar-bottom"><button' + (admin ? ' id="adminHelp"' : '') + ' class="side-link help-link" type="button"><span>' + icon('clock') + '</span>Aide &amp; support</button></div>';
         var title = titleMap[path] || 'FUZZY-QUEST';
+        if (admin && path === '/administration.html') {
+            title = ({ researchers: 'Chercheurs', requests: 'Demandes de compte', templates: 'Modèles', activity: 'Journal d’activité' })[section] || 'Chercheurs';
+        }
         if (path === '/groupe.html') title = document.getElementById('pageContext')?.textContent || 'Groupe';
         var context = topbar.querySelector('.workspace-context');
-        if (context) context.innerHTML = '<span class="page-context-title">' + title + '</span>';
+        if (context) context.innerHTML = '<span' + (admin && path === '/administration.html' ? ' id="adminContext"' : '') + ' class="page-context-title">' + title + '</span>';
         var area = topbar.querySelector('.account-area');
         if (area) area.innerHTML = '<button class="account-trigger" type="button" aria-label="Ouvrir le menu du compte"><span class="avatar av">--</span><span class="account-copy"><b class="account-name"></b><small>' + (admin ? 'Administrateur' : 'Chercheur') + '</small></span><span class="account-chevron" aria-hidden="true">⌄</span></button><div class="account-menu" id="pDD"><div class="account-menu-head"><b class="account-name"></b><small class="account-email"></small></div><button type="button" class="help-link">Aide &amp; support</button><button type="button" class="out">Se déconnecter</button></div>';
     }

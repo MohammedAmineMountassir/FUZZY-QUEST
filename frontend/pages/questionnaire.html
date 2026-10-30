@@ -1,180 +1,45 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-        <title>Fuzzy-Quest – Questionnaire</title>
-        <link rel="stylesheet" href="../css/participer.css">
-        <link rel="stylesheet" href="../css/questionnaire.css">
-        <link rel="stylesheet" href="../css/admin.css">
-        <link rel="stylesheet" href="../css/topbare.css">
-    </head>
-    <body>
-        <header class="topbar">
-            <a class="brand" href="participant.html">
-                <img src="../LOGO_FQ.png" alt="Logo Fuzzy-Quest" width="56" height="56">
-                <div>
-                    <b>FUZZY-QUEST</b>
-                    <small>Quest For Truth</small>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#5145cd">
+    <title>Questionnaire · FUZZY-QUEST</title>
+    <link rel="stylesheet" href="/css/answer.css">
+</head>
+<body class="answer-page">
+    <header class="answer-header">
+        <a class="answer-brand" href="/" aria-label="FUZZY-QUEST">
+            <img src="/LOGO_FQ.png" alt="">
+            <span><b>FUZZY-QUEST</b><small>Quest For Truth</small></span>
+        </a>
+    </header>
+    <main class="answer-shell">
+        <div id="loadError" class="answer-message" role="alert" hidden></div>
+        <form id="responseForm" hidden>
+            <section class="answer-intro">
+                <span class="answer-eyebrow">QUESTIONNAIRE</span>
+                <h1 id="qTitle">Chargement…</h1>
+                <p id="qDescription"></p>
+            </section>
+            <section class="respondent-card" aria-labelledby="respondentTitle">
+                <div class="anonymous-row">
+                    <div><h2 id="respondentTitle">Votre réponse</h2><p>Vous pouvez répondre sans indiquer votre identité.</p></div>
+                    <label class="toggle-label"><input id="anonymousMode" type="checkbox" checked><span>Répondre anonymement</span></label>
                 </div>
-            </a>
-            <nav class="tnav" aria-label="Navigation principale">
-                <a class="nav" href="participant.html">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z">
-                        </path>
-                    </svg>
-                    Tableau de bord
-                </a>
-                <a class="nav on" aria-current="page" href="participant.html#questionnaires">
-                    <svg viewBox="0 0 24 24">
-                        <circle cx="9" cy="8" r="3.5">
-                        </circle>
-                        <path d="M2.5 20a6.5 6.5 0 0 1 13 0M17 4.5a3.5 3.5 0 0 1 0 7M21.5 20a6 6 0 0 0-4-5.6">
-                        </path>
-                    </svg>
-                    Participer <span class="badge" id="navBadge">3</span>
-                </a>
-            </nav>
-            <div class="sp">
-            </div>
-            <div class="av">
-                YA
-            </div>
-            <div class="who">
-                <b>Yasmina Ait</b><small>Participant</small>
-            </div>
-            <div class="dd" id="pDD">
-                <div class="ddhead">
-                    <div class="a2">
-                        YA
-                    </div>
-                    <div>
-                        <b>Yasmina Ait</b><span id="ddRole">Participant</span>
-                    </div>
+                <div id="identityFields" class="identity-fields" hidden>
+                    <label>Nom et prénom<input id="respondentName" name="name" autocomplete="name" maxlength="160" placeholder="Votre nom"></label>
+                    <label>Adresse e-mail<input id="respondentEmail" name="email" type="email" autocomplete="email" maxlength="254" placeholder="vous@exemple.com"></label>
                 </div>
-                <div class="sep">
-                </div>
-                <button onclick="document.getElementById(&#x27;pDD&#x27;).classList.remove(&#x27;on&#x27;);document.getElementById(&#x27;pOvl&#x27;).classList.add(&#x27;on&#x27;)">
-                <svg viewBox="0 0 24 24">
-                    <circle cx="12" cy="8" r="4">
-                    </circle>
-                    <path d="M4 21a8 8 0 0 1 16 0">
-                    </path>
-                </svg>
-                Mon profil </button><button onclick="document.getElementById(&#x27;pDD&#x27;).classList.remove(&#x27;on&#x27;)">
-                <svg viewBox="0 0 24 24">
-                    <circle cx="12" cy="12" r="9">
-                    </circle>
-                    <path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 1.7-2 1.8-2 3.5M12 17h.01">
-                    </path>
-                </svg>
-                Aide &amp; support </button>
-                <div class="sep">
-                </div>
-                <button class="out" onclick="alert(&#x27;Déconnexion (démo)&#x27;);document.getElementById(&#x27;pDD&#x27;).classList.remove(&#x27;on&#x27;)">
-                <svg viewBox="0 0 24 24">
-                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9">
-                    </path>
-                </svg>
-                Se déconnecter </button>
-            </div>
-        </header>
-        <main>
-            <div class="wrap">
-                <a class="back" href="participant.html">
-                    <svg class="icon" aria-hidden="true">
-                        <use href="../icons.svg#icon-arrow-left"></use>
-                    </svg>
-                    Retour aux questionnaires
-                </a>
-                <div id="view">
-                    <div class="top qtop">
-                        <div>
-                            <h1 id="qTitle">
-                                Questionnaire
-                            </h1>
-                            <p class="sub" id="qDesc">
-                            </p>
-                        </div>
-                        <div class="meta" id="qMeta">
-                        </div>
-                    </div>
-                    <div class="card prog">
-                        <div class="row">
-                            <b id="pTxt">0 / 0 questions</b><span id="pPct">0 %</span>
-                        </div>
-                        <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="pBar">
-                            <i id="pFill"></i>
-                        </div>
-                    </div>
-                    <div class="qlist" id="qlist">
-                    </div>
-                    <div class="card submit" id="submitZone">
-                        <div class="st" id="sSt">
-                        </div>
-                        <button class="btn p" id="sendBtn" type="button">Envoyer mes réponses</button>
-                        <div class="alertbox" id="alertBox" role="alert">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </main>
-        <div class="ovl" id="pOvl">
-            <div class="pmodal">
-                <div class="phead">
-                    <button class="x" onclick="document.getElementById(&#x27;pOvl&#x27;).classList.remove(&#x27;on&#x27;)" aria-label="Fermer">
-                    <svg class="icon" aria-hidden="true">
-                        <use href="../icons.svg#icon-close"></use>
-                    </svg>
-                    </button>
-                    <div class="bigav">
-                        YA
-                    </div>
-                    <b>Yasmina Ait</b><span id="pRole">Participant</span>
-                </div>
-                <div class="pbody">
-                    <div class="pfield">
-                        <label>
-                            Nom complet
-                        </label>
-                        <input value="Yasmina Ait">
-                    </div>
-                    <div class="pfield">
-                        <label>
-                            Adresse e-mail
-                        </label>
-                        <input id="pEmail" value="yasmina.ait@fuzzy-quest.com" disabled>
-                    </div>
-                    <div class="pfield">
-                        <label>
-                            Téléphone
-                        </label>
-                        <input id="pPhone" value="+212 6 12 34 56 78" disabled>
-                    </div>
-                    <div class="pdiv">
-                    </div>
-                    <button class="plink" onclick="var d=this.parentElement.querySelectorAll(&#x27;#pEmail,#pPhone&#x27;);d.forEach(i=&gt;i.disabled=!i.disabled);this.textContent=d[0].disabled&#x27; Modifier mes coordonnées&#x27;:&#x27;Verrouiller les champs&#x27;">Modifier mes coordonnées </button>
-                    <div class="pdiv">
-                    </div>
-                    <div class="pfield">
-                        <label>
-                            Mot de passe
-                        </label>
-                        <input type="password" value="••••••••" disabled>
-                    </div>
-                    <button class="plink">Changer le mot de passe</button>
-                    <div class="pdiv">
-                    </div>
-                    <div class="prow">
-                        <button class="btn p" style="justify-content:center" onclick="document.getElementById(&#x27;pOvl&#x27;).classList.remove(&#x27;on&#x27;)">Enregistrer</button><button class="btn">Annuler</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <script src="../js/auth.js">
-        </script>
-        <script src="../js/questionnaire-router.js">
-        </script>
-    </body>
+            </section>
+            <div id="questionList" class="answer-questions"></div>
+            <div id="answerError" class="answer-message" role="alert" hidden></div>
+            <button id="sendBtn" class="answer-submit" type="submit">Envoyer mes réponses</button>
+            <p class="answer-footnote">Vos réponses sont enregistrées de manière sécurisée.</p>
+        </form>
+        <div id="loading" class="answer-loading">Chargement du questionnaire…</div>
+    </main>
+    <script src="/js/auth.js"></script>
+    <script src="/js/questionnaire-api.js"></script>
+</body>
 </html>

@@ -46,6 +46,10 @@ def init_db() -> None:
     template_columns = {row[1] for row in get_db().execute('PRAGMA table_info(questionnaire_templates)')}
     if 'structure' not in template_columns:
         get_db().execute("ALTER TABLE questionnaire_templates ADD COLUMN structure TEXT NOT NULL DEFAULT 'direct'")
+    response_columns = {row[1] for row in get_db().execute('PRAGMA table_info(responses)')}
+    for column in ('respondent_name', 'respondent_email'):
+        if column not in response_columns:
+            get_db().execute(f"ALTER TABLE responses ADD COLUMN {column} TEXT NOT NULL DEFAULT ''")
     admin_email = os.environ.get('FUZZY_QUEST_ADMIN_EMAIL', '').strip().lower()
     admin_password = os.environ.get('FUZZY_QUEST_ADMIN_PASSWORD', '')
     if admin_email and admin_password:

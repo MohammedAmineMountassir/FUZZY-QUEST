@@ -1,96 +1,164 @@
-(async function () {
+(function () {
     'use strict';
-    var $ = function (id) {
-        return document.getElementById(id);
-    }, id = new URLSearchParams(location.search).get('id');
-    function esc(value) {
-        return String(value == null ? '' : value).replace(/[&<>"']/g, function (c) {
+
+    var questionnaireId = new URLSearchParams(window.location.search).get('id');
+    var form = document.getElementById('responseForm');
+    var questionList = document.getElementById('questionList');
+    var anonymousMode = document.getElementById('anonymousMode');
+    var identityFields = document.getElementById('identityFields');
+    var loading = document.getElementById('loading');
+    var errorBox = document.getElementById('loadError');
+    var answerError = document.getElementById('answerError');
+    var submitButton = document.getElementById('sendBtn');
+    var questionnaire = null;
+
+    function escapeHtml(value) {
+        return String(value == null ? '' : value).replace(/[&<>"']/g, function (character) {
             return {
-                '&': '&amp;',
-                '<': '&lt;',
-                '>': '&gt;',
-                '"': '&quot;',
-                "'": '&#39;'
-            } [c];
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            }[character];
         });
     }
-    try {
-        if (!id) throw new Error('Questionnaire introuvable.');
-        var result = await FQAuth.api('/api/questionnaires/' + encodeURIComponent(id)), q = result.questionnaire;
-        $('qTitle').textContent = q.title;
-        $('qDesc').textContent = q.description;
-        $('qMeta').textContent = q.questions.length + ' question(s)';
-        var previousSection = '', previousSubsection = '';
-        $('qlist').innerHTML = q.questions.map(function (question, i) {
-            var label = '<label for="answer-' + i + '">' + esc(question.label) + (question.required ? ' <strong>*</strong>' : '') + '</label>', control;
-            var headings = '';
-            if (question.level === 'section' && question.section && question.section !== previousSection) {
-                headings += '<h2 class="question-section-heading">' + esc(question.section) + '</h2>';
-                previousSection = question.section;
-                previousSubsection = '';
+
+    function renderQuestion(question, index) {
+        var label = escapeHtml(question.label);
+        var requiredMark = question.required ? ' <strong>*</strong>' : '';
+        var control = '';
+
+        if (question.type === 'single' || question.type === 'multi') {
+            control = '<div class="answer-options">' + (question.options || []).map(function (option, optionIndex) {
+                var type = question.type === 'multi' ? 'checkbox' : 'radio';
+                return '<label class="answer-option"><input type="' + type + '" name="answer-' + index + '" value="' + escapeHtml(option) + '"><span>' + escapeHtml(option) + '</span></label>';
+            }).join('') + '</div>';
+        } else if (question.type === 'scale') {
+            var minimum = Number(question.min == null ? 1 : question.min);
+            var maximum = Number(question.max == null ? 5 : question.max);
+            var step = Number(question.step == null ? 1 : question.step);
+            control = '<input id="answer-' + index + '" type="range" min="' + minimum + '" max="' + maximum + '" step="' + step + '" value="' + minimum + '"><div class="scale-labels"><span>' + escapeHtml(question.minLabel || minimum) + '</span><output id="scale-value-' + index + '">' + minimum + '</output><span>' + escapeHtml(question.maxLabel || maximum) + '</span></div>';
+        } else if (question.type === 'triangle' || question.type === 'trapeze') {
+            var points = question.type === 'triangle' ? ['a', 'b', 'c'] : ['a', 'b', 'c', 'd'];
+            control = '<div class="fuzzy-fields">' + points.map(function (point) {
+                return '<label>' + point.toUpperCase() + '<input type="number" step="any" id="answer-' + index + '-' + point + '" placeholder="Valeur"></label>';
+            }).join('') + '</div>';
+        } else if (question.type === 'text') {
+            control = '<textarea id="answer-' + index + '" rows="3" placeholder="Votre réponse"></textarea>';
+        } else {
+            control = '<input id="answer-' + index + '" type="text">';
+        }
+
+        var headings = '';
+        if (question.level === 'section' && question.section) {
+            headings += '<h2 class="answer-section">' + escapeHtml(question.section) + '</h2>';
+        }
+        if (question.level === 'subsection') {
+            if (question.section) headings += '<h2 class="answer-section">' + escapeHtml(question.section) + '</h2>';
+            if (question.subsection) headings += '<h3 class="answer-subsection">' + escapeHtml(question.subsection) + '</h3>';
+        }
+        return headings + '<section class="answer-question"><h2>' + (index + 1) + '. ' + label + requiredMark + '</h2>' + control + '</section>';
+    }
+
+    function readAnswers() {
+        var answers = {};
+        questionnaire.questions.forEach(function (question, index) {
+            var selected = document.querySelectorAll('[name="answer-' + index + '"]:checked');
+            var value;
+            if (selected.length) {
+                value = question.type === 'multi' ? Array.from(selected).map(function (input) { return input.value; }) : selected[0].value;
+            } else if (question.type === 'triangle' || question.type === 'trapeze') {
+                value = (question.type === 'triangle' ? ['a', 'b', 'c'] : ['a', 'b', 'c', 'd']).map(function (point) {
+                    return document.getElementById('answer-' + index + '-' + point).value;
+                });
+            } else {
+                var input = document.getElementById('answer-' + index);
+                value = input ? input.value.trim() : '';
             }
-            if (question.level === 'subsection' && question.section && question.section !== previousSection) {
-                headings += '<h2 class="question-section-heading">' + esc(question.section) + '</h2>';
-                previousSection = question.section;
-                previousSubsection = '';
-            }
-            if (question.level === 'subsection' && question.subsection && question.subsection !== previousSubsection) {
-                headings += '<h3 class="question-subsection-heading">' + esc(question.subsection) + '</h3>';
-                previousSubsection = question.subsection;
-            }
-            if (question.type === 'single' || question.type === 'multi') control = (question.options || []).map(function (option, j) {
-                return '<label class="answer-option"><input type="' + (question.type === 'multi' ? 'checkbox' : 'radio') + '" name="answer-' + i + '" value="' + esc(option) + '"> ' + esc(option) + '</label>';
-            }).join('');
-            else if (question.type === 'scale') control = '<input id="answer-' + i + '" type="range" min="' + Number(question.min || 1) + '" max="' + Number(question.max || 5) + '" step="' + Number(question.step || 1) + '"><span>' + esc(question.minLabel) + ' — ' + esc(question.maxLabel) + '</span>';
-            else control = '<div class="fuzzy-inputs"><label>Minimum <input id="answer-' + i + '-a" type="number"></label><label>Maximum <input id="answer-' + i + '-b" type="number"></label></div>';
-            return headings + '<section class="card question" data-index="' + i + '"><h2>' + (i + 1) + '. ' + esc(question.label) + '</h2>' + (question.type === 'single' || question.type === 'multi' ? control : label + control) + '</section>';
-        }).join('');
-        $('pTxt').textContent = q.questions.length + ' questions';
-        $('pPct').textContent = q.questions.length ? '0 %' : '100 %';
-        $('sendBtn').onclick = async function () {
-            var answers = {
-            }, valid = true;
-            q.questions.forEach(function (question, i) {
-                var selected = document.querySelectorAll('[name="answer-' + i + '"]:checked'), value;
-                if (selected.length) value = question.type === 'multi' ? Array.from(selected).map(function (el) {
-                    return el.value;
-                }): selected[0].value;
-                else if (question.type === 'triangle' || question.type === 'trapeze') value = [$('answer-' + i + '-a')?. value,
-                    $('answer-' + i + '-b')?. value];
-                else value = $('answer-' + i)?. value || '';
-                if (question.required && (!value || Array.isArray(value) && value.some(function (v) {
-                    return !v;
-                }))) valid = false;
-                answers[String(question.id || i + 1)] = value;
-            });
-            if (!valid) {
-                $('alertBox').textContent = 'Répondez à toutes les questions obligatoires.';
-                $('alertBox').classList.add('on');
+            answers[String(question.id || index + 1)] = value;
+        });
+        return answers;
+    }
+
+    function showError(message) {
+        answerError.textContent = message;
+        answerError.hidden = false;
+        answerError.classList.remove('success');
+        answerError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    anonymousMode.addEventListener('change', function () {
+        identityFields.hidden = anonymousMode.checked;
+    });
+
+    questionList.addEventListener('input', function (event) {
+        if (event.target.type === 'range') {
+            var output = document.getElementById('scale-value-' + event.target.id.replace('answer-', ''));
+            if (output) output.value = event.target.value;
+        }
+    });
+
+    form.addEventListener('submit', async function (event) {
+        event.preventDefault();
+        answerError.hidden = true;
+        var answers = readAnswers();
+        for (var index = 0; index < questionnaire.questions.length; index += 1) {
+            var question = questionnaire.questions[index];
+            var value = answers[String(question.id || index + 1)];
+            var empty = Array.isArray(value)
+                ? (question.type === 'multi' ? value.length === 0 : value.some(function (part) { return part === ''; }))
+                : value === '';
+            if (question.required && empty) {
+                showError('Répondez à la question ' + (index + 1) + ' avant de continuer.');
                 return;
             }
-            this.disabled = true;
-            try {
-                await FQAuth.api('/api/questionnaires/' + encodeURIComponent(id) + '/responses', {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        answers: answers
-                    })
-                });
-                $('alertBox').textContent = 'Merci, vos réponses ont été envoyées.';
-                $('alertBox').classList.add('on');
-                this.textContent = 'Réponses envoyées';
-            } catch (error) {
-                $('alertBox').textContent = error.message;
-                $('alertBox').classList.add('on');
-                this.disabled = false;
-            }
-        };
-    } catch (error) {
-        if (error.code === 'AUTH_REQUIRED') {
-            location.assign('/connexion.html?next=' + encodeURIComponent(location.pathname + location.search));
+        }
+        var respondentName = anonymousMode.checked ? '' : document.getElementById('respondentName').value.trim();
+        var respondentEmail = anonymousMode.checked ? '' : document.getElementById('respondentEmail').value.trim();
+        if (!anonymousMode.checked && (!respondentName || !respondentEmail)) {
+            showError('Renseignez votre nom et votre adresse e-mail, ou choisissez la réponse anonyme.');
             return;
         }
-        $('qTitle').textContent = error.message;
-        $('sendBtn').disabled = true;
+        submitButton.disabled = true;
+        submitButton.textContent = 'Envoi en cours…';
+        try {
+            await FQAuth.api('/api/questionnaires/' + encodeURIComponent(questionnaireId) + '/responses', {
+                method: 'POST',
+                body: JSON.stringify({ answers: answers, respondent_name: respondentName, respondent_email: respondentEmail })
+            });
+            answerError.textContent = 'Merci. Votre réponse a bien été envoyée.';
+            answerError.classList.add('success');
+            answerError.hidden = false;
+            submitButton.textContent = 'Réponse envoyée';
+        } catch (error) {
+            showError(error.message || 'Impossible d’envoyer votre réponse. Réessayez.');
+            submitButton.disabled = false;
+            submitButton.textContent = 'Envoyer mes réponses';
+        }
+    });
+
+    async function loadQuestionnaire() {
+        if (!questionnaireId || !/^\d+$/.test(questionnaireId)) {
+            throw new Error('Ce lien de questionnaire est invalide.');
+        }
+        var result = await FQAuth.api('/api/questionnaires/' + encodeURIComponent(questionnaireId));
+        questionnaire = result.questionnaire;
+        if (questionnaire.status !== 'open') throw new Error('Ce questionnaire n’est pas ouvert aux réponses.');
+        document.title = questionnaire.title + ' · FUZZY-QUEST';
+        document.getElementById('qTitle').textContent = questionnaire.title;
+        document.getElementById('qDescription').textContent = questionnaire.description || 'Merci de prendre quelques minutes pour répondre.';
+        questionList.innerHTML = questionnaire.questions.map(renderQuestion).join('');
+        form.hidden = false;
+        loading.hidden = true;
+        FQAuth.me().then(function (session) {
+            if (!session.user) return;
+            document.getElementById('respondentName').value = [session.user.first_name, session.user.last_name].filter(Boolean).join(' ');
+            document.getElementById('respondentEmail').value = session.user.email || '';
+            anonymousMode.checked = false;
+            identityFields.hidden = false;
+        }).catch(function () {});
     }
+
+    loadQuestionnaire().catch(function (error) {
+        loading.hidden = true;
+        errorBox.textContent = error.message || 'Le questionnaire est indisponible.';
+        errorBox.hidden = false;
+    });
 })();
