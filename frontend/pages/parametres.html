@@ -1,143 +1,53 @@
 <!doctype html>
 <html lang="fr">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width,initial-scale=1">
-        <title>Paramètres · FUZZY-QUEST</title>
-        <link rel="stylesheet" href="../css/workspace.css">
-        <link rel="stylesheet" href="../css/admin.css">
-    </head>
-    <body class="workspace">
-        <aside class="sidebar">
-            <a class="workspace-brand" href="/chercheur.html">
-                <img src="/LOGO_FQ.png" alt=""><span><b>FUZZY-QUEST</b><small>Quest For Truth</small></span>
-            </a>
-            <nav aria-label="Navigation chercheur">
-                <a class="side-link" href="/chercheur.html">
-                    <span>
-                    <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z">
-                        </path>
-                    </svg>
-                    </span>Dashboard
-                </a>
-                <a class="side-link" href="/mon-espace.html">
-                    <span>
-                    <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M4 5h16v14H4zM8 9h8M8 13h5">
-                        </path>
-                    </svg>
-                    </span>Mon espace
-                </a>
-                <a class="side-link active" href="/parametres.html">
-                    <span>
-                    <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M4 6h16M4 12h16M4 18h16">
-                        </path>
-                        <circle cx="9" cy="6" r="2" fill="white">
-                        </circle>
-                        <circle cx="15" cy="12" r="2" fill="white">
-                        </circle>
-                        <circle cx="8" cy="18" r="2" fill="white">
-                        </circle>
-                    </svg>
-                    </span>Paramètres
-                </a>
-            </nav>
-            <div class="sidebar-bottom">
-                <a class="side-link" href="#" id="helpSettings">
-                    <span>?</span>Aide &amp; support
-                </a>
-            </div>
-        </aside>
-        <div class="workspace-main">
-            <header class="workspace-topbar">
-                <div class="workspace-context">
-                    <span class="page-context-title">Paramètres</span>
-                </div>
-                <div class="account-area">
-                    <button class="account-trigger" type="button"><span class="avatar av">--</span><span class="account-copy"><b class="account-name"></b><small>Chercheur</small></span><span>⌄</span></button>
-                    <div class="account-menu" id="pDD">
-                        <div class="account-menu-head">
-                            <b class="account-name"></b><small class="account-email"></small>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Paramètres du compte · FUZZY-QUEST</title>
+    <link rel="stylesheet" href="/css/workspace.css">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="workspace">
+    <aside class="sidebar"></aside>
+    <div class="workspace-main">
+        <header class="workspace-topbar"><div class="workspace-context"></div><div class="account-area"></div></header>
+        <main class="content">
+            <section class="section-heading">
+                <div><p class="eyebrow">VOTRE COMPTE</p><h1>Paramètres</h1><p class="muted">Consultez vos informations et gérez l’accès à votre compte.</p></div>
+            </section>
+            <section class="account-settings-grid">
+                <article class="settings-card account-settings-card">
+                    <span class="settings-icon" aria-hidden="true">◎</span>
+                    <h2>Informations du compte</h2>
+                    <p>Modifiez le nom associé à votre profil. L’adresse e-mail reste liée à votre connexion.</p>
+                    <form id="profileForm" class="form-fields account-profile-form">
+                        <label>Prénom<input id="profileFirstName" name="first_name" autocomplete="given-name" required minlength="2" maxlength="80"></label>
+                        <label>Nom<input id="profileLastName" name="last_name" autocomplete="family-name" required minlength="2" maxlength="80"></label>
+                        <div class="account-details">
+                            <div><dt>Adresse e-mail</dt><dd id="settingsEmail">Chargement…</dd></div>
+                            <div><dt>Type de compte</dt><dd id="settingsRole">Chargement…</dd></div>
                         </div>
-                        <a href="/groupes.html">
-                            Mes groupes
-                        </a>
-                        <button type="button" class="out">Se déconnecter</button>
-                    </div>
-                </div>
-            </header>
-            <main class="content">
-                <section class="settings-grid">
-                    <article class="settings-card">
-                        <span class="settings-icon">
-                        <svg class="ui-icon" viewBox="0 0 24 24">
-                            <circle cx="9" cy="8" r="3">
-                            </circle>
-                            <path d="M3 20v-1a6 6 0 0 1 12 0v1M16 5a3 3 0 0 1 0 6m2 3a5 5 0 0 1 3 5v1">
-                            </path>
-                        </svg>
-                        </span>
-                        <h2>
-                            Groupes
-                        </h2>
-                        <p>
-                            Participants, diffusion et liens d’inscription.
-                        </p>
-                        <a class="button primary small" href="/groupes.html">
-                            Ouvrir les groupes
-                        </a>
-                        <button class="help-dot" title="Un groupe rassemble les participants auxquels vous diffusez un questionnaire." aria-label="À propos des groupes">?</button>
-                    </article>
-                    <article class="settings-card">
-                        <span class="settings-icon">
-                        <svg class="ui-icon" viewBox="0 0 24 24">
-                            <circle cx="9" cy="8" r="3">
-                            </circle>
-                            <path d="M3 20v-1a6 6 0 0 1 12 0v1M19 8v6m-3-3h6">
-                            </path>
-                        </svg>
-                        </span>
-                        <h2>
-                            Co-administrateurs
-                        </h2>
-                        <p>
-                            Donnez à un collègue chercheur l’accès à vos questionnaires et groupes.
-                        </p>
-                        <a class="button primary small" href="/coadministrateurs.html">
-                            Ouvrir
-                        </a>
-                        <button class="help-dot" title="Ajoutez un compte chercheur actif pour collaborer sur vos questionnaires." aria-label="À propos des co-administrateurs">?</button>
-                    </article>
-                    <article class="settings-card">
-                        <span class="settings-icon">
-                        <svg class="ui-icon" viewBox="0 0 24 24">
-                            <circle cx="12" cy="12" r="9">
-                            </circle>
-                            <path d="M12 7v5l3 2M5 5l2 2">
-                            </path>
-                        </svg>
-                        </span>
-                        <h2>
-                            Journal d’activité
-                        </h2>
-                        <p>
-                            Retrouvez vos créations, modifications et actions de diffusion.
-                        </p>
-                        <a class="button primary small" href="/journal-chercheur.html">
-                            Ouvrir
-                        </a>
-                        <button class="help-dot" title="Le journal affiche les actions récentes associées à votre compte." aria-label="À propos du journal">?</button>
-                    </article>
-                </section>
-            </main>
-        </div>
-        <script src="/js/workspace-shell.js"></script><script src="../js/auth.js">
-        </script>
-        <script src="../js/dashboard.js">
-        </script>
-        <script src="../js/settings.js">
-        </script>
-    </body>
+                        <p id="profileStatus" class="account-settings-status" role="status" aria-live="polite"></p>
+                        <button class="button primary small" type="submit">Enregistrer les informations</button>
+                    </form>
+                </article>
+                <article class="settings-card account-settings-card">
+                    <span class="settings-icon" aria-hidden="true">⌑</span>
+                    <h2>Mot de passe</h2>
+                    <p>Choisissez un nouveau mot de passe. Le changement est appliqué immédiatement après vérification de votre mot de passe actuel.</p>
+                    <form id="passwordForm" class="form-fields account-profile-form">
+                        <label>Mot de passe actuel<input id="currentPassword" type="password" autocomplete="current-password" required></label>
+                        <label>Nouveau mot de passe<input id="newPassword" type="password" autocomplete="new-password" minlength="8" required><small>Au moins 8 caractères, avec une lettre et un chiffre.</small></label>
+                        <label>Confirmer le nouveau mot de passe<input id="confirmPassword" type="password" autocomplete="new-password" minlength="8" required></label>
+                        <p id="passwordStatus" class="account-settings-status" role="status" aria-live="polite"></p>
+                        <button class="button primary small" type="submit">Modifier le mot de passe</button>
+                    </form>
+                </article>
+            </section>
+        </main>
+    </div>
+    <script src="/js/workspace-shell.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/settings.js"></script>
+</body>
 </html>

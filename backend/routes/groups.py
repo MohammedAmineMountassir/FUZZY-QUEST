@@ -270,8 +270,8 @@ def add_collaborator():
     try:
         get_db().execute('INSERT INTO researcher_collaborators(owner_id,user_id,created_at) VALUES(?,?,?)', (user['id'], target['id'], utc_now()))
     except Exception:
-        return (jsonify(error='ALREADY_ADDED', message='Ce chercheur est déjà co-administrateur.'), 409)
-    log_activity('Co-administrateur ajouté', email, 'Accès de collaboration accordé', user)
+        return (jsonify(error='ALREADY_ADDED', message='Ce chercheur est déjà co-chercheur.'), 409)
+    log_activity('Co-chercheur ajouté', email, 'Accès de collaboration accordé', user)
     get_db().commit()
     return (jsonify(ok=True), 201)
 
@@ -282,7 +282,7 @@ def remove_collaborator(user_id):
     cur = get_db().execute('DELETE FROM researcher_collaborators WHERE owner_id=? AND user_id=?', (user['id'], user_id))
     if not cur.rowcount:
         return (jsonify(error='NOT_FOUND'), 404)
-    log_activity('Co-administrateur retiré', str(user_id), 'Accès de collaboration retiré', user)
+    log_activity('Co-chercheur retiré', str(user_id), 'Accès de collaboration retiré', user)
     get_db().commit()
     return jsonify(ok=True)
 

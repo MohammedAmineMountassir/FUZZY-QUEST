@@ -7,18 +7,19 @@
         '/chercheur.html': 'Dashboard', '/creer-questionnaire.html': 'Nouveau questionnaire',
         '/groupes.html': 'Groupes', '/nouveau-groupe.html': 'Nouveau groupe',
         '/groupe.html': 'Groupe', '/bibliotheque.html': 'Bibliothèque de modèles',
-        '/parametres.html': 'Paramètres', '/mon-espace.html': 'Mon espace',
-        '/journal-chercheur.html': 'Journal d’activité', '/coadministrateurs.html': 'Coadministrateurs',
+        '/parametres.html': 'Paramètres',
+        '/journal-chercheur.html': 'Journal', '/coadministrateurs.html': 'Co-chercheurs',
         '/creer-modele.html': 'Nouveau modèle'
     };
     var icons = {
         home: '<path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
-        space: '<rect x="4" y="5" width="16" height="14" rx="2"/><path d="M8 9h8M8 13h5"/>',
         settings: '<path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="2"/><circle cx="15" cy="12" r="2"/><circle cx="8" cy="18" r="2"/>',
         users: '<circle cx="9" cy="8" r="3"/><path d="M3 20v-1a6 6 0 0 1 12 0v1M16 5a3 3 0 0 1 0 6"/>',
         mail: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/>',
         file: '<path d="M6 3h9l4 4v14H6zM14 3v5h5M9 12h7M9 16h7"/>',
-        clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>'
+        clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+        group: '<circle cx="9" cy="8" r="3"/><path d="M3 20v-1a6 6 0 0 1 12 0v1m1-10a3 3 0 1 0 0-6m1 10a5 5 0 0 1 4 5v1"/>',
+        collaborators: '<circle cx="8" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M2 20v-1a6 6 0 0 1 12 0v1m2-4a5 5 0 0 1 6 4"/>'
     };
     function icon(name) { return '<svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true">' + icons[name] + '</svg>'; }
     function link(href, label, glyph, active, adminSection) {
@@ -26,6 +27,8 @@
         return '<a' + adminAttribute + ' class="side-link' + (active ? ' active' : '') + '" href="' + href + '"><span>' + icon(glyph) + '</span>' + label + '</a>';
     }
     function render() {
+        // La page historique reste le portail des participants, avec sa propre navigation.
+        if (path === '/mon-espace.html') return;
         var aside = document.querySelector('.sidebar');
         var topbar = document.querySelector('.workspace-topbar');
         if (!aside || !topbar) return;
@@ -37,12 +40,13 @@
                 link('/administration.html?section=templates', 'Modèles', 'file', current === 'templates', 'templates') +
                 link('/administration.html?section=activity', 'Journal d’activité', 'clock', current === 'activity', 'activity');
         } else {
-            var active = path === '/mon-espace.html' ? 'space' :
-             ['/parametres.html', '/groupes.html', '/nouveau-groupe.html',
-              '/groupe.html', '/bibliotheque.html', '/journal-chercheur.html',
-              '/coadministrateurs.html'].includes(path) ? 'settings' : 'home';
+            var active = path === '/groupes.html' || path === '/groupe.html' || path === '/nouveau-groupe.html' ? 'groups' :
+                path === '/coadministrateurs.html' ? 'collaborators' : path === '/journal-chercheur.html' ? 'activity' :
+                path === '/parametres.html' ? 'settings' : path === '/bibliotheque.html' ? 'none' : 'home';
             nav = link('/chercheur.html', 'Dashboard', 'home', active === 'home') +
-                link('/mon-espace.html', 'Mon espace', 'space', active === 'space') +
+                link('/groupes.html', 'Groupes', 'group', active === 'groups') +
+                link('/coadministrateurs.html', 'Co-chercheurs', 'collaborators', active === 'collaborators') +
+                link('/journal-chercheur.html', 'Journal', 'clock', active === 'activity') +
                 link('/parametres.html', 'Paramètres', 'settings', active === 'settings');
         }
         aside.innerHTML = '<a class="workspace-brand" href="' + (admin ? '/administration.html' : '/chercheur.html') + '"><img src="/LOGO_FQ.png" alt=""><span><b>FUZZY-QUEST</b><small>Quest For Truth</small></span></a><nav aria-label="Navigation principale">' + nav + '</nav>' +

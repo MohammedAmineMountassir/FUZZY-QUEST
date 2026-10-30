@@ -19,7 +19,11 @@
             location.replace('/administration.html');
             return;
         }
-        if ((page === '/participant.html' || page === '/mon-espace.html') && user.role !== 'participant' && !(page === '/mon-espace.html' && user.role === 'researcher')) {
+        if (page === '/mon-espace.html' && user.role === 'researcher') {
+            location.replace('/chercheur.html');
+            return;
+        }
+        if (page === '/participant.html' && user.role !== 'participant') {
             location.replace('/chercheur.html');
             return;
         }

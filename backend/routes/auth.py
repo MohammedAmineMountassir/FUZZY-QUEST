@@ -129,6 +129,44 @@ def logout():
 def me():
     return jsonify(user=get_current_user())
 
+@auth_bp.patch('/profile')
+def update_profile():
+    user = get_current_user()
+    if not user:
+        return (jsonify(error='AUTH_REQUIRED', message='Connectez-vous pour modifier votre compte.'), 401)
+    data = request.get_json(silent=True) or {}
+    first = str(data.get('first_name', '')).strip()
+    last = str(data.get('last_name', '')).strip()
+    if len(first) < 2 or len(last) < 2 or len(first) > 80 or len(last) > 80:
+        return (jsonify(error='INVALID_INPUT', message='Le prénom et le nom doivent contenir entre 2 et 80 caractères.'), 400)
+    db = get_db()
+    db.execute('UPDATE users SET first_name=?,last_name=? WHERE id=?', (first, last, user['id']))
+    log_activity('Profil modifié', user['email'], 'Nom du compte mis à jour', user)
+    db.commit()
+    return jsonify(message='Les informations du compte ont été enregistrées.', user=get_current_user())
+
+@auth_bp.post('/change-password')
+def change_password():
+    user = get_current_user()
+    if not user:
+        return (jsonify(error='AUTH_REQUIRED', message='Connectez-vous pour modifier votre mot de passe.'), 401)
+    data = request.get_json(silent=True) or {}
+    current_password = str(data.get('current_password', ''))
+    new_password = str(data.get('new_password', ''))
+    row = get_db().execute('SELECT password_hash FROM users WHERE id=?', (user['id'],)).fetchone()
+    if not row or not check_password_hash(row['password_hash'], current_password):
+        return (jsonify(error='INVALID_PASSWORD', message='Le mot de passe actuel est incorrect.'), 400)
+    if not password_is_valid(new_password):
+        return (jsonify(error='WEAK_PASSWORD', message='Choisissez au moins 8 caractères avec une lettre et un chiffre.'), 400)
+    if check_password_hash(row['password_hash'], new_password):
+        return (jsonify(error='PASSWORD_UNCHANGED', message='Choisissez un mot de passe différent de l’actuel.'), 400)
+    db = get_db()
+    db.execute('UPDATE users SET password_hash=? WHERE id=?', (generate_password_hash(new_password), user['id']))
+    db.execute("UPDATE password_change_requests SET status='completed',token_hash=NULL WHERE user_id=? AND status IN ('pending','approved')", (user['id'],))
+    log_activity('Mot de passe modifié', user['email'], 'Changement effectué depuis les paramètres du compte', user)
+    db.commit()
+    return jsonify(message='Votre mot de passe a été modifié.')
+
 @auth_bp.get('/admin-setup-status')
 def admin_setup_status():
     if current_app.config.get('APP_ENV') != 'development':
