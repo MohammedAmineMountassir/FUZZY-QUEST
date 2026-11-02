@@ -44,7 +44,8 @@
             nav = link('/administration.html?section=researchers', 'Chercheurs', 'users', current === 'researchers', 'researchers') +
                 link('/administration.html?section=requests', 'Demandes de compte <i id="requestBadge" class="nav-badge">0</i>', 'mail', current === 'requests', 'requests') +
                 link('/administration.html?section=templates', 'Modèles', 'file', current === 'templates', 'templates') +
-                link('/administration.html?section=activity', 'Journal d’activité', 'clock', current === 'activity', 'activity');
+                link('/administration.html?section=activity', 'Journal d’activité', 'clock', current === 'activity', 'activity') +
+                link('/parametres.html', 'Paramètres', 'settings', path === '/parametres.html');
         } else {
             var active = path === '/groupes.html' || path === '/groupe.html' || path === '/nouveau-groupe.html' ? 'groups' :
                 path === '/coadministrateurs.html' ? 'collaborators' : path === '/journal-chercheur.html' ? 'activity' :
@@ -65,7 +66,7 @@
         var context = topbar.querySelector('.workspace-context');
         if (context) context.innerHTML = '<span' + (admin && path === '/administration.html' ? ' id="adminContext"' : '') + ' class="page-context-title">' + title + '</span>';
         var area = topbar.querySelector('.account-area');
-        if (area) area.innerHTML = '<button class="account-trigger" type="button" aria-label="Ouvrir le menu du compte"><span class="avatar av">--</span><span class="account-copy"><b class="account-name"></b><small>' + (admin ? 'Administrateur' : 'Chercheur') + '</small></span><span class="account-chevron" aria-hidden="true">⌄</span></button><div class="account-menu" id="pDD"><div class="account-menu-head"><b class="account-name"></b><small class="account-email"></small></div><button type="button" class="help-link">Aide &amp; support</button><button type="button" class="out">Se déconnecter</button></div>';
+        if (area) area.innerHTML = '<button class="account-trigger" type="button" aria-label="Ouvrir le menu du compte"><span class="avatar av">--</span><span class="account-copy"><b class="account-name"></b><small>' + (admin ? 'Administrateur' : 'Chercheur') + '</small></span><span class="account-chevron" aria-hidden="true">⌄</span></button><div class="account-menu" id="pDD"><div class="account-menu-head"><b class="account-name"></b><small class="account-email"></small></div><a href="/parametres.html">Paramètres</a><button type="button" class="help-link">Aide &amp; support</button><button type="button" class="out">Se déconnecter</button></div>';
     }
     render();
     window.addEventListener('group-name-updated', function (event) {
