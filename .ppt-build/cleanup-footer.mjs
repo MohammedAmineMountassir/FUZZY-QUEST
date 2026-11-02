@@ -1,4 +1,0 @@
-import fs from 'node:fs/promises';import path from 'node:path';import {FileBlob,PresentationFile} from '@oai/artifact-tool';
-const root='C:/Users/ait/FUZZY-QUEST';const input=path.join(root,'presentation-output','fuzzy-quest-amelioree-v2.pptx');const draft=path.join(root,'.ppt-build','fuzzy-quest-amelioree-v3-draft.pptx');
-const p=await PresentationFile.importPptx(await FileBlob.load(input));const d=await p.inspect({kind:'textbox',search:'FUZZY-QUEST · Quest For Truth',maxChars:4000});
-const ids=d.records.filter(r=>r.kind==='textbox'&&(r.name==='footer-brand-3'||r.name==='footer-brand-5')).map(r=>r.id);if(ids.length!==2)throw new Error(`Expected two duplicate footers, found ${ids.length}`);p.delete(ids);await(await PresentationFile.exportPptx(p)).save(draft);console.log(JSON.stringify({draft,removed:ids.length}));

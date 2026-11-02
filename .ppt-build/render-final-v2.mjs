@@ -1,4 +1,0 @@
-import fs from 'node:fs/promises';import {FileBlob,PresentationFile} from '@oai/artifact-tool';
-const p=await PresentationFile.importPptx(await FileBlob.load('C:/Users/ait/FUZZY-QUEST/presentation-output/fuzzy-quest-amelioree-v2.pptx'));const d=await p.inspect({kind:'slide,textbox',maxChars:80000});
-const out='C:/Users/ait/FUZZY-QUEST/.ppt-build/final-render-v2';await fs.mkdir(out,{recursive:true});for(let i=0;i<p.slides.items.length;i++){let b=await p.export({slide:p.slides.items[i],format:'png',scale:1});await fs.writeFile(`${out}/slide-${String(i+1).padStart(2,'0')}.png`,new Uint8Array(await b.arrayBuffer()))}
-for(const s of d.records.filter(x=>x.kind==='slide'&&(x.slideIndex===1||x.slideIndex===2||x.slideIndex===3||x.slideIndex===4||x.slideIndex===5||x.slideIndex===14))){console.log(`SLIDE${s.slideIndex+1}: ${s.title}`);console.log(d.records.filter(x=>x.kind==='textbox'&&x.slideIndex===s.slideIndex).map(x=>x.text).join(' | '))}
