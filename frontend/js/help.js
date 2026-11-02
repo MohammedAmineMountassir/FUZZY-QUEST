@@ -48,7 +48,7 @@
 			title: 'Bibliothèque de modèles',
 			tips: [
 				'Choisissez un modèle pour créer un questionnaire pré-rempli, puis adaptez-le.',
-				'Les modèles publiés par l’administrateur apparaissent en premier.'
+				'Les modèles disponibles apparaissent dans cette bibliothèque.'
 			]
 		},
 		'/coadministrateurs.html': {
@@ -74,15 +74,7 @@
 			tips: [
 				'« Chercheurs » : consulter les comptes et désactiver ou réactiver un accès.',
 				'« Demandes de compte » : approuver ou refuser les nouvelles inscriptions.',
-				'« Modèles » : publier des modèles de questionnaires pour tous les chercheurs.',
 				'« Journal d’activité » : consulter les 500 derniers événements de la plateforme.'
-			]
-		},
-		'/creer-modele.html': {
-			title: 'Nouveau modèle',
-			tips: [
-				'Un modèle doit avoir un titre, une structure et au moins une question.',
-				'Une fois publié, il apparaît dans la bibliothèque de tous les chercheurs.'
 			]
 		},
 		'/mon-espace.html': {

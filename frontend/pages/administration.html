@@ -33,14 +33,6 @@
                     </svg>
                     </span>Demandes de compte <i id="requestBadge" class="nav-badge">0</i>
                 </a>
-                <a class="side-link" href="/administration.html?section=templates" data-admin-nav="templates">
-                    <span>
-                    <svg class="ui-icon" viewBox="0 0 24 24">
-                        <path d="M6 3h9l4 4v14H6zM14 3v5h5M9 12h7M9 16h7">
-                        </path>
-                    </svg>
-                    </span>Modèles
-                </a>
                 <a class="side-link" href="/administration.html?section=activity" data-admin-nav="activity">
                     <span>
                     <svg class="ui-icon" viewBox="0 0 24 24">
@@ -89,7 +81,7 @@
                             Chercheurs
                         </h1>
                         <p class="muted" id="adminIntro">
-                            Gérez les comptes, les demandes et la bibliothèque de modèles.
+                            Gérez les comptes chercheurs, les demandes et le journal d’activité.
                         </p>
                     </div>
                 </section>
@@ -192,21 +184,6 @@
                         </table>
                     </div>
                 </section>
-                <section class="admin-pane" id="pane-templates" hidden>
-                    <div class="section-heading">
-                        <div>
-                            <h2>
-                                Bibliothèque des modèles
-                            </h2>
-                            <p class="muted">
-                                Ces questionnaires seront proposés aux chercheurs.
-                            </p>
-                        </div>
-                        <a class="button primary" id="newTemplate" href="/creer-modele.html">＋ Créer un modèle</a>
-                    </div>
-                    <div id="templateRows" class="template-admin-grid">
-                    </div>
-                </section>
                 <section class="admin-pane" id="pane-activity" hidden>
                     <div class="toolbar-card">
                         <p class="muted">
@@ -280,43 +257,6 @@
             </div>
             <div class="modal-actions">
                 <button class="button secondary" data-close="researcherDialog">Annuler</button><button class="button primary" id="saveResearcher">Créer le compte</button>
-            </div>
-        </dialog>
-        <dialog class="modal quiz-editor-modal" id="templateDialog">
-            <div class="modal-head">
-                <div>
-                    <p class="eyebrow">
-                        BIBLIOTHÈQUE DE MODÈLES
-                    </p>
-                    <h2 id="templateDialogTitle">
-                        Créer un modèle
-                    </h2>
-                    <p class="muted">
-                        Organisez les questions directement ou avec sections.
-                    </p>
-                </div>
-                <button class="icon-button" data-close="templateDialog">×</button>
-            </div>
-            <div class="form-fields">
-                <label>
-                    Titre du modèle<input id="templateTitle">
-                </label>
-                <label>
-                    Description<textarea id="templateDescription" rows="2"></textarea>
-                </label>
-                <div class="two-col">
-                    <label>
-                        Structure du questionnaire<select id="templateStructure"><option value="direct">Questions directes</option><option value="sections">Avec sections</option><option value="subsections">Avec sections et sous-sections</option></select>
-                    </label>
-                    <button class="button secondary" id="addTemplateQuestion" type="button">＋ Ajouter une question</button>
-                </div>
-                <div id="templateQuestionRows" class="question-list">
-                </div>
-                <div class="editor-error" id="templateError" hidden>
-                </div>
-            </div>
-            <div class="modal-actions">
-                <button class="button secondary" data-close="templateDialog">Annuler</button><button class="button primary" id="saveTemplate">Enregistrer le modèle</button>
             </div>
         </dialog>
         <script src="/js/workspace-shell.js?v=admin-request-badge"></script><script src="../js/auth.js">

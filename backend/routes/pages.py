@@ -14,7 +14,6 @@ PAGES = {
     'parametres', 'questionnaire', 'administration', 'groupes', 'activation',
     'mot-de-passe', 'creer-questionnaire', 'bibliotheque', 'coadministrateurs',
     'journal-chercheur', 'administration-initiale', 'nouveau-groupe', 'groupe',
-    'creer-modele',
 }
 PUBLIC_ASSETS = {'LOGO_FQ.png', 'icons.svg'}
 

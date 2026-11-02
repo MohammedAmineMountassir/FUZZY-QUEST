@@ -1,6 +1,5 @@
-"""Administration des chercheurs, demandes, modèles et journaux."""
+"""Administration des chercheurs, demandes et journaux."""
 import hashlib
-import json
 import re
 import secrets
 from flask import Blueprint, current_app, jsonify, request
@@ -133,54 +132,6 @@ def researcher_action(user_id, action):
     if not sent and current_app.config.get('APP_ENV') == 'development':
         result['dev_link'] = link
     return jsonify(result)
-
-@admin_bp.get('/templates')
-@role_required('admin')
-def templates():
-    rows = get_db().execute('SELECT id,title,description,questions,structure,created_at,updated_at FROM questionnaire_templates ORDER BY updated_at DESC').fetchall()
-    return jsonify(templates=[dict(row, questions=json.loads(row['questions'])) for row in rows])
-
-@admin_bp.post('/templates')
-@role_required('admin')
-def create_template():
-    data = request.get_json(silent=True) or {}
-    title = str(data.get('title', '')).strip()
-    questions = data.get('questions', [])
-    structure = data.get('structure', 'direct')
-    if not title or not isinstance(questions, list) or (not questions) or (structure not in {'direct', 'sections', 'subsections'}):
-        return (jsonify(error='INVALID_INPUT', message='Un titre, une structure et au moins une question sont requis.'), 400)
-    now = utc_now()
-    cur = get_db().execute('INSERT INTO questionnaire_templates(title,description,questions,structure,created_by,created_at,updated_at) VALUES(?,?,?,?,?,?,?)', (title, str(data.get('description', '')), json.dumps(questions, ensure_ascii=False), structure, get_current_user()['id'], now, now))
-    log_activity('Modèle créé', title, 'Modèle ajouté à la bibliothèque', get_current_user())
-    get_db().commit()
-    return (jsonify(id=cur.lastrowid), 201)
-
-@admin_bp.put('/templates/<int:template_id>')
-@role_required('admin')
-def update_template(template_id):
-    data = request.get_json(silent=True) or {}
-    title = str(data.get('title', '')).strip()
-    questions = data.get('questions', [])
-    structure = data.get('structure', 'direct')
-    if not title or not isinstance(questions, list) or (not questions) or (structure not in {'direct', 'sections', 'subsections'}):
-        return (jsonify(error='INVALID_INPUT', message='Titre, structure et questions requis.'), 400)
-    cur = get_db().execute('UPDATE questionnaire_templates SET title=?,description=?,questions=?,structure=?,updated_at=? WHERE id=?', (title, str(data.get('description', '')), json.dumps(questions, ensure_ascii=False), structure, utc_now(), template_id))
-    if not cur.rowcount:
-        return (jsonify(error='NOT_FOUND'), 404)
-    log_activity('Modèle modifié', title, 'Modèle mis à jour', get_current_user())
-    get_db().commit()
-    return jsonify(ok=True)
-
-@admin_bp.delete('/templates/<int:template_id>')
-@role_required('admin')
-def delete_template(template_id):
-    row = get_db().execute('SELECT title FROM questionnaire_templates WHERE id=?', (template_id,)).fetchone()
-    if not row:
-        return (jsonify(error='NOT_FOUND'), 404)
-    get_db().execute('DELETE FROM questionnaire_templates WHERE id=?', (template_id,))
-    log_activity('Modèle supprimé', row['title'], '', get_current_user())
-    get_db().commit()
-    return jsonify(ok=True)
 
 @admin_bp.get('/activity')
 @role_required('admin')

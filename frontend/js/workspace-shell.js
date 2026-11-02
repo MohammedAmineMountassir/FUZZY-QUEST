@@ -1,15 +1,15 @@
 (function () {
     'use strict';
     var path = location.pathname;
-    var admin = path === '/administration.html' || path === '/creer-modele.html';
+    var admin = path === '/administration.html';
     var section = new URLSearchParams(location.search).get('section') || 'researchers';
+    if (['researchers', 'requests', 'activity'].indexOf(section) === -1) section = 'researchers';
     var titleMap = {
         '/chercheur.html': 'Dashboard', '/creer-questionnaire.html': 'Nouveau questionnaire',
         '/groupes.html': 'Groupes', '/nouveau-groupe.html': 'Nouveau groupe',
         '/groupe.html': 'Groupe', '/bibliotheque.html': 'Bibliothèque de modèles',
         '/parametres.html': 'Paramètres',
         '/journal-chercheur.html': 'Journal', '/coadministrateurs.html': 'Co-chercheurs',
-        '/creer-modele.html': 'Nouveau modèle'
     };
     var icons = {
         home: '<path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
@@ -40,10 +40,9 @@
         if (!aside || !topbar) return;
         var nav;
         if (admin) {
-            var current = path === '/creer-modele.html' ? 'templates' : section;
+            var current = section;
             nav = link('/administration.html?section=researchers', 'Chercheurs', 'users', current === 'researchers', 'researchers') +
                 link('/administration.html?section=requests', 'Demandes de compte <i id="requestBadge" class="nav-badge">0</i>', 'mail', current === 'requests', 'requests') +
-                link('/administration.html?section=templates', 'Modèles', 'file', current === 'templates', 'templates') +
                 link('/administration.html?section=activity', 'Journal d’activité', 'clock', current === 'activity', 'activity') +
                 link('/parametres.html', 'Paramètres', 'settings', path === '/parametres.html');
         } else {
@@ -60,7 +59,7 @@
             '<div class="sidebar-bottom"><button' + (admin ? ' id="adminHelp"' : '') + ' class="side-link help-link" type="button"><span>' + icon('clock') + '</span>Aide &amp; support</button></div>';
         var title = titleMap[path] || 'FUZZY-QUEST';
         if (admin && path === '/administration.html') {
-            title = ({ researchers: 'Chercheurs', requests: 'Demandes de compte', templates: 'Modèles', activity: 'Journal d’activité' })[section] || 'Chercheurs';
+            title = ({ researchers: 'Chercheurs', requests: 'Demandes de compte', activity: 'Journal d’activité' })[section] || 'Chercheurs';
         }
         if (path === '/groupe.html') title = document.getElementById('pageContext')?.textContent || 'Groupe';
         var context = topbar.querySelector('.workspace-context');
@@ -68,7 +67,16 @@
         var area = topbar.querySelector('.account-area');
         if (area) area.innerHTML = '<button class="account-trigger" type="button" aria-label="Ouvrir le menu du compte"><span class="avatar av">--</span><span class="account-copy"><b class="account-name"></b><small>' + (admin ? 'Administrateur' : 'Chercheur') + '</small></span><span class="account-chevron" aria-hidden="true">⌄</span></button><div class="account-menu" id="pDD"><div class="account-menu-head"><b class="account-name"></b><small class="account-email"></small></div><a href="/parametres.html">Paramètres</a><button type="button" class="help-link">Aide &amp; support</button><button type="button" class="out">Se déconnecter</button></div>';
     }
-    render();
+    if (path === '/parametres.html') {
+        fetch('/api/auth/me', { credentials: 'same-origin' }).then(function (response) {
+            return response.ok ? response.json() : null;
+        }).then(function (result) {
+            admin = !!(result && result.user && result.user.role === 'admin');
+            render();
+        }).catch(function () { render(); });
+    } else {
+        render();
+    }
     window.addEventListener('group-name-updated', function (event) {
         var label = event.detail && event.detail.name;
         if (label) {

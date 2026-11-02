@@ -2,14 +2,12 @@
     'use strict';
     var $ = function (id) {
         return document.getElementById(id);
-    }, researchers = [], templateId = null;
+    }, researchers = [];
     var titles = {
         researchers: ['Chercheurs',
             'Gérez les comptes chercheurs et leurs accès.'],
         requests: ['Demandes de compte',
             'Examinez les demandes de création de compte et de réinitialisation.'],
-        templates: ['Modèles',
-            'Créez les questionnaires disponibles dans la bibliothèque des chercheurs.'],
         activity: ['Journal d’activité',
             'Consultez les événements enregistrés sur la plateforme.']
     };
@@ -77,39 +75,11 @@
             return '<tr><td><b>' + esc(r.first_name + ' ' + r.last_name) + '</b></td><td>' + esc(r.email) + '</td><td>' + esc(r.phone) + '</td><td>' + (r.requested_role === 'participant' ? 'Participant' : 'Chercheur') + '</td><td>' + date(r.created_at, true) + '</td><td><button class="button primary small" data-account="approve" data-id="' + r.id + '">Accepter</button> <button class="button danger-text small" data-account="reject" data-id="' + r.id + '">Refuser</button></td></tr>';
         }).join(''): '<tr><td colspan="6">Aucune demande en attente.</td></tr>';
     }
-    async function loadTemplates() {
-        var result = await api('/api/admin/templates');
-        $('templateRows').innerHTML = result.templates.length ? result.templates.map(function (t) {
-            return '<article class="template-card"><span class="template-icon">▤</span><div><h3>' + esc(t.title) + '</h3><p>' + esc(t.description) + '</p><small>' + t.questions.length + ' questions · ' + esc(t.structure || 'direct') + '</small></div><button class="button text small" data-template-edit="' + t.id + '">Modifier</button><button class="button danger-text small" data-template-delete="' + t.id + '">Supprimer</button></article>';
-        }).join(''): '<div class="empty-state"><h3>La bibliothèque est vide</h3><p>Créez le premier modèle à proposer aux chercheurs.</p></div>';
-    }
     async function loadActivity() {
         var result = await api('/api/admin/activity');
         $('activityRows').innerHTML = result.events.length ? result.events.map(function (e) {
             return '<tr><td>' + date(e.created_at, true) + '</td><td>' + esc(e.actor_name) + '<small class="table-subline">' + esc(e.actor_role) + '</small></td><td>' + esc(e.action) + '</td><td>' + esc(e.subject) + '</td><td>' + esc(e.details) + '</td><td>' + esc(e.ip_address || '—') + '</td></tr>';
         }).join(''): '<tr><td colspan="6">Aucun événement enregistré.</td></tr>';
-    }
-    function addQuestion(q) {
-        q = q || {
-        };
-        var row = document.createElement('article');
-        row.className = 'question-editor-card template-question';
-        row.innerHTML = '<div class="two-col"><label>Intitulé<input class="tq-label" value="' + esc(q.label || '') + '" placeholder="Saisissez la question"></label><label>Type<select class="tq-type"><option value="scale">Échelle</option><option value="single">Choix unique</option><option value="multi">Choix multiple</option><option value="text">Texte libre</option></select></label></div><div class="two-col"><label>Niveau<select class="tq-level"><option value="question">Question directe</option><option value="section">Question avec section</option><option value="subsection">Question avec sous-section</option></select></label><label>Nom de la section<input class="tq-section" value="' + esc(q.section || '') + '" placeholder="Ex. Profil"></label></div><label>Sous-section (si besoin)<input class="tq-subsection" value="' + esc(q.subsection || '') + '" placeholder="Ex. Informations générales"></label><button type="button" class="button danger-text small remove-template-question">Retirer la question</button>';
-        row.querySelector('.tq-type').value = q.type || 'scale';
-        row.querySelector('.tq-level').value = q.level || 'question';
-        $('templateQuestionRows').appendChild(row);
-    }
-    function openTemplate(t) {
-        templateId = t ? t.id : null;
-        $('templateDialogTitle').textContent = t ? 'Modifier le modèle' : 'Créer un modèle';
-        $('templateTitle').value = t ? t.title : '';
-        $('templateDescription').value = t ? t.description : '';
-        $('templateStructure').value = t ? (t.structure || 'direct'): 'direct';
-        $('templateQuestionRows').innerHTML = '';
-        (t ? t.questions : [ {
-        }]).forEach(addQuestion);
-        $('templateError').hidden = true;
-        $('templateDialog').showModal();
     }
     document.addEventListener('DOMContentLoaded', async function () {
         try {
@@ -132,18 +102,12 @@
             document.querySelectorAll('.av').forEach(function (e) {
                 e.textContent = me.user.first_name[0] + me.user.last_name[0];
             });
-            await Promise.all([loadResearchers(),
-                loadRequests(),
-                loadTemplates(),
-                loadActivity()]);
+            await Promise.all([loadResearchers(), loadRequests(), loadActivity()]);
             document.querySelectorAll('[data-admin-nav]').forEach(function (a) {
                 a.classList.toggle('active', a.dataset.adminNav === (new URLSearchParams(location.search).get('section') || 'researchers'));
             });
             $('newResearcher').onclick = function () {
                 $('researcherDialog').showModal();
-            };
-            $('addTemplateQuestion').onclick = function () {
-                addQuestion();
             };
             $('refreshActivity').onclick = loadActivity;
             $('researcherSearch').oninput = filterResearchers;
@@ -151,8 +115,6 @@
             document.addEventListener('click', async function (e) {
                 var close = e.target.closest('[data-close]');
                 if (close) $(close.dataset.close).close();
-                var remove = e.target.closest('.remove-template-question');
-                if (remove) remove.closest('.template-question').remove();
                 var action = e.target.closest('[data-researcher-action]');
                 if (action) {
                     if (action.dataset.researcherAction === 'disable' && !confirm('Désactiver ce compte chercheur ?')) return;
@@ -184,24 +146,7 @@
                         alert(err2.message);
                     }
                 }
-                var del = e.target.closest('[data-template-delete]');
-                if (del && confirm('Supprimer ce modèle de la bibliothèque ?')) {
-                    try {
-                        await api('/api/admin/templates/' + del.dataset.templateDelete, {
-                            method: 'DELETE'
-                        });
-                        await loadTemplates();
-                    } catch (err3) {
-                        alert(err3.message);
-                    }
-                }
-                var edit = e.target.closest('[data-template-edit]');
-                if (edit) {
-                    var all = await api('/api/admin/templates');
-                    openTemplate(all.templates.find(function (t) {
-                        return String(t.id) === edit.dataset.templateEdit;
-                    }));
-                }
+
             });
             $('saveResearcher').onclick = async function () {
                 $('researcherError').hidden = true;
@@ -229,50 +174,12 @@
                     $('researcherError').hidden = false;
                 }
             };
-            $('saveTemplate').onclick = async function () {
-                var questions = Array.from(document.querySelectorAll('.template-question')).map(function (row) {
-                    return {
-                        label: row.querySelector('.tq-label').value.trim(),
-                        type: row.querySelector('.tq-type').value,
-                        level: row.querySelector('.tq-level').value,
-                        section: row.querySelector('.tq-section').value.trim(),
-                        subsection: row.querySelector('.tq-subsection').value.trim(),
-                        required: true
-                    };
-                });
-                var invalid = questions.some(function (q) {
-                    return !q.label || (q.level !== 'question' && !q.section) || (q.level === 'subsection' && !q.subsection);
-                });
-                if (!$('templateTitle').value.trim() || !questions.length || invalid) {
-                    $('templateError').textContent = 'Complétez le titre et chaque question. Ajoutez une section ou sous-section selon le niveau choisi.';
-                    $('templateError').hidden = false;
-                    return;
-                }
-                try {
-                    var body = JSON.stringify({
-                        title: $('templateTitle').value.trim(),
-                        description: $('templateDescription').value.trim(),
-                        structure: $('templateStructure').value,
-                        questions: questions
-                    });
-                    await api(templateId ? '/api/admin/templates/' + templateId: '/api/admin/templates', {
-                        method: templateId ? 'PUT' : 'POST',
-                        body: body
-                    });
-                    $('templateDialog').close();
-                    await loadTemplates();
-                    await loadActivity();
-                } catch (err) {
-                    $('templateError').textContent = err.message;
-                    $('templateError').hidden = false;
-                }
-            };
             $('adminHelp').onclick = function (e) {
                 e.preventDefault();
-                alert('Utilisez la navigation pour gérer les chercheurs, examiner les demandes, publier des modèles et consulter le journal d’activité.');
+                alert('Utilisez la navigation pour gérer les chercheurs, examiner les demandes et consulter le journal d’activité.');
             };
             var initial = new URLSearchParams(location.search).get('section') || 'researchers';
-            if (titles[initial]) nav(initial);
+            nav(titles[initial] ? initial : 'researchers');
         } catch (error) {
             alert(error.message);
             location.replace('/connexion.html');
